@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>China Defence Industrial Base Tracker</title>
+<title>Weapons 'Made in China' — Tracker</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -31,9 +31,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
-
 body {
   font-family: 'Inter', system-ui, sans-serif;
   background: var(--bg-dark);
@@ -42,13 +40,12 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-dark); }
 ::-webkit-scrollbar-thumb { background: var(--purple-dark); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--purple-mid); }
 
-/* ===== NAVIGATION ===== */
+/* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   background: rgba(13, 10, 20, 0.92);
@@ -82,7 +79,7 @@ nav.scrolled { box-shadow: 0 4px 30px rgba(45, 27, 78, 0.4); }
   background: rgba(245, 197, 24, 0.08);
 }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero {
   min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
@@ -123,8 +120,8 @@ nav.scrolled { box-shadow: 0 4px 30px rgba(45, 27, 78, 0.4); }
   50% { opacity: 0.5; transform: scale(1.5); }
 }
 .hero h1 {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 900; line-height: 1.05;
+  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  font-weight: 900; line-height: 1.08;
   letter-spacing: -0.03em;
   margin-bottom: 1.5rem;
 }
@@ -134,24 +131,22 @@ nav.scrolled { box-shadow: 0 4px 30px rgba(45, 27, 78, 0.4); }
   background-clip: text;
 }
 .hero-sub {
-  font-size: 1.15rem; color: var(--text-secondary);
-  max-width: 650px; margin: 0 auto 2.5rem;
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 680px; margin: 0 auto 2.5rem;
   line-height: 1.7;
 }
 .hero-stats {
-  display: flex; justify-content: center; gap: 3rem;
+  display: flex; justify-content: center; gap: 2.5rem;
   flex-wrap: wrap;
 }
-.hero-stat {
-  text-align: center;
-}
+.hero-stat { text-align: center; }
 .hero-stat-value {
-  font-size: 2.5rem; font-weight: 800;
+  font-size: 2.2rem; font-weight: 800;
   font-family: 'JetBrains Mono', monospace;
   color: var(--yellow-bright);
 }
 .hero-stat-label {
-  font-size: 0.75rem; color: var(--text-muted);
+  font-size: 0.72rem; color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.1em;
   margin-top: 0.25rem;
 }
@@ -169,12 +164,10 @@ nav.scrolled { box-shadow: 0 4px 30px rgba(45, 27, 78, 0.4); }
 }
 .scroll-indicator svg { width: 20px; height: 20px; stroke: var(--purple-light); }
 
-/* ===== SECTION LAYOUT ===== */
+/* SECTIONS */
 section { padding: 6rem 2rem; position: relative; }
 .section-inner { max-width: 1400px; margin: 0 auto; }
-.section-header {
-  text-align: center; margin-bottom: 4rem;
-}
+.section-header { text-align: center; margin-bottom: 4rem; }
 .section-number {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem; color: var(--purple-light);
@@ -188,7 +181,7 @@ section { padding: 6rem 2rem; position: relative; }
 }
 .section-subtitle {
   font-size: 1rem; color: var(--text-secondary);
-  max-width: 600px; margin: 0 auto;
+  max-width: 650px; margin: 0 auto;
 }
 .section-divider {
   width: 60px; height: 3px;
@@ -196,16 +189,43 @@ section { padding: 6rem 2rem; position: relative; }
   margin: 1.5rem auto 0; border-radius: 2px;
 }
 
-/* ===== SECTION 1: DIB NETWORK ===== */
-#dib { background: var(--bg-dark); }
-
-.dib-overview {
+/* MIC OVERVIEW */
+#mic { background: var(--bg-dark); }
+.mic-overview {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 3rem; margin-bottom: 4rem; align-items: center;
+  gap: 3rem; margin-bottom: 4rem; align-items: start;
 }
-.dib-overview-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
-.dib-overview-text strong { color: var(--yellow-bright); font-weight: 600; }
+.mic-overview-text { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.8; }
+.mic-overview-text strong { color: var(--yellow-bright); font-weight: 600; }
 
+/* Policy Visual */
+.policy-stack {
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.policy-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px; padding: 1.15rem 1.5rem;
+  transition: all 0.3s;
+}
+.policy-card:hover {
+  border-color: var(--purple-light);
+  transform: translateX(4px);
+}
+.policy-card-label {
+  font-size: 0.65rem; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--purple-light);
+  margin-bottom: 0.3rem; font-weight: 600;
+}
+.policy-card-title {
+  font-size: 0.9rem; font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.policy-card-desc {
+  font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;
+}
+
+/* MCF Diagram */
 .mcf-diagram {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -256,7 +276,7 @@ section { padding: 6rem 2rem; position: relative; }
   font-size: 0.5rem; color: var(--purple-pale);
 }
 
-/* SOE Cards Grid */
+/* SOE Cards */
 .soe-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -284,7 +304,6 @@ section { padding: 6rem 2rem; position: relative; }
   box-shadow: 0 12px 40px rgba(74, 45, 122, 0.25);
 }
 .soe-card:hover::before { opacity: 1; }
-
 .soe-card-header {
   display: flex; align-items: flex-start;
   justify-content: space-between;
@@ -305,40 +324,22 @@ section { padding: 6rem 2rem; position: relative; }
   padding: 0.2rem 0.6rem; border-radius: 6px;
 }
 .soe-name {
-  font-size: 1.1rem; font-weight: 700;
-  margin-bottom: 0.5rem; line-height: 1.3;
+  font-size: 1.05rem; font-weight: 700;
+  margin-bottom: 0.35rem; line-height: 1.3;
 }
-.soe-chinese { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+.soe-chinese { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.65rem; }
 .soe-desc {
-  font-size: 0.82rem; color: var(--text-secondary);
+  font-size: 0.8rem; color: var(--text-secondary);
   line-height: 1.6; margin-bottom: 1rem;
 }
 .soe-products {
   display: flex; flex-wrap: wrap; gap: 0.4rem;
-  margin-bottom: 1rem;
 }
 .soe-product-tag {
   font-size: 0.7rem; padding: 0.2rem 0.5rem;
   background: rgba(107, 63, 160, 0.15);
   border: 1px solid rgba(107, 63, 160, 0.2);
   border-radius: 6px; color: var(--purple-pale);
-}
-.soe-subsidiaries {
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 1rem; margin-top: 0.5rem;
-}
-.soe-sub-label {
-  font-size: 0.7rem; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--text-muted);
-  margin-bottom: 0.5rem;
-}
-.soe-sub-list {
-  display: flex; flex-wrap: wrap; gap: 0.3rem;
-}
-.soe-sub-item {
-  font-size: 0.7rem; color: var(--text-secondary);
-  background: rgba(13, 10, 20, 0.5);
-  padding: 0.15rem 0.5rem; border-radius: 4px;
 }
 
 /* Platform Carousel */
@@ -356,9 +357,7 @@ section { padding: 6rem 2rem; position: relative; }
   font-size: 0.8rem; color: var(--text-muted);
   margin-bottom: 1.5rem;
 }
-.carousel-wrapper {
-  position: relative; overflow: hidden;
-}
+.carousel-wrapper { position: relative; overflow: hidden; }
 .carousel-track {
   display: flex; gap: 1.25rem;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -379,25 +378,11 @@ section { padding: 6rem 2rem; position: relative; }
   letter-spacing: 0.1em; color: var(--yellow-mid);
   margin-bottom: 0.5rem; font-weight: 600;
 }
-.platform-card-name {
-  font-size: 0.95rem; font-weight: 700;
-  margin-bottom: 0.35rem;
-}
-.platform-card-type {
-  font-size: 0.75rem; color: var(--text-muted);
-  margin-bottom: 0.75rem;
-}
-.platform-card-specs {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 0.4rem;
-}
-.platform-spec {
-  font-size: 0.7rem; color: var(--text-secondary);
-}
-.platform-spec strong {
-  display: block; color: var(--text-primary);
-  font-size: 0.8rem;
-}
+.platform-card-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; }
+.platform-card-type { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+.platform-card-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+.platform-spec { font-size: 0.7rem; color: var(--text-secondary); }
+.platform-spec strong { display: block; color: var(--text-primary); font-size: 0.8rem; }
 .carousel-controls {
   display: flex; justify-content: center;
   gap: 0.75rem; margin-top: 1.5rem;
@@ -409,379 +394,167 @@ section { padding: 6rem 2rem; position: relative; }
   color: var(--text-primary);
   border-radius: 10px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-  font-size: 1.1rem;
+  transition: all 0.2s; font-size: 1.1rem;
 }
 .carousel-btn:hover {
   background: var(--purple-dark);
   border-color: var(--purple-mid);
 }
 
-/* ===== SECTION 2: EXPORT DATA ===== */
+/* EXPORTS SECTION */
 #exports {
   background: linear-gradient(180deg, var(--bg-dark) 0%, #110E1A 100%);
 }
-
 .export-charts {
   display: grid; grid-template-columns: 1.2fr 0.8fr;
-  gap: 2rem; margin-bottom: 4rem;
+  gap: 2rem; margin-bottom: 3rem;
 }
 .chart-box {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 16px; padding: 1.75rem;
 }
-.chart-box-title {
-  font-size: 0.95rem; font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-.chart-box-sub {
-  font-size: 0.75rem; color: var(--text-muted);
-  margin-bottom: 1.25rem;
-}
+.chart-box-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+.chart-box-sub { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.25rem; }
 .chart-container { position: relative; width: 100%; }
 .chart-container canvas { width: 100% !important; }
 
-/* Key Stats Row */
-.export-key-stats {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem; margin-bottom: 4rem;
+/* Headline Stats */
+.headline-stats {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem; margin-bottom: 3rem;
 }
-.key-stat-card {
+.headline-stat {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 14px; padding: 1.5rem;
+  border-radius: 14px; padding: 1.3rem 1rem;
   text-align: center;
   transition: all 0.3s;
 }
-.key-stat-card:hover {
+.headline-stat:hover {
   border-color: var(--yellow-bright);
   transform: translateY(-2px);
 }
-.key-stat-icon {
-  font-size: 1.5rem; margin-bottom: 0.5rem;
-}
-.key-stat-value {
-  font-size: 1.8rem; font-weight: 800;
+.headline-stat-value {
+  font-size: 1.6rem; font-weight: 800;
   font-family: 'JetBrains Mono', monospace;
   color: var(--yellow-bright);
 }
-.key-stat-label {
-  font-size: 0.75rem; color: var(--text-muted);
-  margin-top: 0.25rem;
-}
-
-/* Country Profile Cards */
-.country-profiles-title {
-  font-size: 1.4rem; font-weight: 800;
-  margin-bottom: 0.5rem;
-}
-.country-profiles-sub {
-  font-size: 0.85rem; color: var(--text-secondary);
-  margin-bottom: 2rem;
-}
-
-.country-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 1.25rem;
-}
-.country-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 14px;
-  overflow: hidden; transition: all 0.3s;
-  cursor: pointer;
-}
-.country-card:hover {
-  border-color: var(--purple-light);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(74, 45, 122, 0.2);
-}
-.country-card-header {
-  display: flex; align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--border-subtle);
-}
-.country-info {
-  display: flex; align-items: center; gap: 0.75rem;
-}
-.country-flag {
-  font-size: 1.8rem;
-  width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.05);
-  border-radius: 8px;
-}
-.country-name { font-size: 1rem; font-weight: 700; }
-.country-region {
+.headline-stat-label {
   font-size: 0.7rem; color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 0.08em;
-}
-.country-share {
-  text-align: right;
-}
-.country-share-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.3rem; font-weight: 700;
-  color: var(--yellow-bright);
-}
-.country-share-label {
-  font-size: 0.65rem; color: var(--text-muted);
-}
-.country-card-body { padding: 1.25rem 1.5rem; }
-.country-systems {
-  display: flex; flex-wrap: wrap; gap: 0.4rem;
-  margin-bottom: 1rem;
-}
-.system-tag {
-  font-size: 0.68rem; padding: 0.2rem 0.5rem;
-  background: rgba(245, 197, 24, 0.08);
-  border: 1px solid rgba(245, 197, 24, 0.15);
-  border-radius: 5px; color: var(--yellow-pale);
-}
-.country-detail {
-  font-size: 0.78rem; color: var(--text-secondary);
-  line-height: 1.6;
-}
-.country-card-footer {
-  padding: 0.75rem 1.5rem;
-  background: rgba(13, 10, 20, 0.4);
-  border-top: 1px solid var(--border-subtle);
-  display: flex; justify-content: space-between;
-  align-items: center;
-}
-.country-status {
-  display: flex; align-items: center; gap: 0.4rem;
-  font-size: 0.7rem;
-}
-.status-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-}
-.status-dot.active { background: var(--green-ok); }
-.status-dot.issues { background: var(--orange-warn); }
-.status-dot.critical { background: var(--red-alert); }
-.country-value {
-  font-size: 0.72rem; color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
+  margin-top: 0.25rem; line-height: 1.3;
 }
 
-/* ===== SECTION 2.5: LIVE DEALS CAROUSEL ===== */
-#deals {
-  background: linear-gradient(180deg, #110E1A 0%, var(--bg-dark) 100%);
-  padding: 5rem 2rem;
+/* Clientele Cards */
+.clientele-section { margin-bottom: 3rem; }
+.clientele-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
-.deals-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 2.5rem;
-}
-.deals-title-group {}
-.deals-badge {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  font-size: 0.7rem; font-weight: 600;
-  color: var(--yellow-bright);
-  text-transform: uppercase; letter-spacing: 0.12em;
-  margin-bottom: 0.5rem;
-}
-.deals-badge .live-dot {
-  width: 8px; height: 8px;
-  background: var(--red-alert); border-radius: 50%;
-  animation: pulse-dot 1.5s infinite;
-}
-.deals-title {
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 800;
-}
-.deals-auto-label {
-  font-size: 0.72rem; color: var(--text-muted);
+.clientele-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  padding: 0.4rem 0.8rem; border-radius: 8px;
-  display: flex; align-items: center; gap: 0.4rem;
-}
-.deals-auto-label svg { width: 14px; height: 14px; stroke: var(--purple-light); }
-
-.deals-carousel {
-  display: flex; gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  padding-bottom: 1rem;
-}
-.deals-carousel::-webkit-scrollbar { display: none; }
-
-.deal-card {
-  min-width: 420px; max-width: 420px;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  overflow: hidden;
+  border-radius: 12px; padding: 1.25rem;
+  text-align: center;
   transition: all 0.3s;
 }
-.deal-card:hover {
-  border-color: var(--yellow-bright);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(245, 197, 24, 0.1);
+.clientele-card:hover {
+  border-color: var(--purple-light);
+  transform: translateY(-2px);
 }
-.deal-card-accent {
-  height: 4px;
-  background: linear-gradient(90deg, var(--yellow-bright), var(--purple-mid));
-}
-.deal-card-content { padding: 1.75rem; }
-.deal-date {
-  font-size: 0.7rem; color: var(--text-muted);
+.clientele-flag { font-size: 2rem; margin-bottom: 0.4rem; }
+.clientele-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+.clientele-pct {
   font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  margin-bottom: 0.75rem;
-}
-.deal-headline {
-  font-size: 1.1rem; font-weight: 700;
-  line-height: 1.35; margin-bottom: 0.75rem;
-}
-.deal-parties {
-  display: flex; gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.deal-party {
-  font-size: 0.7rem; padding: 0.2rem 0.6rem;
-  border-radius: 6px; font-weight: 500;
-}
-.deal-party.seller {
-  background: rgba(231, 76, 60, 0.12);
-  color: #ff7675;
-  border: 1px solid rgba(231, 76, 60, 0.2);
-}
-.deal-party.buyer {
-  background: rgba(46, 204, 113, 0.1);
-  color: #55efc4;
-  border: 1px solid rgba(46, 204, 113, 0.2);
-}
-.deal-desc {
-  font-size: 0.82rem; color: var(--text-secondary);
-  line-height: 1.65; margin-bottom: 1.25rem;
-}
-.deal-meta {
-  display: flex; justify-content: space-between;
-  align-items: center;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-subtle);
-}
-.deal-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.1rem; font-weight: 700;
+  font-size: 1.5rem; font-weight: 800;
   color: var(--yellow-bright);
 }
-.deal-value-label {
-  font-size: 0.65rem; color: var(--text-muted);
+.clientele-label { font-size: 0.65rem; color: var(--text-muted); }
+.clientele-bar {
+  height: 6px; border-radius: 3px;
+  background: rgba(107, 63, 160, 0.2);
+  margin-top: 0.6rem; overflow: hidden;
 }
-.deal-type-tag {
-  font-size: 0.68rem; padding: 0.25rem 0.6rem;
-  background: rgba(107, 63, 160, 0.15);
-  border: 1px solid rgba(107, 63, 160, 0.25);
-  border-radius: 6px; color: var(--purple-pale);
+.clientele-bar-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--yellow-bright), var(--purple-mid));
+  transition: width 1s ease;
 }
 
-/* ===== SECTION 3: QC TRACKER ===== */
-#quality {
+/* CASE STUDIES */
+#cases {
   background: var(--bg-dark);
 }
-
-.qc-intro {
-  display: grid; grid-template-columns: 2fr 1fr;
-  gap: 3rem; margin-bottom: 4rem; align-items: center;
+.region-group {
+  margin-bottom: 4rem;
 }
-.qc-intro-text {
-  font-size: 0.92rem; color: var(--text-secondary); line-height: 1.8;
+.region-label {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--yellow-bright);
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 1rem; border-radius: 8px;
+  background: rgba(245, 197, 24, 0.08);
+  border: 1px solid rgba(245, 197, 24, 0.15);
 }
-.qc-score-card {
-  background: var(--bg-card);
-  border: 1px solid rgba(231, 76, 60, 0.25);
-  border-radius: 16px; padding: 2rem;
-  text-align: center;
-}
-.qc-score-label {
-  font-size: 0.7rem; text-transform: uppercase;
-  letter-spacing: 0.15em; color: var(--text-muted);
-  margin-bottom: 0.75rem;
-}
-.qc-score-value {
-  font-size: 3rem; font-weight: 900;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--red-alert);
-}
-.qc-score-sub {
-  font-size: 0.75rem; color: var(--text-secondary);
-  margin-top: 0.5rem;
-}
-
-/* QC Incident Cards */
-.qc-grid {
+.case-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 1.5rem;
 }
-.qc-card {
+.case-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.3s;
 }
-.qc-card:hover {
+.case-card:hover {
   border-color: var(--red-alert);
   transform: translateY(-3px);
   box-shadow: 0 8px 30px rgba(231, 76, 60, 0.15);
 }
-.qc-card-severity {
-  height: 4px;
-}
-.qc-card-severity.critical { background: var(--red-alert); }
-.qc-card-severity.high { background: var(--orange-warn); }
-.qc-card-severity.medium { background: var(--yellow-bright); }
-
-.qc-card-content { padding: 1.5rem; }
-.qc-card-top {
+.case-card-severity { height: 4px; }
+.case-card-severity.critical { background: var(--red-alert); }
+.case-card-severity.high { background: var(--orange-warn); }
+.case-card-severity.medium { background: var(--yellow-bright); }
+.case-card-content { padding: 1.5rem; }
+.case-card-top {
   display: flex; justify-content: space-between;
   align-items: flex-start; margin-bottom: 0.75rem;
 }
-.qc-card-country {
+.case-card-country {
   display: flex; align-items: center; gap: 0.5rem;
 }
-.qc-card-flag { font-size: 1.3rem; }
-.qc-card-nation {
-  font-size: 0.85rem; font-weight: 600;
-}
-.qc-card-year {
+.case-card-flag { font-size: 1.3rem; }
+.case-card-nation { font-size: 0.85rem; font-weight: 600; }
+.case-card-year {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem; color: var(--text-muted);
 }
-.qc-severity-badge {
+.severity-badge {
   font-size: 0.6rem; text-transform: uppercase;
   letter-spacing: 0.1em; font-weight: 700;
   padding: 0.2rem 0.5rem; border-radius: 4px;
 }
-.qc-severity-badge.critical {
+.severity-badge.critical {
   background: rgba(231, 76, 60, 0.15);
   color: var(--red-alert);
 }
-.qc-severity-badge.high {
+.severity-badge.high {
   background: rgba(243, 156, 18, 0.15);
   color: var(--orange-warn);
 }
-.qc-severity-badge.medium {
+.severity-badge.medium {
   background: rgba(245, 197, 24, 0.15);
   color: var(--yellow-bright);
 }
-
-.qc-card-headline {
+.case-card-headline {
   font-size: 1rem; font-weight: 700;
   line-height: 1.35; margin-bottom: 0.5rem;
 }
-.qc-card-platform {
+.case-card-platform {
   display: inline-flex; align-items: center; gap: 0.3rem;
   font-size: 0.72rem; padding: 0.2rem 0.5rem;
   background: rgba(245, 197, 24, 0.08);
@@ -789,33 +562,28 @@ section { padding: 6rem 2rem; position: relative; }
   border-radius: 5px; color: var(--yellow-pale);
   margin-bottom: 0.75rem;
 }
-.qc-card-desc {
+.case-card-desc {
   font-size: 0.8rem; color: var(--text-secondary);
   line-height: 1.65; margin-bottom: 1rem;
 }
-.qc-card-complaint {
+.case-card-complaint {
   background: rgba(231, 76, 60, 0.06);
   border-left: 3px solid var(--red-alert);
   padding: 0.75rem 1rem; border-radius: 0 8px 8px 0;
-  margin-bottom: 1rem;
 }
-.qc-complaint-label {
+.complaint-label {
   font-size: 0.65rem; text-transform: uppercase;
   letter-spacing: 0.1em; color: var(--red-alert);
   margin-bottom: 0.3rem; font-weight: 600;
 }
-.qc-complaint-text {
+.complaint-text {
   font-size: 0.78rem; color: var(--text-secondary);
   line-height: 1.5;
 }
-.qc-card-source {
-  font-size: 0.68rem; color: var(--text-muted);
-  display: flex; align-items: center; gap: 0.3rem;
-}
 
-/* Failure Matrix Table */
+/* Failure Matrix */
 .failure-matrix {
-  margin-top: 4rem;
+  margin-top: 3rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
@@ -847,19 +615,178 @@ section { padding: 6rem 2rem; position: relative; }
   color: var(--text-secondary);
   vertical-align: top;
 }
-.matrix-table tr:hover td {
-  background: rgba(107, 63, 160, 0.05);
-}
-.matrix-table .country-col {
-  font-weight: 600; color: var(--text-primary);
-  white-space: nowrap;
-}
-.matrix-table .platform-col {
-  color: var(--yellow-bright); font-weight: 500;
-}
+.matrix-table tr:hover td { background: rgba(107, 63, 160, 0.05); }
+.matrix-table .country-col { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+.matrix-table .platform-col { color: var(--yellow-bright); font-weight: 500; }
 .matrix-table .severity-col { white-space: nowrap; }
 
-/* ===== FOOTER ===== */
+/* DEALS */
+#deals {
+  background: linear-gradient(180deg, #110E1A 0%, var(--bg-dark) 100%);
+  padding: 5rem 2rem;
+}
+.deals-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+.deals-title-group {}
+.deals-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.7rem; font-weight: 600;
+  color: var(--yellow-bright);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+.deals-badge .live-dot {
+  width: 8px; height: 8px;
+  background: var(--red-alert); border-radius: 50%;
+  animation: pulse-dot 1.5s infinite;
+}
+.deals-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+}
+.deals-carousel {
+  display: flex; gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding-bottom: 1rem;
+}
+.deals-carousel::-webkit-scrollbar { display: none; }
+.deal-card {
+  min-width: 400px; max-width: 400px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.deal-card:hover {
+  border-color: var(--yellow-bright);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(245, 197, 24, 0.1);
+}
+.deal-card-accent {
+  height: 4px;
+  background: linear-gradient(90deg, var(--yellow-bright), var(--purple-mid));
+}
+.deal-card-content { padding: 1.5rem; }
+.deal-date {
+  font-size: 0.7rem; color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+}
+.deal-headline {
+  font-size: 1rem; font-weight: 700;
+  line-height: 1.35; margin-bottom: 0.6rem;
+}
+.deal-parties { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
+.deal-party {
+  font-size: 0.7rem; padding: 0.2rem 0.6rem;
+  border-radius: 6px; font-weight: 500;
+}
+.deal-party.seller {
+  background: rgba(231, 76, 60, 0.12); color: #ff7675;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+.deal-party.buyer {
+  background: rgba(46, 204, 113, 0.1); color: #55efc4;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+.deal-desc {
+  font-size: 0.8rem; color: var(--text-secondary);
+  line-height: 1.6; margin-bottom: 1rem;
+}
+.deal-meta {
+  display: flex; justify-content: space-between;
+  align-items: center; padding-top: 0.85rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.deal-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--yellow-bright);
+}
+.deal-value-label { font-size: 0.65rem; color: var(--text-muted); }
+.deal-type-tag {
+  font-size: 0.68rem; padding: 0.25rem 0.6rem;
+  background: rgba(107, 63, 160, 0.15);
+  border: 1px solid rgba(107, 63, 160, 0.25);
+  border-radius: 6px; color: var(--purple-pale);
+}
+
+/* OUTLOOK */
+#outlook {
+  background: linear-gradient(180deg, var(--bg-dark) 0%, #110E1A 100%);
+}
+.outlook-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-bottom: 3rem;
+}
+.outlook-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px; padding: 2rem;
+  transition: all 0.3s;
+  position: relative;
+}
+.outlook-card:hover {
+  border-color: var(--purple-light);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(74, 45, 122, 0.2);
+}
+.outlook-card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2rem; font-weight: 800;
+  color: var(--purple-mid); opacity: 0.3;
+  position: absolute; top: 1rem; right: 1.5rem;
+}
+.outlook-card-title {
+  font-size: 1rem; font-weight: 700;
+  margin-bottom: 0.75rem; line-height: 1.3;
+}
+.outlook-card-text {
+  font-size: 0.82rem; color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Purge Ticker */
+.purge-section {
+  background: var(--bg-card);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+  border-radius: 16px; padding: 2rem;
+}
+.purge-title {
+  font-size: 1rem; font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+.purge-sub {
+  font-size: 0.78rem; color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+.purge-grid {
+  display: flex; flex-wrap: wrap; gap: 0.75rem;
+}
+.purge-tag {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.78rem; padding: 0.5rem 0.85rem;
+  background: rgba(231, 76, 60, 0.06);
+  border: 1px solid rgba(231, 76, 60, 0.15);
+  border-radius: 8px; color: var(--text-secondary);
+}
+.purge-tag strong {
+  color: var(--text-primary); font-weight: 600;
+}
+.purge-tag .purge-role {
+  font-size: 0.65rem; color: var(--text-muted);
+}
+
+/* FOOTER */
 footer {
   padding: 3rem 2rem;
   border-top: 1px solid var(--border-subtle);
@@ -879,119 +806,95 @@ footer {
   margin-top: 1.5rem;
   font-size: 0.7rem; color: var(--text-muted);
 }
-.footer-sources a {
-  color: var(--purple-light);
-  text-decoration: none;
-}
+.footer-sources a { color: var(--purple-light); text-decoration: none; }
 .footer-sources a:hover { text-decoration: underline; }
 
-/* ===== RESPONSIVE ===== */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
-  .dib-overview { grid-template-columns: 1fr; }
+  .mic-overview { grid-template-columns: 1fr; }
   .export-charts { grid-template-columns: 1fr; }
-  .qc-intro { grid-template-columns: 1fr; }
-  .export-key-stats { grid-template-columns: repeat(2, 1fr); }
+  .headline-stats { grid-template-columns: repeat(3, 1fr); }
+  .clientele-grid { grid-template-columns: repeat(2, 1fr); }
+  .outlook-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hero-stats { gap: 1.5rem; }
   .soe-grid { grid-template-columns: 1fr; }
-  .country-grid { grid-template-columns: 1fr; }
-  .qc-grid { grid-template-columns: 1fr; }
+  .case-grid { grid-template-columns: 1fr; }
   .deal-card { min-width: 320px; max-width: 320px; }
-  .export-key-stats { grid-template-columns: 1fr 1fr; }
+  .headline-stats { grid-template-columns: repeat(2, 1fr); }
+  .clientele-grid { grid-template-columns: 1fr 1fr; }
   section { padding: 4rem 1.25rem; }
 }
 @media (max-width: 480px) {
-  .export-key-stats { grid-template-columns: 1fr; }
+  .headline-stats { grid-template-columns: 1fr; }
   .hero-stats { flex-direction: column; gap: 1rem; }
+  .clientele-grid { grid-template-columns: 1fr; }
 }
 
-/* ===== ANIMATIONS ===== */
+/* ANIMATIONS */
 .fade-in {
   opacity: 0; transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.fade-in.visible {
-  opacity: 1; transform: translateY(0);
-}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
 .fade-in-delay-1 { transition-delay: 0.1s; }
 .fade-in-delay-2 { transition-delay: 0.2s; }
 .fade-in-delay-3 { transition-delay: 0.3s; }
 .fade-in-delay-4 { transition-delay: 0.4s; }
-
-/* Tooltip for hover info */
-.tooltip-container { position: relative; }
-.tooltip-box {
-  position: absolute; bottom: calc(100% + 10px); left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-card);
-  border: 1px solid var(--purple-mid);
-  border-radius: 12px; padding: 1rem 1.25rem;
-  min-width: 280px; max-width: 350px;
-  opacity: 0; visibility: hidden;
-  transition: all 0.25s ease;
-  z-index: 100;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-  pointer-events: none;
-}
-.tooltip-container:hover .tooltip-box {
-  opacity: 1; visibility: visible;
-}
-.tooltip-box::after {
-  content: '';
-  position: absolute; top: 100%; left: 50%;
-  transform: translateX(-50%);
-  border: 8px solid transparent;
-  border-top-color: var(--purple-mid);
-}
 </style>
 </head>
 <body>
 
-<!-- ===== NAVIGATION ===== -->
+<!-- NAV -->
 <nav id="navbar">
   <div class="nav-inner">
     <div class="nav-brand">
-      CHINA DIB <span>TRACKER</span>
+      'MADE IN CHINA' <span>WEAPONS TRACKER</span>
     </div>
     <div class="nav-links">
-      <a href="#dib">The DIB</a>
-      <a href="#exports">Export Data</a>
-      <a href="#deals">Live Deals</a>
-      <a href="#quality">QC Tracker</a>
+      <a href="#mic">The MIC</a>
+      <a href="#exports">Exports &amp; Patterns</a>
+      <a href="#deals">Deal Tracker</a>
+      <a href="#cases">Case Studies</a>
+      <a href="#outlook">Outlook</a>
     </div>
   </div>
 </nav>
 
-<!-- ===== HERO ===== -->
+<!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-content">
-    <div class="hero-badge">Tracking 2016 &ndash; 2026</div>
+    <a href="https://takshashila.org.in/content/publications/ChinaArms-20062026.html" target="_blank" class="hero-badge" style="text-decoration:none; cursor:pointer;">Read the Full Paper Here &rarr;</a>
     <h1>
-      Mapping China's<br>
-      <span class="highlight">Defence Industrial Base</span>
+      Weapons <span class="highlight">'Made in China'</span><br>
+      Foolproof or in Muddy Waters?
     </h1>
     <p class="hero-sub">
-      A comprehensive tracker of China's defence-industrial actors, global arms exports,
-      emerging deals, and the growing record of quality control failures reported by importing states.
+      Tracking the paradox of Beijing's rise as a major arms exporter and the operational deficiencies
+      plaguing its military-industrial complex &mdash; from SOE monopolies to battlefield post-mortems.
     </p>
     <div class="hero-stats">
       <div class="hero-stat">
-        <div class="hero-stat-value">~5.8%</div>
-        <div class="hero-stat-label">Global Arms Export Share</div>
+        <div class="hero-stat-value">~600</div>
+        <div class="hero-stat-label">Tanks to 8 Countries</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-value">44</div>
-        <div class="hero-stat-label">Recipient States (2020&ndash;24)</div>
+        <div class="hero-stat-value">300+</div>
+        <div class="hero-stat-label">UCAVs to 16+ Countries</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-value">63%</div>
-        <div class="hero-stat-label">Exports to Pakistan Alone</div>
+        <div class="hero-stat-value">12K+</div>
+        <div class="hero-stat-label">Missiles to Pakistan Alone</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-value">9+</div>
-        <div class="hero-stat-label">Countries Reporting Failures</div>
+        <div class="hero-stat-value">~95</div>
+        <div class="hero-stat-label">JF-17s Exported (Only Customer)</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">4th&rarr;5th</div>
+        <div class="hero-stat-label">Exporter Rank (Passed by Germany)</div>
       </div>
     </div>
   </div>
@@ -1003,59 +906,63 @@ footer {
   </div>
 </section>
 
-<!-- ===== SECTION 1: THE DIB ===== -->
-<section id="dib">
+<!-- SECTION 1: THE MIC -->
+<section id="mic">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <div class="section-number">01 &mdash; Structure</div>
-      <h2 class="section-title">The Defence Industrial Base</h2>
+      <div class="section-number">01 &mdash; Architecture</div>
+      <h2 class="section-title">China's Military-Industrial Complex</h2>
       <p class="section-subtitle">
-        Key state-owned enterprises, Military-Civil Fusion architecture, and the platforms they produce
+        Policy scaffolding, state-owned enterprises, and the non-traditional actors driving Military-Civil Fusion
       </p>
       <div class="section-divider"></div>
     </div>
 
-    <!-- Overview + MCF Diagram -->
-    <div class="dib-overview fade-in">
-      <div class="dib-overview-text">
-        <p style="margin-bottom:1rem;">
-          China's DIB is anchored by a constellation of massive <strong>state-owned enterprises (SOEs)</strong>
-          operating under the direct oversight of the Central Military Commission (CMC) and the State Council's
-          State-owned Assets Supervision and Administration Commission (SASAC).
-        </p>
-        <p style="margin-bottom:1rem;">
-          The overarching strategy binding civilian tech and military production is <strong>Military-Civil Fusion (MCF)</strong>,
-          a whole-of-society mandate enshrined in the 13th, 14th, and 15th Five-Year Plans. MCF aims to channel
-          dual-use advances in AI, quantum computing, semiconductors, and metamaterials into PLA modernisation.
-        </p>
-        <p>
-          According to SIPRI, <strong>11 state-owned enterprises</strong> hold exclusive, permanent authorisation to
-          export conventional arms&mdash;private companies and citizens are prohibited. Four of these (NORINCO,
-          Poly Technologies, Jing'an, Xinxing) are authorised for SALW; two more (CPMIEC, ALIT) handle MANPADS.
-          Recent PLA procurement data also reveals a surge in <strong>Non-Traditional Vendors (NTVs)</strong>&mdash;private
-          firms with no formal state ownership&mdash;securing ~764 AI-related defence contracts between 2023&ndash;2024,
-          complicating Western sanctions frameworks.
-        </p>
-      </div>
-      <div class="mcf-diagram">
-        <div class="mcf-title">Military-Civil Fusion Hierarchy</div>
-        <div class="mcf-layers">
-          <div class="mcf-layer party">CCP Central Committee &amp; CMC</div>
-          <div class="mcf-connector"></div>
-          <div class="mcf-layer cmc">SASAC &amp; Equipment Development Dept.</div>
-          <div class="mcf-connector"></div>
-          <div class="mcf-layer soe">Legacy SOEs (NORINCO, AVIC, CASC, CETC, CASIC, CSSC, Poly, CATIC)</div>
-          <div class="mcf-connector"></div>
-          <div class="mcf-layer ntv">Non-Traditional Vendors (~1,560 NTVs, 75% est. after 2010)</div>
-          <div class="mcf-connector"></div>
-          <div class="mcf-layer civil">Civilian Tech Sector (Huawei, DJI, SenseTime, etc.)</div>
+    <!-- Policy Stack -->
+    <div class="fade-in">
+      <div class="policy-stack" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
+        <div class="policy-card">
+          <div class="policy-card-label">Strategy</div>
+          <div class="policy-card-title">Military-Civil Fusion &rarr; NSSC</div>
+          <div class="policy-card-desc">Whole-of-nation mobilisation for dual-use tech integration</div>
         </div>
+        <div class="policy-card">
+          <div class="policy-card-label">Legislation</div>
+          <div class="policy-card-title">Export Control + Data Security Laws</div>
+          <div class="policy-card-desc">Broad security parameters governing dual-use trade &amp; data flows</div>
+        </div>
+        <div class="policy-card">
+          <div class="policy-card-label">April 2026</div>
+          <div class="policy-card-title">Decrees 834 &amp; 835</div>
+          <div class="policy-card-desc">Supply chain security &amp; countering foreign extraterritorial jurisdiction</div>
+        </div>
+        <div class="policy-card">
+          <div class="policy-card-label">US Response</div>
+          <div class="policy-card-title">1260H List &mdash; 188 Entities</div>
+          <div class="policy-card-desc">Including Alibaba, Baidu, BYD designated as Chinese Military Companies</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MCF Hierarchy -->
+
+    <div class="mcf-diagram fade-in" style="margin-top: 3rem;">
+      <div class="mcf-title">Military-Civil Fusion Hierarchy</div>
+      <div class="mcf-layers">
+        <div class="mcf-layer party">CCP Central Committee &amp; Central Military Commission</div>
+        <div class="mcf-connector"></div>
+        <div class="mcf-layer cmc">SASAC &amp; CMC Equipment Development Dept.</div>
+        <div class="mcf-connector"></div>
+        <div class="mcf-layer soe">Legacy SOEs (NORINCO, AVIC, CASC, CASIC, CETC, CSSC, Poly, CATIC)</div>
+        <div class="mcf-connector"></div>
+        <div class="mcf-layer ntv">Non-Traditional Vendors (~75% of PLA AI contracts, 2023&ndash;24)</div>
+        <div class="mcf-connector"></div>
+        <div class="mcf-layer civil">Civilian Tech (Baidu, Alibaba, Tencent, Huawei, DJI, SenseTime)</div>
       </div>
     </div>
 
     <!-- SOE Cards -->
     <div class="soe-grid">
-      <!-- NORINCO -->
       <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">NORINCO</div>
@@ -1064,28 +971,18 @@ footer {
         <div class="soe-name">China North Industries Group Corporation</div>
         <div class="soe-chinese">中国兵器工业集团有限公司</div>
         <div class="soe-desc">
-          China's largest land systems manufacturer. Produces main battle tanks, APCs, howitzers, and small arms.
-          Primary supplier of armoured vehicles to export markets across Africa, SE Asia, and the Middle East.
+          China's largest land systems manufacturer. Dominates ground-force exports to Africa, SE Asia, and West Asia.
+          One of only four SOEs authorised to export SALW.
         </div>
         <div class="soe-products">
           <span class="soe-product-tag">VT-4 MBT</span>
           <span class="soe-product-tag">VT-5 Light Tank</span>
           <span class="soe-product-tag">VN-4 APC</span>
-          <span class="soe-product-tag">VN-22 APC</span>
           <span class="soe-product-tag">SH-15 Howitzer</span>
-          <span class="soe-product-tag">Small Arms</span>
-        </div>
-        <div class="soe-subsidiaries">
-          <div class="soe-sub-label">Key Subsidiaries</div>
-          <div class="soe-sub-list">
-            <span class="soe-sub-item">Inner Mongolia First Machinery</span>
-            <span class="soe-sub-item">China North Vehicle Research Institute</span>
-            <span class="soe-sub-item">NORINCO International</span>
-          </div>
+          <span class="soe-product-tag">SALW</span>
         </div>
       </div>
 
-      <!-- AVIC -->
       <div class="soe-card fade-in fade-in-delay-1">
         <div class="soe-card-header">
           <div class="soe-acronym">AVIC</div>
@@ -1094,116 +991,74 @@ footer {
         <div class="soe-name">Aviation Industry Corporation of China</div>
         <div class="soe-chinese">中国航空工业集团有限公司</div>
         <div class="soe-desc">
-          Dominant aerospace conglomerate producing manned and unmanned aircraft. Manufactures the J-20 stealth fighter
-          (domestic only), the JF-17 (with Pakistan), and the Wing Loong UCAV series for export.
+          Dominant aerospace conglomerate. Subsidiaries include Chengdu Aircraft (CAC) and Shenyang Aircraft.
+          Wing Loong drone series especially popular in the global market.
         </div>
         <div class="soe-products">
-          <span class="soe-product-tag">J-20 Stealth</span>
-          <span class="soe-product-tag">J-10C/CE</span>
           <span class="soe-product-tag">JF-17 Thunder</span>
+          <span class="soe-product-tag">J-10CE</span>
           <span class="soe-product-tag">Wing Loong II/III</span>
           <span class="soe-product-tag">FTC-2000G</span>
-          <span class="soe-product-tag">FC-31 Export</span>
-        </div>
-        <div class="soe-subsidiaries">
-          <div class="soe-sub-label">Key Subsidiaries</div>
-          <div class="soe-sub-list">
-            <span class="soe-sub-item">Chengdu Aircraft Corp (CAC)</span>
-            <span class="soe-sub-item">Shenyang Aircraft Corp (SAC)</span>
-            <span class="soe-sub-item">CAIG (Guizhou)</span>
-            <span class="soe-sub-item">Hongdu Aviation</span>
-          </div>
         </div>
       </div>
 
-      <!-- CASC -->
       <div class="soe-card fade-in fade-in-delay-2">
         <div class="soe-card-header">
           <div class="soe-acronym">CASC</div>
           <div class="soe-domain-tag">Missiles &amp; Space</div>
         </div>
-        <div class="soe-name">China Aerospace Science &amp; Technology Corporation</div>
+        <div class="soe-name">China Aerospace Science &amp; Technology Corp.</div>
         <div class="soe-chinese">中国航天科技集团有限公司</div>
         <div class="soe-desc">
-          Leads China's strategic missile and space programmes. Produces the Long March launch family,
-          BeiDou navigation satellites, and the CH-series "Rainbow" reconnaissance/strike drones.
+          Leads strategic missile and space programmes. CH/"Rainbow" series drones widely exported.
+          Also produces BeiDou navigation satellites and Long March launch vehicles.
         </div>
         <div class="soe-products">
-          <span class="soe-product-tag">CH-4 Rainbow</span>
+          <span class="soe-product-tag">CH-4B Rainbow</span>
           <span class="soe-product-tag">CH-5</span>
           <span class="soe-product-tag">DF-series ICBMs</span>
-          <span class="soe-product-tag">BeiDou Satellites</span>
-          <span class="soe-product-tag">Long March LVs</span>
-        </div>
-        <div class="soe-subsidiaries">
-          <div class="soe-sub-label">Key Subsidiaries</div>
-          <div class="soe-sub-list">
-            <span class="soe-sub-item">China Academy of Space Technology</span>
-            <span class="soe-sub-item">CAS(&amp;T)C Research Institutes</span>
-          </div>
+          <span class="soe-product-tag">BeiDou</span>
         </div>
       </div>
 
-      <!-- CASIC -->
       <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">CASIC</div>
           <div class="soe-domain-tag">Air Defence &amp; Cruise Missiles</div>
         </div>
-        <div class="soe-name">China Aerospace Science &amp; Industry Corporation</div>
+        <div class="soe-name">China Aerospace Science &amp; Industry Corp.</div>
         <div class="soe-chinese">中国航天科工集团有限公司</div>
         <div class="soe-desc">
-          Produces China's surface-to-air missile systems including the HQ-9 family, cruise missiles, and
-          anti-ship missiles. The HQ-9B&mdash;marketed as a Patriot equivalent&mdash;has been exported to Pakistan and Iran.
+          Responsible for SAM systems including the HQ-9 family and cruise/anti-ship missiles.
+          SAM systems exported to 12+ countries between 2015 and 2025.
         </div>
         <div class="soe-products">
           <span class="soe-product-tag">HQ-9B SAM</span>
-          <span class="soe-product-tag">HQ-16/LY-80</span>
           <span class="soe-product-tag">HQ-22/FK-3</span>
+          <span class="soe-product-tag">LY-80/HQ-16</span>
           <span class="soe-product-tag">CM-302 AShM</span>
-          <span class="soe-product-tag">YJ-21E</span>
-        </div>
-        <div class="soe-subsidiaries">
-          <div class="soe-sub-label">Key Subsidiaries</div>
-          <div class="soe-sub-list">
-            <span class="soe-sub-item">Sanjiang Space Group</span>
-            <span class="soe-sub-item">Haiying Corp</span>
-            <span class="soe-sub-item">066 Base</span>
-          </div>
         </div>
       </div>
 
-      <!-- CETC -->
       <div class="soe-card fade-in fade-in-delay-1">
         <div class="soe-card-header">
           <div class="soe-acronym">CETC</div>
           <div class="soe-domain-tag">Electronics &amp; Radar</div>
         </div>
-        <div class="soe-name">China Electronics Technology Group Corporation</div>
+        <div class="soe-name">China Electronics Technology Group Corp.</div>
         <div class="soe-chinese">中国电子科技集团有限公司</div>
         <div class="soe-desc">
-          Produces military radars, EW systems, IFF equipment, and C4ISR infrastructure. Manufactured the
-          JY-27A and JYL-1 radars whose catastrophic failure in Venezuela in January 2026 destroyed Beijing's
-          "anti-stealth" export narrative.
+          Produces military radars, EW systems, and C4ISR infrastructure. JY-27A and JYL-1 radars marketed
+          as "anti-stealth" &mdash; operationally failed in Venezuela (January 2026).
         </div>
         <div class="soe-products">
           <span class="soe-product-tag">JY-27A Radar</span>
           <span class="soe-product-tag">JYL-1 Radar</span>
           <span class="soe-product-tag">KLJ-7 AESA</span>
-          <span class="soe-product-tag">Safe City Systems</span>
-          <span class="soe-product-tag">Signal Jammers</span>
-        </div>
-        <div class="soe-subsidiaries">
-          <div class="soe-sub-label">Key Subsidiaries</div>
-          <div class="soe-sub-list">
-            <span class="soe-sub-item">CETC International</span>
-            <span class="soe-sub-item">Nanjing Research Institute</span>
-            <span class="soe-sub-item">14th &amp; 38th Research Institutes</span>
-          </div>
+          <span class="soe-product-tag">C4ISR</span>
         </div>
       </div>
 
-      <!-- CSSC -->
       <div class="soe-card fade-in fade-in-delay-2">
         <div class="soe-card-header">
           <div class="soe-acronym">CSSC</div>
@@ -1212,28 +1067,17 @@ footer {
         <div class="soe-name">China State Shipbuilding Corporation</div>
         <div class="soe-chinese">中国船舶集团有限公司</div>
         <div class="soe-desc">
-          World's largest shipbuilder by tonnage. Builds the PLA Navy's entire surface combatant and submarine
-          fleet domestically, plus export frigates, corvettes, and the Hangor-class submarines for Pakistan.
+          World's largest shipbuilder by tonnage. Builds PLA Navy fleet domestically and export frigates,
+          corvettes, and submarines for Pakistan, Bangladesh, and Thailand.
         </div>
         <div class="soe-products">
           <span class="soe-product-tag">Type 054A/P Frigates</span>
           <span class="soe-product-tag">Hangor-class Subs</span>
-          <span class="soe-product-tag">Type 055 Destroyer</span>
           <span class="soe-product-tag">S26T Submarine</span>
           <span class="soe-product-tag">F-22P Frigates</span>
         </div>
-        <div class="soe-subsidiaries">
-          <div class="soe-sub-label">Key Subsidiaries</div>
-          <div class="soe-sub-list">
-            <span class="soe-sub-item">Wuchang Shipyard</span>
-            <span class="soe-sub-item">Hudong-Zhonghua</span>
-            <span class="soe-sub-item">CSOC (Offshore International)</span>
-          </div>
-        </div>
       </div>
-    </div>
 
-      <!-- Poly Technologies -->
       <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">POLY TECH</div>
@@ -1242,57 +1086,33 @@ footer {
         <div class="soe-name">Poly Technologies Inc.</div>
         <div class="soe-chinese">保利科技有限公司</div>
         <div class="soe-desc">
-          One of China's most prolific arms trading entities and one of only 4 SOEs authorised to export
-          small arms and light weapons (SALW). Originally under PLA control, supervision transferred to
-          the State Council in 1999. Active across Africa, South Asia, the Middle East, and Latin America.
-          US-sanctioned in 2013 over alleged transfers violating the Iran/North Korea/Syria Nonproliferation Act.
+          One of only four SOEs authorised to export SALW. Originally under PLA control, transferred to State Council
+          in 1999. US-sanctioned in 2013 over nonproliferation violations.
         </div>
         <div class="soe-products">
           <span class="soe-product-tag">Assault Rifles</span>
-          <span class="soe-product-tag">Machine Guns</span>
           <span class="soe-product-tag">RPGs</span>
           <span class="soe-product-tag">Ammunition</span>
-          <span class="soe-product-tag">APCs</span>
-          <span class="soe-product-tag">Artillery Systems</span>
-        </div>
-        <div class="soe-subsidiaries">
-          <div class="soe-sub-label">Key Details</div>
-          <div class="soe-sub-list">
-            <span class="soe-sub-item">Absorbed Xin Shidai/New Era Group (2010)</span>
-            <span class="soe-sub-item">Poly Group Corporation (parent)</span>
-            <span class="soe-sub-item">1 of 11 authorised arms-export SOEs</span>
-          </div>
+          <span class="soe-product-tag">Artillery</span>
         </div>
       </div>
 
-      <!-- CATIC -->
       <div class="soe-card fade-in fade-in-delay-1">
         <div class="soe-card-header">
           <div class="soe-acronym">CATIC</div>
-          <div class="soe-domain-tag">Aerospace Export &amp; Trade</div>
+          <div class="soe-domain-tag">Aerospace Export</div>
         </div>
-        <div class="soe-name">China National Aero-Technology Import &amp; Export Corporation</div>
+        <div class="soe-name">China National Aero-Technology Import &amp; Export Corp.</div>
         <div class="soe-chinese">中国航空技术进出口有限公司</div>
         <div class="soe-desc">
-          AVIC's dedicated aerospace trading and export arm, authorised to conduct international arms transfers
-          on behalf of aviation-sector producers. Handles export sales of fighter jets, trainers, helicopters, and UAVs.
-          Implicated in transfers to Liberia during its UN arms embargo (2001&ndash;03) via Dutch intermediary
-          Gus van Kouwenhoven.
+          AVIC's dedicated trading arm for international fighter jet, UAV, and helicopter sales.
+          Implicated in transfers to Liberia during its UN arms embargo.
         </div>
         <div class="soe-products">
-          <span class="soe-product-tag">Fighter Jet Exports</span>
-          <span class="soe-product-tag">Trainer Aircraft</span>
+          <span class="soe-product-tag">Fighter Exports</span>
+          <span class="soe-product-tag">UAV Sales</span>
           <span class="soe-product-tag">Helicopter Sales</span>
-          <span class="soe-product-tag">UAV Exports</span>
           <span class="soe-product-tag">Aero-Engine Parts</span>
-        </div>
-        <div class="soe-subsidiaries">
-          <div class="soe-sub-label">Key Details</div>
-          <div class="soe-sub-list">
-            <span class="soe-sub-item">Subsidiary of AVIC</span>
-            <span class="soe-sub-item">1 of 11 authorised arms-export SOEs</span>
-            <span class="soe-sub-item">Key exhibitor at IDEX, AAD, Airshow China</span>
-          </div>
         </div>
       </div>
     </div>
@@ -1300,7 +1120,7 @@ footer {
     <!-- Platform Carousel -->
     <div class="platform-carousel-section fade-in">
       <div class="platform-carousel-title">Key Export Platforms</div>
-      <div class="platform-carousel-sub">Scroll or use arrows to browse major Chinese defence export systems</div>
+      <div class="platform-carousel-sub">Major systems exported between 2015 and 2025</div>
       <div class="carousel-wrapper">
         <div class="carousel-track" id="platformCarousel">
           <div class="platform-card">
@@ -1308,21 +1128,10 @@ footer {
             <div class="platform-card-name">JF-17 Thunder</div>
             <div class="platform-card-type">Light Multi-Role Combat Aircraft</div>
             <div class="platform-card-specs">
-              <div class="platform-spec"><strong>~$25-30M</strong>Per unit</div>
-              <div class="platform-spec"><strong>150+</strong>In PAF service</div>
-              <div class="platform-spec"><strong>CAC + PAC</strong>Co-produced</div>
+              <div class="platform-spec"><strong>~$25M</strong>Per unit</div>
+              <div class="platform-spec"><strong>~95</strong>To Pakistan (only buyer)</div>
               <div class="platform-spec"><strong>Block I/II/III</strong>Variants</div>
-            </div>
-          </div>
-          <div class="platform-card">
-            <div class="platform-card-domain">Fighter Jet</div>
-            <div class="platform-card-name">J-10CE</div>
-            <div class="platform-card-type">4th-Gen Multi-Role Fighter</div>
-            <div class="platform-card-specs">
-              <div class="platform-spec"><strong>~$50M</strong>Per unit</div>
-              <div class="platform-spec"><strong>20-36</strong>Delivered to Pak</div>
-              <div class="platform-spec"><strong>CAC</strong>Manufacturer</div>
-              <div class="platform-spec"><strong>Export</strong>Variant of J-10C</div>
+              <div class="platform-spec"><strong>CAC + PAC</strong>Co-produced</div>
             </div>
           </div>
           <div class="platform-card">
@@ -1330,49 +1139,49 @@ footer {
             <div class="platform-card-name">VT-4 (MBT-3000)</div>
             <div class="platform-card-type">3rd-Gen Main Battle Tank</div>
             <div class="platform-card-specs">
-              <div class="platform-spec"><strong>~$5-6M</strong>Per unit</div>
+              <div class="platform-spec"><strong>~600 sold</strong>To 8 countries</div>
               <div class="platform-spec"><strong>NORINCO</strong>Manufacturer</div>
               <div class="platform-spec"><strong>125mm</strong>Smoothbore gun</div>
-              <div class="platform-spec"><strong>Nigeria, Thai, Pak</strong>Operators</div>
+              <div class="platform-spec"><strong>Pak, Thai, Nigeria</strong>Operators</div>
             </div>
           </div>
           <div class="platform-card">
             <div class="platform-card-domain">UCAV</div>
-            <div class="platform-card-name">Wing Loong II</div>
-            <div class="platform-card-type">Medium-Altitude Long-Endurance UCAV</div>
+            <div class="platform-card-name">Wing Loong II / III</div>
+            <div class="platform-card-type">MALE UCAV</div>
             <div class="platform-card-specs">
+              <div class="platform-spec"><strong>300+ sold</strong>To 16+ countries</div>
+              <div class="platform-spec"><strong>AVIC</strong>Manufacturer</div>
               <div class="platform-spec"><strong>~$2M</strong>Per unit</div>
-              <div class="platform-spec"><strong>CAIG/AVIC</strong>Manufacturer</div>
-              <div class="platform-spec"><strong>32hr</strong>Endurance</div>
-              <div class="platform-spec"><strong>UAE, Saudi, Pak</strong>Operators</div>
+              <div class="platform-spec"><strong>Saudi, Pak, UAE</strong>Top buyers</div>
             </div>
           </div>
           <div class="platform-card">
             <div class="platform-card-domain">ISR Drone</div>
             <div class="platform-card-name">CH-4B Rainbow</div>
-            <div class="platform-card-type">Medium-Altitude ISR/Strike Drone</div>
+            <div class="platform-card-type">ISR/Strike Drone</div>
             <div class="platform-card-specs">
               <div class="platform-spec"><strong>~$4M</strong>Per unit</div>
               <div class="platform-spec"><strong>CASC</strong>Manufacturer</div>
-              <div class="platform-spec"><strong>30hr</strong>Endurance</div>
-              <div class="platform-spec"><strong>Iraq, Jordan, Pak</strong>Operators</div>
+              <div class="platform-spec"><strong>40% crash rate</strong>Iraq</div>
+              <div class="platform-spec"><strong>Iraq, Jordan, Algeria</strong>Operators</div>
             </div>
           </div>
           <div class="platform-card">
             <div class="platform-card-domain">Air Defence</div>
             <div class="platform-card-name">HQ-9B / FD-2000B</div>
-            <div class="platform-card-type">Long-Range Surface-to-Air Missile</div>
+            <div class="platform-card-type">Long-Range SAM</div>
             <div class="platform-card-specs">
               <div class="platform-spec"><strong>$100M+</strong>Per battery</div>
               <div class="platform-spec"><strong>CASIC</strong>Manufacturer</div>
-              <div class="platform-spec"><strong>260km</strong>Range claimed</div>
-              <div class="platform-spec"><strong>Pak, Iran</strong>Operators</div>
+              <div class="platform-spec"><strong>12+ countries</strong>SAM exports</div>
+              <div class="platform-spec"><strong>Failed</strong>Iran &amp; Pakistan ops</div>
             </div>
           </div>
           <div class="platform-card">
             <div class="platform-card-domain">Submarine</div>
             <div class="platform-card-name">Hangor-class (Type 041)</div>
-            <div class="platform-card-type">Diesel-Electric Attack Submarine</div>
+            <div class="platform-card-type">Diesel-Electric Attack Sub</div>
             <div class="platform-card-specs">
               <div class="platform-spec"><strong>~$5B</strong>For 8 units</div>
               <div class="platform-spec"><strong>CSSC</strong>Manufacturer</div>
@@ -1387,19 +1196,19 @@ footer {
             <div class="platform-card-specs">
               <div class="platform-spec"><strong>~$350M</strong>Per unit</div>
               <div class="platform-spec"><strong>Hudong-Zhonghua</strong>Yard</div>
-              <div class="platform-spec"><strong>4 units</strong>Commissioned</div>
-              <div class="platform-spec"><strong>Pakistan</strong>Tughril-class</div>
+              <div class="platform-spec"><strong>4 units</strong>To Pakistan</div>
+              <div class="platform-spec"><strong>~15 ships</strong>To Bangladesh</div>
             </div>
           </div>
           <div class="platform-card">
             <div class="platform-card-domain">Radar</div>
             <div class="platform-card-name">JY-27A</div>
-            <div class="platform-card-type">Long-Range Air Surveillance Radar</div>
+            <div class="platform-card-type">Long-Range Surveillance Radar</div>
             <div class="platform-card-specs">
               <div class="platform-spec"><strong>CETC</strong>Manufacturer</div>
-              <div class="platform-spec"><strong>400km</strong>Range claimed</div>
-              <div class="platform-spec"><strong>"Anti-stealth"</strong>Marketed as</div>
-              <div class="platform-spec"><strong>Venezuela</strong>Failed in combat</div>
+              <div class="platform-spec"><strong>400km</strong>Range (claimed)</div>
+              <div class="platform-spec"><strong>"Anti-stealth"</strong>Marketing</div>
+              <div class="platform-spec"><strong>Blind in combat</strong>Venezuela 2026</div>
             </div>
           </div>
         </div>
@@ -1412,401 +1221,119 @@ footer {
   </div>
 </section>
 
-<!-- ===== SECTION 2: EXPORT DATA ===== -->
+<!-- SECTION 2: EXPORTS & PATTERNS -->
 <section id="exports">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <div class="section-number">02 &mdash; Exports</div>
-      <h2 class="section-title">Global Export Footprint</h2>
+      <div class="section-number">02 &mdash; Numbers &amp; Patterns</div>
+      <h2 class="section-title">The Export Footprint</h2>
       <p class="section-subtitle">
-        SIPRI data on China's arms transfers, regional breakdowns, and country-level import profiles (2016&ndash;2026)
+        SIPRI TIV data on scale, clientele dependency, and the geographic concentration of China's arms trade (2015&ndash;2025)
       </p>
       <div class="section-divider"></div>
     </div>
 
-    <!-- Key Stats -->
-    <div class="export-key-stats fade-in">
-      <div class="key-stat-card">
-        <div class="key-stat-icon">📊</div>
-        <div class="key-stat-value">4th</div>
-        <div class="key-stat-label">Largest Global Exporter</div>
+    <!-- Headline Stats -->
+    <div class="headline-stats fade-in">
+      <div class="headline-stat">
+        <div class="headline-stat-value">~600</div>
+        <div class="headline-stat-label">Tanks &bull; 8 Countries</div>
       </div>
-      <div class="key-stat-card">
-        <div class="key-stat-icon">🌏</div>
-        <div class="key-stat-value">77%</div>
-        <div class="key-stat-label">To Asia &amp; Oceania</div>
+      <div class="headline-stat">
+        <div class="headline-stat-value">300+</div>
+        <div class="headline-stat-label">UCAVs &bull; 16+ Countries</div>
       </div>
-      <div class="key-stat-card">
-        <div class="key-stat-icon">📉</div>
-        <div class="key-stat-value">-5.4%</div>
-        <div class="key-stat-label">Change (2015-19 to 2020-24)</div>
+      <div class="headline-stat">
+        <div class="headline-stat-value">12K+</div>
+        <div class="headline-stat-label">Missiles &bull; Pakistan Alone</div>
       </div>
-      <div class="key-stat-card">
-        <div class="key-stat-icon">🚫</div>
-        <div class="key-stat-value">0</div>
-        <div class="key-stat-label">Human Rights Conditions</div>
+      <div class="headline-stat">
+        <div class="headline-stat-value">~28</div>
+        <div class="headline-stat-label">Ships &bull; Bangladesh &amp; Pak</div>
+      </div>
+      <div class="headline-stat">
+        <div class="headline-stat-value">12+</div>
+        <div class="headline-stat-label">Countries &bull; SAM Systems</div>
       </div>
     </div>
 
-    <!-- Charts Row -->
+    <!-- Clientele Dependency -->
+    <div class="clientele-section fade-in">
+      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.3rem;">Deeply Dependent Clientele (2025)</h3>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">
+        Percentage of each country's total arms imports basket sourced from China
+      </p>
+      <div class="clientele-grid">
+        <div class="clientele-card">
+          <div class="clientele-flag">🇵🇰</div>
+          <div class="clientele-name">Pakistan</div>
+          <div class="clientele-pct">80%</div>
+          <div class="clientele-label">of imports from China</div>
+          <div class="clientele-bar"><div class="clientele-bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="clientele-card">
+          <div class="clientele-flag">🇷🇸</div>
+          <div class="clientele-name">Serbia</div>
+          <div class="clientele-pct">61%</div>
+          <div class="clientele-label">of imports from China</div>
+          <div class="clientele-bar"><div class="clientele-bar-fill" style="width:61%"></div></div>
+        </div>
+        <div class="clientele-card">
+          <div class="clientele-flag">🇹🇭</div>
+          <div class="clientele-name">Thailand</div>
+          <div class="clientele-pct">49%</div>
+          <div class="clientele-label">of imports from China</div>
+          <div class="clientele-bar"><div class="clientele-bar-fill" style="width:49%"></div></div>
+        </div>
+        <div class="clientele-card">
+          <div class="clientele-flag">🇩🇿</div>
+          <div class="clientele-name">Algeria</div>
+          <div class="clientele-pct">27%</div>
+          <div class="clientele-label">of imports from China</div>
+          <div class="clientele-bar"><div class="clientele-bar-fill" style="width:27%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
     <div class="export-charts fade-in">
       <div class="chart-box">
-        <div class="chart-box-title">China's Global Arms Export Share Over Time</div>
-        <div class="chart-box-sub">SIPRI 5-year rolling averages, percentage of global arms exports</div>
+        <div class="chart-box-title">Global Arms Export Share Over Time</div>
+        <div class="chart-box-sub">SIPRI 5-year rolling averages (%)</div>
         <div class="chart-container">
           <canvas id="exportShareChart" height="280"></canvas>
         </div>
       </div>
       <div class="chart-box">
         <div class="chart-box-title">Regional Distribution (2020&ndash;24)</div>
-        <div class="chart-box-sub">Where Chinese arms exports go, by region</div>
+        <div class="chart-box-sub">Where Chinese arms exports go</div>
         <div class="chart-container">
           <canvas id="regionalChart" height="280"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- Country Profiles -->
-    <div class="fade-in">
-      <div class="country-profiles-title">Importer Country Profiles</div>
-      <div class="country-profiles-sub">
-        Key recipients of Chinese defence exports. Click cards for detail. Ordered by share of China's total exports.
-      </div>
-    </div>
-
-    <div class="country-grid">
-      <!-- Pakistan -->
-      <div class="country-card fade-in">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇵🇰</div>
-            <div>
-              <div class="country-name">Pakistan</div>
-              <div class="country-region">South Asia</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">63%</div>
-            <div class="country-share-label">of China's exports</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">JF-17 Thunder</span>
-            <span class="system-tag">J-10CE</span>
-            <span class="system-tag">HQ-9P SAM</span>
-            <span class="system-tag">Type 054A/P</span>
-            <span class="system-tag">Hangor Subs</span>
-            <span class="system-tag">VT-4 MBT</span>
-            <span class="system-tag">Wing Loong II</span>
-            <span class="system-tag">Z-10ME</span>
-          </div>
-          <div class="country-detail">
-            Beijing's single largest defence client. China supplied 81% of Pakistan's arms imports in 2020&ndash;24
-            (up from 74% in 2015&ndash;19). Relationship spans co-production (JF-17 at PAC Kamra), technology transfer
-            (Hangor ToT at Karachi Shipyard), and dual-use infrastructure (BeiDou access, Huawei Safe City, CPEC digital corridor).
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot issues"></span>
-            F-22P frigate defects &bull; JF-17 radar issues &bull; RD-93 dependency
-          </div>
-          <div class="country-value">~$15B+ cumulative</div>
+    <!-- New Charts: Tank & UCAV exports -->
+    <div class="export-charts fade-in" style="margin-top:0;">
+      <div class="chart-box">
+        <div class="chart-box-title">Tank Exports by Buyer (2015&ndash;25)</div>
+        <div class="chart-box-sub">~600 tanks across all types (VT-4, Type-90-2M, VT-5, ZTD-05)</div>
+        <div class="chart-container">
+          <canvas id="tankChart" height="260"></canvas>
         </div>
       </div>
-
-      <!-- Bangladesh -->
-      <div class="country-card fade-in fade-in-delay-1">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇧🇩</div>
-            <div>
-              <div class="country-name">Bangladesh</div>
-              <div class="country-region">South Asia</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">~10%</div>
-            <div class="country-share-label">of China's exports</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">Type 035 Submarines</span>
-            <span class="system-tag">F-7 Jets</span>
-            <span class="system-tag">K-8W Trainers</span>
-            <span class="system-tag">Frigates</span>
-            <span class="system-tag">APCs</span>
-          </div>
-          <div class="country-detail">
-            Historically one of China's top 3 defence customers. Dhaka has procured submarines, frigates,
-            trainer jets, and armoured vehicles. Part of Beijing's strategic encirclement calculus around India.
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot active"></span>
-            Active procurement relationship
-          </div>
-          <div class="country-value">Multi-billion</div>
-        </div>
-      </div>
-
-      <!-- Myanmar -->
-      <div class="country-card fade-in fade-in-delay-2">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇲🇲</div>
-            <div>
-              <div class="country-name">Myanmar</div>
-              <div class="country-region">Southeast Asia</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">~4%</div>
-            <div class="country-share-label">of China's exports</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">JF-17 Thunder</span>
-            <span class="system-tag">FTC-2000G</span>
-            <span class="system-tag">K-8W Trainer</span>
-            <span class="system-tag">APCs</span>
-          </div>
-          <div class="country-detail">
-            Myanmar's junta grounded most of its JF-17 fleet in late 2022 due to structural cracks and
-            radar/BVR malfunctions. Pakistani technicians were secretly flown to Pathein to attempt repairs.
-            FTC-2000Gs shot down during civil war ops due to poor performance.
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot critical"></span>
-            Fleet grounded &bull; Multiple shoot-downs
-          </div>
-          <div class="country-value">Hundreds of millions</div>
-        </div>
-      </div>
-
-      <!-- Saudi Arabia -->
-      <div class="country-card fade-in">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇸🇦</div>
-            <div>
-              <div class="country-name">Saudi Arabia</div>
-              <div class="country-region">Middle East</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">Growing</div>
-            <div class="country-share-label">Strategic pivot</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">Wing Loong II</span>
-            <span class="system-tag">Wing Loong III (2026)</span>
-            <span class="system-tag">CH-4B Rainbow</span>
-          </div>
-          <div class="country-detail">
-            In March 2026, Riyadh signed a landmark $5B deal with AVIC/GAMI for a Wing Loong-3 factory in Jeddah
-            (48 units/year). Driven by strategic pricing (1/4 the cost of MQ-9B Reaper) and Vision 2030
-            tech-transfer goals, despite documented drone losses to Houthi fire.
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot issues"></span>
-            12+ drones lost to Houthi fire
-          </div>
-          <div class="country-value">$5B+ (WL-3 deal alone)</div>
-        </div>
-      </div>
-
-      <!-- Thailand -->
-      <div class="country-card fade-in fade-in-delay-1">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇹🇭</div>
-            <div>
-              <div class="country-name">Thailand</div>
-              <div class="country-region">Southeast Asia</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">~4.7%</div>
-            <div class="country-share-label">of China's exports</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">VT-4 MBT</span>
-            <span class="system-tag">S26T Submarine</span>
-          </div>
-          <div class="country-detail">
-            A cautionary tale. Thailand's Type 69-IIs were so unreliable they were dumped as artificial reefs. The VT-4
-            suffered a catastrophic gun barrel explosion in 2025. The S26T submarine saga dragged for years after China
-            couldn't supply the contracted German MTU engine, forcing Thailand to accept an unproven Chinese substitute.
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot critical"></span>
-            Barrel explosion &bull; Sub engine substitution
-          </div>
-          <div class="country-value">13.5B baht (sub alone)</div>
-        </div>
-      </div>
-
-      <!-- Nigeria -->
-      <div class="country-card fade-in fade-in-delay-2">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇳🇬</div>
-            <div>
-              <div class="country-name">Nigeria</div>
-              <div class="country-region">West Africa</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">Notable</div>
-            <div class="country-share-label">Largest in W. Africa</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">VT-4 MBT</span>
-            <span class="system-tag">F-7 Jets</span>
-            <span class="system-tag">APCs</span>
-          </div>
-          <div class="country-detail">
-            VT-4 tanks required 30-minute turret cooldowns, had autoloader failures, and were destroyed by
-            Boko Haram RPGs ("tin cans"). 3 F-7s crashed; 7 of 9 remaining returned to China. Nigeria
-            pivoted to Russian T-90s. China supplied 26% of West African arms in 2020&ndash;24.
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot critical"></span>
-            Tanks destroyed &bull; Jets returned &bull; Pivoting away
-          </div>
-          <div class="country-value">Hundreds of millions</div>
-        </div>
-      </div>
-
-      <!-- Venezuela -->
-      <div class="country-card fade-in">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇻🇪</div>
-            <div>
-              <div class="country-name">Venezuela</div>
-              <div class="country-region">Latin America</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">Niche</div>
-            <div class="country-share-label">Strategic presence</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">JY-27A Radar</span>
-            <span class="system-tag">JYL-1 Radar</span>
-          </div>
-          <div class="country-detail">
-            $2B+ invested in Chinese/Russian air defences. During Operation Absolute Resolve (Jan 2026),
-            US EW instantly blinded all CETC radar systems. "Anti-stealth" claims never materialised.
-            60%+ of radar network was already non-operational due to spare parts collapse before the raid.
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot critical"></span>
-            Total air defence collapse &bull; Maduro captured
-          </div>
-          <div class="country-value">$2B+ IADS investment</div>
-        </div>
-      </div>
-
-      <!-- Iran -->
-      <div class="country-card fade-in fade-in-delay-1">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇮🇷</div>
-            <div>
-              <div class="country-name">Iran</div>
-              <div class="country-region">Middle East</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">Recent</div>
-            <div class="country-share-label">Post-2025 acquisition</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">HQ-9B SAM</span>
-            <span class="system-tag">CM-302 AShM</span>
-            <span class="system-tag">YJ-21E</span>
-          </div>
-          <div class="country-detail">
-            Acquired HQ-9B in July 2025 specifically to protect nuclear sites. During April 2026 US-Israeli
-            strikes, the system suffered catastrophic collapse under saturation&mdash;failing to intercept
-            cruise missiles and stealth aircraft. 550+ civilian casualties, confirmed Natanz damage.
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot critical"></span>
-            HQ-9B systemic failure &bull; Nuclear sites breached
-          </div>
-          <div class="country-value">Classified</div>
-        </div>
-      </div>
-
-      <!-- Serbia -->
-      <div class="country-card fade-in fade-in-delay-2">
-        <div class="country-card-header">
-          <div class="country-info">
-            <div class="country-flag">🇷🇸</div>
-            <div>
-              <div class="country-name">Serbia</div>
-              <div class="country-region">Europe</div>
-            </div>
-          </div>
-          <div class="country-share">
-            <div class="country-share-value">6.8%</div>
-            <div class="country-share-label">of China's exports</div>
-          </div>
-        </div>
-        <div class="country-card-body">
-          <div class="country-systems">
-            <span class="system-tag">FK-3 / HQ-22</span>
-            <span class="system-tag">CH-92A UAV</span>
-          </div>
-          <div class="country-detail">
-            China's primary defence partner in Europe. Serbia acquired the FK-3 (export HQ-22) SAM system,
-            becoming the only European state with Chinese air defence. Also procured CH-92A armed drones.
-            Reflects Beijing's strategic bridgehead into the European theatre.
-          </div>
-        </div>
-        <div class="country-card-footer">
-          <div class="country-status">
-            <span class="status-dot active"></span>
-            Only European Chinese arms customer
-          </div>
-          <div class="country-value">Est. $500M+</div>
+      <div class="chart-box">
+        <div class="chart-box-title">UCAV Exports by Buyer (2015&ndash;25)</div>
+        <div class="chart-box-sub">300+ combat drones to 16+ countries</div>
+        <div class="chart-container">
+          <canvas id="ucavChart" height="260"></canvas>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== SECTION 2.5: LIVE DEALS ===== -->
+<!-- SECTION 2.5: DEAL TRACKER -->
 <section id="deals">
   <div class="section-inner">
     <div class="deals-header fade-in">
@@ -1817,88 +1344,75 @@ footer {
         </div>
         <h2 class="deals-title">Latest Defence Industrial Deals</h2>
       </div>
-      <div class="deals-auto-label">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
-          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-        </svg>
-        Auto-updates when new deals emerge
-      </div>
     </div>
 
     <div class="deals-carousel" id="dealsCarousel">
-      <!-- Deal 1: Hangor Submarines -->
       <div class="deal-card fade-in">
         <div class="deal-card-accent"></div>
         <div class="deal-card-content">
           <div class="deal-date">April 2024 &ndash; December 2025</div>
-          <div class="deal-headline">Hangor-Class Submarine Programme: China Launches 4 Boats for Pakistan Navy</div>
+          <div class="deal-headline">Hangor-Class Submarine Programme for Pakistan Navy</div>
           <div class="deal-parties">
-            <span class="deal-party seller">🇨🇳 CSSC / Wuchang Shipyard</span>
+            <span class="deal-party seller">🇨🇳 CSSC / Wuchang</span>
             <span class="deal-party buyer">🇵🇰 Pakistan Navy</span>
           </div>
           <div class="deal-desc">
-            Four Type 041-variant diesel-electric submarines launched at Wuchang Shipyard in Wuhan between
-            April 2024 and December 2025, currently undergoing sea trials. Four additional boats to be assembled
-            at Karachi Shipyard under Transfer of Technology (ToT). Pakistan's single largest defence procurement programme.
+            Four Type 041-variant diesel-electric submarines launched at Wuchang Shipyard; four more
+            to be assembled at Karachi under ToT. Pakistan's largest defence procurement programme.
           </div>
           <div class="deal-meta">
             <div>
               <div class="deal-value">~$5 Billion</div>
-              <div class="deal-value-label">Estimated for 8 submarines</div>
+              <div class="deal-value-label">8 submarines total</div>
             </div>
             <div class="deal-type-tag">Co-Production + ToT</div>
           </div>
         </div>
       </div>
 
-      <!-- Deal 2: AVIC-GAMI Wing Loong-3 -->
       <div class="deal-card fade-in fade-in-delay-1">
         <div class="deal-card-accent"></div>
         <div class="deal-card-content">
           <div class="deal-date">March 2026</div>
-          <div class="deal-headline">Saudi Arabia Signs $5B AVIC-GAMI Deal for Wing Loong-3 Factory in Jeddah</div>
+          <div class="deal-headline">AVIC-GAMI Wing Loong-3 Factory in Jeddah</div>
           <div class="deal-parties">
             <span class="deal-party seller">🇨🇳 AVIC</span>
             <span class="deal-party buyer">🇸🇦 GAMI / Saudi Arabia</span>
           </div>
           <div class="deal-desc">
-            Landmark agreement to establish a manufacturing assembly line in the Red Sea city of Jeddah,
-            capable of producing 48 Wing Loong-3 UCAVs annually. The WL-3 boasts 40-hour endurance,
-            10,000 km range, and enhanced desert dust protection. Costs ~25% of the US MQ-9B Reaper.
-            A milestone for Vision 2030 defence localisation.
+            Landmark agreement for a manufacturing line producing 48 Wing Loong-3 UCAVs annually.
+            Costs ~25% of the US MQ-9B Reaper. A Vision 2030 defence localisation milestone.
           </div>
           <div class="deal-meta">
             <div>
               <div class="deal-value">$5 Billion</div>
-              <div class="deal-value-label">Joint production venture</div>
+              <div class="deal-value-label">Joint production</div>
             </div>
             <div class="deal-type-tag">Joint Production</div>
           </div>
         </div>
       </div>
 
-      <!-- Deal 3: Thailand S26T Submarine Saga -->
       <div class="deal-card fade-in fade-in-delay-2">
         <div class="deal-card-accent"></div>
         <div class="deal-card-content">
           <div class="deal-date">August 2025</div>
-          <div class="deal-headline">Thailand Capitulates: Accepts Chinese CHD620 Engine for Stalled S26T Submarine</div>
+          <div class="deal-headline">Thailand Accepts Chinese Engine for Stalled S26T Submarine</div>
           <div class="deal-parties">
             <span class="deal-party seller">🇨🇳 CSOC</span>
             <span class="deal-party buyer">🇹🇭 Royal Thai Navy</span>
           </div>
           <div class="deal-desc">
-            After years of stalled negotiations over the EU-embargoed German MTU396 engine, Thailand's cabinet
-            signed a revised contract accepting the unproven Chinese CHD620 substitute. Delivery extended
-            by 1,217 days to late 2028. China had offered to sell the half-built sub to Indonesia as leverage.
-            A case study in coercive defence diplomacy.
+            After years of stalled negotiations over the EU-embargoed German MTU396 engine, Thailand accepted
+            the unproven CHD620 substitute. Delivery extended by 1,217 days. China offered to sell the
+            half-built sub to Indonesia as leverage.
           </div>
           <div class="deal-meta">
             <div>
               <div class="deal-value">13.5B Baht</div>
-              <div class="deal-value-label">~$390M revised contract</div>
+              <div class="deal-value-label">~$402M per sub</div>
             </div>
-            <div class="deal-type-tag">Revised G2G Contract</div>
+            <div class="deal-type-tag">Revised G2G</div>
           </div>
         </div>
       </div>
@@ -1906,350 +1420,243 @@ footer {
   </div>
 </section>
 
-<!-- ===== SECTION 3: QC TRACKER ===== -->
-<section id="quality">
+<!-- SECTION 3: CASE STUDIES -->
+<section id="cases">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <div class="section-number">03 &mdash; Quality</div>
-      <h2 class="section-title">Quality Control Failure Tracker</h2>
+      <div class="section-number">03 &mdash; Operational Realities</div>
+      <h2 class="section-title">Case Studies &amp; Battlefield Post-Mortems</h2>
       <p class="section-subtitle">
-        Documented battlefield failures, consumer complaints, and systemic defects reported by importing states
+        Training and combat deployment reveal genuine issues &mdash; from mechanical failures to absent after-sales support
       </p>
       <div class="section-divider"></div>
     </div>
 
-    <!-- Intro + Score -->
-    <div class="qc-intro fade-in">
-      <div class="qc-intro-text">
-        <p style="margin-bottom:1rem;">
-          A widening gap has emerged between the theoretical capabilities of Chinese military hardware and its
-          operational reality under combat stress. From the collapse of Venezuelan air defences in January 2026,
-          to the HQ-9B debacle in Iran, to chronic armoured vehicle failures in Africa&mdash;the Chinese defence export
-          portfolio is increasingly characterised by critical technical failures and absent after-sales support.
-        </p>
-        <p>
-          Analysts attribute this to a DIB fundamentally reliant on <strong>reverse engineering</strong>&mdash;capable of
-          replicating exterior architecture but unable to master the metallurgy, materials science, and software
-          integration required for extreme operational stress. The "after-sales vacuum" (no lifecycle support,
-          no maintenance logistics, no spare parts) accelerates platform degradation across all theatres.
-        </p>
-      </div>
-      <div class="qc-score-card">
-        <div class="qc-score-label">Documented Failure Incidents</div>
-        <div class="qc-score-value">15+</div>
-        <div class="qc-score-sub">Across 9 countries, 2016&ndash;2026</div>
-      </div>
-    </div>
-
-    <!-- QC Incident Cards -->
-    <div class="qc-grid">
-      <!-- Venezuela -->
-      <div class="qc-card fade-in">
-        <div class="qc-card-severity critical"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇻🇪</span>
-              <div>
-                <div class="qc-card-nation">Venezuela</div>
-                <div class="qc-card-year">January 2026</div>
+    <!-- SE ASIA -->
+    <div class="region-group fade-in">
+      <div class="region-label">3.1 &mdash; Southeast Asia</div>
+      <div class="case-grid">
+        <div class="case-card">
+          <div class="case-card-severity critical"></div>
+          <div class="case-card-content">
+            <div class="case-card-top">
+              <div class="case-card-country">
+                <span class="case-card-flag">🇹🇭</span>
+                <div><div class="case-card-nation">Thailand</div><div class="case-card-year">December 2025</div></div>
+              </div>
+              <span class="severity-badge critical">Critical</span>
+            </div>
+            <div class="case-card-headline">VT-4 Gun Barrel Explosion Near Cambodia Border</div>
+            <div class="case-card-platform">VT-4 MBT &bull; NORINCO</div>
+            <div class="case-card-desc">
+              During a live-fire exercise, a 125mm gun barrel exploded while firing HE ammunition. All three crew
+              severely wounded. Thai tank crews also report melting barrels past "safe limits" and underperforming
+              V12 diesel engines. Cambodia has damaged three Thai VT-4s in border clashes.
+            </div>
+            <div class="case-card-complaint">
+              <div class="complaint-label">History</div>
+              <div class="complaint-text">
+                Thailand's 1970s Type 69 MBTs sat unused for decades, then were dumped into the ocean as artificial reefs.
+                The Thai Ordnance Department attributes the 2025 explosion to "thermal stress."
               </div>
             </div>
-            <span class="qc-severity-badge critical">Critical</span>
           </div>
-          <div class="qc-card-headline">Total Radar Blindness During US Operation Absolute Resolve</div>
-          <div class="qc-card-platform">JY-27A &amp; JYL-1 Radars &bull; CETC</div>
-          <div class="qc-card-desc">
-            US multi-spectral EW barrage instantly overwhelmed Chinese radar screens. The "anti-stealth"
-            radars failed to detect incoming fighters or special ops helicopters flying directly into Caracas.
-            Cascading failure collapsed the entire integrated air defence network.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              60%+ of radar network was already non-operational before the attack due to years of spare parts shortages.
-              Venezuelan crews relied on "archaeological-style" patchwork repairs. Chinese contractors never established
-              adequate after-sales supply chains.
-            </div>
-          </div>
-          <div class="qc-card-source">📰 IPDefenseForum, Newsweek, Zona Militar</div>
         </div>
-      </div>
 
-      <!-- Iran -->
-      <div class="qc-card fade-in fade-in-delay-1">
-        <div class="qc-card-severity critical"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇮🇷</span>
-              <div>
-                <div class="qc-card-nation">Iran</div>
-                <div class="qc-card-year">April 2026</div>
+        <div class="case-card">
+          <div class="case-card-severity high"></div>
+          <div class="case-card-content">
+            <div class="case-card-top">
+              <div class="case-card-country">
+                <span class="case-card-flag">🇲🇲</span>
+                <div><div class="case-card-nation">Myanmar</div><div class="case-card-year">Nov 2022 &ndash; 2025</div></div>
+              </div>
+              <span class="severity-badge high">High</span>
+            </div>
+            <div class="case-card-headline">JF-17 Fleet Grounded; FTC-2000Gs Shot Down</div>
+            <div class="case-card-platform">JF-17, FTC-2000G &bull; AVIC</div>
+            <div class="case-card-desc">
+              Majority of JF-17 fleet grounded due to structural airframe cracks, CETC KLJ-7A radar failures,
+              and inability to perform BVR targeting. Pakistani technicians secretly deployed to Pathein airbase.
+              Two FTC-2000Gs confirmed shot down &mdash; one by a Chinese-made FN-6 MANPAD, ironically.
+            </div>
+            <div class="case-card-complaint">
+              <div class="complaint-label">Systemic Issue</div>
+              <div class="complaint-text">
+                Myanmar lacks technical expertise for repairs and cannot import Western spares due to sanctions.
+                Radar resolution-cell issues with KLJ-7/7A affect situational awareness in dense combat environments.
               </div>
             </div>
-            <span class="qc-severity-badge critical">Critical</span>
           </div>
-          <div class="qc-card-headline">HQ-9B Systemic Collapse Under US-Israeli Saturation Strikes</div>
-          <div class="qc-card-platform">HQ-9B SAM &bull; CASIC</div>
-          <div class="qc-card-desc">
-            Acquired just 9 months prior to protect nuclear sites, the HQ-9B repeatedly failed to intercept
-            advanced stealth aircraft and precision cruise missiles. Fatal vulnerabilities in radar resilience,
-            multi-layer integration, and processing under Western EW.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              Marketed as capable of engaging 8 simultaneous targets from 100 tracked, with 260 km range.
-              None of these specifications materialised under real combat conditions. Natanz nuclear site
-              suffered confirmed damage. 550+ civilian casualties.
-            </div>
-          </div>
-          <div class="qc-card-source">📰 India Today, Global Defense Corp, Organiser</div>
-        </div>
-      </div>
-
-      <!-- Nigeria VT-4 -->
-      <div class="qc-card fade-in fade-in-delay-2">
-        <div class="qc-card-severity critical"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇳🇬</span>
-              <div>
-                <div class="qc-card-nation">Nigeria</div>
-                <div class="qc-card-year">2023&ndash;2025</div>
-              </div>
-            </div>
-            <span class="qc-severity-badge critical">Critical</span>
-          </div>
-          <div class="qc-card-headline">"Tin Cans": VT-4 Tanks Destroyed by Boko Haram RPGs</div>
-          <div class="qc-card-platform">VT-4 MBT &bull; NORINCO</div>
-          <div class="qc-card-desc">
-            VT-4 turrets required 30-minute cooldowns between engagements due to severe thermal management
-            issues. Autoloader mechanisms suffered pervasive malfunctions. Boko Haram insurgents destroyed
-            multiple "advanced" tanks using simple RPGs.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              Nigeria dubbed them "Temu tanks." Army pivoted procurement to Russian T-90 platforms.
-              Additionally, Nigerian Air Force lost 3 F-7 jets to crashes and returned 7 of 9 remaining
-              aircraft directly to China.
-            </div>
-          </div>
-          <div class="qc-card-source">📰 Global Defense Corp, NDTV</div>
-        </div>
-      </div>
-
-      <!-- Thailand VT-4 -->
-      <div class="qc-card fade-in">
-        <div class="qc-card-severity critical"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇹🇭</span>
-              <div>
-                <div class="qc-card-nation">Thailand</div>
-                <div class="qc-card-year">2025</div>
-              </div>
-            </div>
-            <span class="qc-severity-badge critical">Critical</span>
-          </div>
-          <div class="qc-card-headline">VT-4 Gun Barrel Explosion During Live-Fire Exercise</div>
-          <div class="qc-card-platform">VT-4 MBT &bull; NORINCO</div>
-          <div class="qc-card-desc">
-            During a live combat firing exercise near the Cambodian border, a Royal Thai Army VT-4 suffered
-            a catastrophic 125mm gun barrel explosion while firing HE ammunition. Three-man crew severely
-            wounded, vehicle disabled without any enemy action.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              Highlighted deep metallurgical flaws and service-life issues. Thailand's history with Chinese
-              armour dates to the 1980s Type 69-IIs&mdash;so unreliable they were dumped as artificial reefs.
-            </div>
-          </div>
-          <div class="qc-card-source">📰 Calibre Defence, Bangkok Post</div>
-        </div>
-      </div>
-
-      <!-- Myanmar JF-17 -->
-      <div class="qc-card fade-in fade-in-delay-1">
-        <div class="qc-card-severity high"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇲🇲</span>
-              <div>
-                <div class="qc-card-nation">Myanmar</div>
-                <div class="qc-card-year">Late 2022</div>
-              </div>
-            </div>
-            <span class="qc-severity-badge high">High</span>
-          </div>
-          <div class="qc-card-headline">JF-17 Fleet Grounded: Structural Cracks and BVR Targeting Failure</div>
-          <div class="qc-card-platform">JF-17 Thunder &bull; AVIC/CAC</div>
-          <div class="qc-card-desc">
-            Myanmar Air Force grounded the majority of its JF-17 fleet due to severe structural airframe
-            cracks and massive technical malfunctions. Onboard computers failed to conduct basic BVR targeting.
-            KLJ-7 radars suffered chronic failures.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              Myanmar lacks technical expertise for repairs. Pakistani Air Force technicians were secretly
-              flown to Pathein air base to attempt to resolve glitches and set up simulators. FTC-2000Gs
-              also shot down during civil war operations.
-            </div>
-          </div>
-          <div class="qc-card-source">📰 The Irrawaddy, DefenseMirror</div>
-        </div>
-      </div>
-
-      <!-- Iraq/Jordan CH-4B -->
-      <div class="qc-card fade-in fade-in-delay-2">
-        <div class="qc-card-severity high"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇮🇶</span>
-              <div>
-                <div class="qc-card-nation">Iraq &amp; Jordan</div>
-                <div class="qc-card-year">2018&ndash;2023</div>
-              </div>
-            </div>
-            <span class="qc-severity-badge high">High</span>
-          </div>
-          <div class="qc-card-headline">CH-4B Drones: Mass Crashes, Grounded Fleets, Fire-Sale Disposal</div>
-          <div class="qc-card-platform">CH-4B Rainbow &bull; CASC</div>
-          <div class="qc-card-desc">
-            8 of Iraq's 20 CH-4Bs crashed due to technical malfunctions; remaining units permanently
-            grounded due to zero spare parts. Jordan placed its entire fleet of 6 CH-4Bs up for sale
-            within a single year of acquisition.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              Complete absence of after-sales support. No spare parts supply chain established. Algeria
-              also reported multiple unexplained CH-4 crashes during routine operations and testing.
-            </div>
-          </div>
-          <div class="qc-card-source">📰 IJ-Reportika, UAS Vision, RAND</div>
-        </div>
-      </div>
-
-      <!-- Pakistan F-22P -->
-      <div class="qc-card fade-in">
-        <div class="qc-card-severity high"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇵🇰</span>
-              <div>
-                <div class="qc-card-nation">Pakistan</div>
-                <div class="qc-card-year">2016&ndash;Present</div>
-              </div>
-            </div>
-            <span class="qc-severity-badge high">High</span>
-          </div>
-          <div class="qc-card-headline">F-22P Frigate Defects: Missile Lock Failures and Engine Degradation</div>
-          <div class="qc-card-platform">F-22P (Zulfiqar-class) Frigate &bull; CSSC</div>
-          <div class="qc-card-desc">
-            FM-90(N) missile systems exhibit faulty image processing, unable to lock onto targets.
-            Defective IR17 infrared sensors, non-functional SR60 search radars, severe diesel engine
-            degradation preventing optimal operational speed.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              Frigates struggle to sustain prolonged deployments. Fundamentally undermines Pakistan's
-              maritime power projection and sea-denial strategy in the Indian Ocean Region.
-              Despite failures, Pakistan continues procurement (Type 054A/P, Babur corvettes).
-            </div>
-          </div>
-          <div class="qc-card-source">📰 Eurasia Review, ORF Online</div>
-        </div>
-      </div>
-
-      <!-- Kenya VN-4 -->
-      <div class="qc-card fade-in fade-in-delay-1">
-        <div class="qc-card-severity critical"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇰🇪</span>
-              <div>
-                <div class="qc-card-nation">Kenya</div>
-                <div class="qc-card-year">2016&ndash;Present</div>
-              </div>
-            </div>
-            <span class="qc-severity-badge critical">Critical</span>
-          </div>
-          <div class="qc-card-headline">250+ Soldiers Killed in NORINCO VN-4 APCs</div>
-          <div class="qc-card-platform">VN-4 APC &bull; NORINCO</div>
-          <div class="qc-card-desc">
-            During initial delivery in 2016, Chinese sales representatives refused to sit inside the
-            vehicles during test firings. Over 250 Kenyan soldiers have reportedly been killed inside
-            these vehicles&mdash;not from direct combat, but structural failures, mechanical breakdowns,
-            and rollover vulnerabilities.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              The manufacturer's own representatives lacked confidence in the product's survivability.
-              Deaths occurred during routine operations, not combat, indicating fundamental design and
-              manufacturing defects.
-            </div>
-          </div>
-          <div class="qc-card-source">📰 IJ-Reportika</div>
-        </div>
-      </div>
-
-      <!-- Pakistan Op Sindoor -->
-      <div class="qc-card fade-in fade-in-delay-2">
-        <div class="qc-card-severity high"></div>
-        <div class="qc-card-content">
-          <div class="qc-card-top">
-            <div class="qc-card-country">
-              <span class="qc-card-flag">🇵🇰</span>
-              <div>
-                <div class="qc-card-nation">Pakistan (vs India)</div>
-                <div class="qc-card-year">May 2025</div>
-              </div>
-            </div>
-            <span class="qc-severity-badge high">High</span>
-          </div>
-          <div class="qc-card-headline">Operation Sindoor Exposes Chinese Air Defence Gaps</div>
-          <div class="qc-card-platform">HQ-9P, HQ-16, JF-17, J-10CE &bull; Multiple SOEs</div>
-          <div class="qc-card-desc">
-            During the four-day India-Pakistan clash, Indian airstrikes successfully penetrated air defences
-            heavily reliant on Chinese SAMs. Chinese commentators framed it as a contest between Chinese-origin
-            and Indian/Western hardware. Produced terrible optics for Beijing's export credibility.
-          </div>
-          <div class="qc-card-complaint">
-            <div class="qc-complaint-label">Consumer Complaint</div>
-            <div class="qc-complaint-text">
-              Multiple targets hit despite layered Chinese air defence. KLJ-7 AESA radar accuracy issues
-              prevented holistic use of PL-15 missiles without AWACS support. Poor radar resolution cell
-              performance in dense combat environments.
-            </div>
-          </div>
-          <div class="qc-card-source">📰 India Today, Times of India</div>
         </div>
       </div>
     </div>
 
-    <!-- Failure Matrix Table -->
+    <!-- WEST ASIA -->
+    <div class="region-group fade-in">
+      <div class="region-label">3.2 &mdash; West Asia</div>
+      <div class="case-grid">
+        <div class="case-card">
+          <div class="case-card-severity high"></div>
+          <div class="case-card-content">
+            <div class="case-card-top">
+              <div class="case-card-country">
+                <span class="case-card-flag">🇮🇶</span>
+                <div><div class="case-card-nation">Iraq &amp; Jordan</div><div class="case-card-year">2016&ndash;2021</div></div>
+              </div>
+              <span class="severity-badge high">High</span>
+            </div>
+            <div class="case-card-headline">CH-4B Fleets: Mass Crashes, Grounded, Sold Off</div>
+            <div class="case-card-platform">CH-4B Rainbow &bull; CASC</div>
+            <div class="case-card-desc">
+              Eight of Iraq's 20 CH-4Bs crashed from technical malfunctions; the rest grounded by 2021 due to absolute
+              lack of spares from CASC. Jordan put all 6 CH-4Bs up for sale within three years of acquisition.
+              Algeria also experienced multiple crashes during routine drills.
+            </div>
+            <div class="case-card-complaint">
+              <div class="complaint-label">Broader Pattern</div>
+              <div class="complaint-text">
+                Despite failures, Iraq has since purchased CH-5 drones. Baghdad unveiled one during a live missile
+                drill as US forces exited Ain Al-Asad in February 2026. Countries continue engagement despite evidence.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-severity medium"></div>
+          <div class="case-card-content">
+            <div class="case-card-top">
+              <div class="case-card-country">
+                <span class="case-card-flag">🇸🇦</span>
+                <div><div class="case-card-nation">Saudi Arabia</div><div class="case-card-year">March 2026</div></div>
+              </div>
+              <span class="severity-badge medium">Continuing</span>
+            </div>
+            <div class="case-card-headline">$5B Wing Loong-3 Factory Despite Operational Concerns</div>
+            <div class="case-card-platform">Wing Loong III &bull; AVIC</div>
+            <div class="case-card-desc">
+              Riyadh signed a landmark co-production deal despite known operational issues with earlier Chinese
+              drones in the region. Driven by desire to diversify from US, strategic pricing (1/4 of MQ-9B cost),
+              and Vision 2030 indigenous capability goals. Saudi is the top UCAV buyer (~85 units, 2015&ndash;25).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFRICA -->
+    <div class="region-group fade-in">
+      <div class="region-label">3.3 &mdash; Africa</div>
+      <div class="case-grid">
+        <div class="case-card">
+          <div class="case-card-severity critical"></div>
+          <div class="case-card-content">
+            <div class="case-card-top">
+              <div class="case-card-country">
+                <span class="case-card-flag">🇳🇬</span>
+                <div><div class="case-card-nation">Nigeria</div><div class="case-card-year">2020&ndash;2025</div></div>
+              </div>
+              <span class="severity-badge critical">Critical</span>
+            </div>
+            <div class="case-card-headline">VT-4 "Temu Tanks": 30-Min Cooldowns, Destroyed by RPGs</div>
+            <div class="case-card-platform">VT-4 MBT, F-7 &bull; NORINCO, AVIC</div>
+            <div class="case-card-desc">
+              Procured for $152M to fight Boko Haram (Operation Tura Takai Bango). Turrets required 30-minute
+              cooldowns between engagements. Boko Haram destroyed multiple VT-4s with simple RPGs.
+              Nigeria also lost 3 F-7 jets to crashes; returned 7 of 9 remaining to China.
+            </div>
+            <div class="case-card-complaint">
+              <div class="complaint-label">Diversification</div>
+              <div class="complaint-text">
+                Nigeria resumed negotiations with Russia for T-90 MBTs ($99.5M). Armed forces continue using
+                Czech/Ukrainian T-72s and British Vickers Mk-3 tanks instead.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-severity critical"></div>
+          <div class="case-card-content">
+            <div class="case-card-top">
+              <div class="case-card-country">
+                <span class="case-card-flag">🇰🇪</span>
+                <div><div class="case-card-nation">Kenya</div><div class="case-card-year">2016&ndash;present</div></div>
+              </div>
+              <span class="severity-badge critical">Critical</span>
+            </div>
+            <div class="case-card-headline">VN-4 APCs: Chinese Reps Refused to Sit Inside During Tests</div>
+            <div class="case-card-platform">VN-4 APC &bull; NORINCO / Chongqing Tiema</div>
+            <div class="case-card-desc">
+              Chinese sales representatives from Chongqing Tiema Industries refused to sit inside VN-4s
+              during test firings. Kenya's National Police Service found APCs "cannot withstand an RPG attack."
+              IEDs planted by Al Shabaab caused injuries and deaths. Kenya signed deals for South African
+              Springbuck APCs and US M1117s in late 2025.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VENEZUELA & PAKISTAN -->
+    <div class="region-group fade-in">
+      <div class="region-label">3.4 &mdash; Venezuela &amp; Pakistan</div>
+      <div class="case-grid">
+        <div class="case-card">
+          <div class="case-card-severity critical"></div>
+          <div class="case-card-content">
+            <div class="case-card-top">
+              <div class="case-card-country">
+                <span class="case-card-flag">🇻🇪</span>
+                <div><div class="case-card-nation">Venezuela</div><div class="case-card-year">January 2026</div></div>
+              </div>
+              <span class="severity-badge critical">Critical</span>
+            </div>
+            <div class="case-card-headline">Total Radar Blindness During US Op. Absolute Resolve</div>
+            <div class="case-card-platform">JY-27A, JYL-1 Radars &bull; CETC</div>
+            <div class="case-card-desc">
+              US Joint Chiefs assessed that Chinese radars "failed to detect US fighter jets or aircraft."
+              $2B+ layered air defence network (Chinese radars + Russian S-300s/Pantsir) did not fire a single shot.
+              Whether systems were overwhelmed by EW, internally sabotaged, or simply broken is debated &mdash;
+              but 60%+ of the radar network was already non-operational due to years of spare parts shortages.
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-card-severity high"></div>
+          <div class="case-card-content">
+            <div class="case-card-top">
+              <div class="case-card-country">
+                <span class="case-card-flag">🇵🇰</span>
+                <div><div class="case-card-nation">Pakistan</div><div class="case-card-year">May 2025 &amp; ongoing</div></div>
+              </div>
+              <span class="severity-badge high">High</span>
+            </div>
+            <div class="case-card-headline">Operation Sindoor Exposes Chinese Air Defence &amp; Naval Gaps</div>
+            <div class="case-card-platform">HQ-9P, HQ-16, JF-17, F-22P Frigates &bull; Multiple SOEs</div>
+            <div class="case-card-desc">
+              Indian airstrikes penetrated defences heavily reliant on Chinese SAMs. F-22P frigate FM-90(N) missile
+              systems exhibit faulty image processing and cannot lock targets; IR17 sensors and SR60 radars also
+              defective. Multiple JF-17s have crashed during drills. Yet Pakistan continues procuring &mdash;
+              Type 054A/P frigates, Hangor subs, CM-401 hypersonic missiles.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Failure Matrix -->
     <div class="failure-matrix fade-in">
-      <div class="failure-matrix-title">Battlefield Failure Matrix (2016&ndash;2026)</div>
+      <div class="failure-matrix-title">Battlefield &amp; Operational Failure Matrix (2016&ndash;2026)</div>
       <div class="matrix-table-wrapper">
         <table class="matrix-table">
           <thead>
             <tr>
-              <th>Country / Theatre</th>
+              <th>Country</th>
               <th>Platform</th>
-              <th>Manufacturer</th>
+              <th>SOE</th>
               <th>Nature of Failure</th>
               <th>Severity</th>
               <th>Consequence</th>
@@ -2260,80 +1667,72 @@ footer {
               <td class="country-col">🇻🇪 Venezuela (2026)</td>
               <td class="platform-col">JY-27A, JYL-1</td>
               <td>CETC</td>
-              <td>Total blindness under US EW; anti-stealth claims failed</td>
-              <td class="severity-col"><span class="qc-severity-badge critical">Critical</span></td>
-              <td>Entire IADS collapsed; Maduro captured</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇮🇷 Iran (2026)</td>
-              <td class="platform-col">HQ-9B, CM-302, YJ-21E</td>
-              <td>CASIC</td>
-              <td>Failed to intercept cruise missiles/stealth under saturation</td>
-              <td class="severity-col"><span class="qc-severity-badge critical">Critical</span></td>
-              <td>Natanz damage; 550+ casualties</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇵🇰 Pakistan (2025)</td>
-              <td class="platform-col">HQ-9P, HQ-16, JF-17</td>
-              <td>CASIC, AVIC</td>
-              <td>Air defences penetrated during Op Sindoor</td>
-              <td class="severity-col"><span class="qc-severity-badge high">High</span></td>
-              <td>Multiple Indian strikes on targets</td>
+              <td>Total blindness under US EW</td>
+              <td class="severity-col"><span class="severity-badge critical">Critical</span></td>
+              <td>IADS collapsed; Maduro captured</td>
             </tr>
             <tr>
               <td class="country-col">🇹🇭 Thailand (2025)</td>
               <td class="platform-col">VT-4 MBT</td>
               <td>NORINCO</td>
-              <td>125mm barrel explosion during live fire</td>
-              <td class="severity-col"><span class="qc-severity-badge critical">Critical</span></td>
-              <td>3 crew wounded; metallurgical flaws exposed</td>
+              <td>125mm barrel explosion; thermal stress</td>
+              <td class="severity-col"><span class="severity-badge critical">Critical</span></td>
+              <td>3 crew wounded; metallurgical flaws</td>
             </tr>
             <tr>
-              <td class="country-col">🇳🇬 Nigeria (2023&ndash;25)</td>
+              <td class="country-col">🇵🇰 Pakistan (2025)</td>
+              <td class="platform-col">HQ-9P, HQ-16, JF-17</td>
+              <td>CASIC, AVIC</td>
+              <td>Air defences penetrated in Op Sindoor</td>
+              <td class="severity-col"><span class="severity-badge high">High</span></td>
+              <td>Multiple Indian strikes on targets</td>
+            </tr>
+            <tr>
+              <td class="country-col">🇳🇬 Nigeria (2020&ndash;25)</td>
               <td class="platform-col">VT-4, F-7</td>
               <td>NORINCO, AVIC</td>
-              <td>30-min turret cooldown; autoloader failure; crashes</td>
-              <td class="severity-col"><span class="qc-severity-badge critical">Critical</span></td>
-              <td>Tanks destroyed by RPGs; jets returned</td>
+              <td>30-min cooldown; RPG penetration; crashes</td>
+              <td class="severity-col"><span class="severity-badge critical">Critical</span></td>
+              <td>"Temu tanks"; jets returned to China</td>
             </tr>
             <tr>
               <td class="country-col">🇲🇲 Myanmar (2022)</td>
               <td class="platform-col">JF-17, FTC-2000G</td>
-              <td>AVIC/CAC</td>
+              <td>AVIC</td>
               <td>Structural cracks; BVR failure; shoot-downs</td>
-              <td class="severity-col"><span class="qc-severity-badge high">High</span></td>
+              <td class="severity-col"><span class="severity-badge high">High</span></td>
               <td>Fleet grounded mid-civil war</td>
             </tr>
             <tr>
               <td class="country-col">🇮🇶🇯🇴 Iraq &amp; Jordan</td>
               <td class="platform-col">CH-4B Rainbow</td>
               <td>CASC</td>
-              <td>8/20 crashed (Iraq); no spare parts at all</td>
-              <td class="severity-col"><span class="qc-severity-badge high">High</span></td>
+              <td>8/20 crashed (Iraq); zero spare parts</td>
+              <td class="severity-col"><span class="severity-badge high">High</span></td>
               <td>Jordan sold fleet; Iraq grounded rest</td>
             </tr>
             <tr>
               <td class="country-col">🇰🇪 Kenya (2016&ndash;)</td>
               <td class="platform-col">VN-4 APC</td>
               <td>NORINCO</td>
-              <td>Structural failures; rollovers; breakdowns</td>
-              <td class="severity-col"><span class="qc-severity-badge critical">Critical</span></td>
-              <td>250+ soldier deaths in routine ops</td>
+              <td>Cannot withstand RPG; structural failures</td>
+              <td class="severity-col"><span class="severity-badge critical">Critical</span></td>
+              <td>Diversifying to SA/US platforms</td>
             </tr>
             <tr>
               <td class="country-col">🇵🇰 Pakistan (ongoing)</td>
               <td class="platform-col">F-22P Frigates</td>
               <td>CSSC</td>
-              <td>Missile lock failure; engine degradation; radar issues</td>
-              <td class="severity-col"><span class="qc-severity-badge high">High</span></td>
+              <td>Missile lock failure; engine degradation</td>
+              <td class="severity-col"><span class="severity-badge high">High</span></td>
               <td>Cannot sustain prolonged deployments</td>
             </tr>
             <tr>
-              <td class="country-col">🇩🇿 Algeria</td>
+              <td class="country-col">🇩🇿 Algeria (2014&ndash;21)</td>
               <td class="platform-col">CH-4 Rainbow</td>
               <td>CASC</td>
-              <td>Multiple unexplained crashes during routine ops</td>
-              <td class="severity-col"><span class="qc-severity-badge medium">Medium</span></td>
+              <td>Multiple crashes during routine drills</td>
+              <td class="severity-col"><span class="severity-badge medium">Medium</span></td>
               <td>Fleet reliability in question</td>
             </tr>
           </tbody>
@@ -2343,36 +1742,119 @@ footer {
   </div>
 </section>
 
-<!-- ===== FOOTER ===== -->
+<!-- SECTION 4: OUTLOOK -->
+<section id="outlook">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <div class="section-number">04 &mdash; Outlook</div>
+      <h2 class="section-title">Concerns &amp; The Future</h2>
+      <p class="section-subtitle">
+        Three structural headwinds, internal purges, and the after-sales vacuum
+      </p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="outlook-grid fade-in">
+      <div class="outlook-card">
+        <div class="outlook-card-num">01</div>
+        <div class="outlook-card-title">Post-Ukraine Resurgence of Russian &amp; US Exporters</div>
+        <div class="outlook-card-text">
+          China's rise to 4th-largest exporter was partly due to Russia's shrinking share during the Ukraine war,
+          inflating Beijing's contribution numbers. As Russian and American production lines ramp back up,
+          market share competition will intensify &mdash; especially in Africa and West Asia.
+        </div>
+      </div>
+      <div class="outlook-card">
+        <div class="outlook-card-num">02</div>
+        <div class="outlook-card-title">Widening Net of US BIS &amp; 1260H Designations</div>
+        <div class="outlook-card-text">
+          The June 2026 list now includes ~188 entities, including commercial giants like Alibaba, Baidu,
+          and BYD. Compliance scrutiny extends globally under the "small yard, high fences" strategy,
+          complicating supply chains for China's dual-use components and non-traditional vendors.
+        </div>
+      </div>
+      <div class="outlook-card">
+        <div class="outlook-card-num">03</div>
+        <div class="outlook-card-title">After-Sales Vacuum &amp; Buyer's Remorse</div>
+        <div class="outlook-card-text">
+          Once a Chinese SOE secures the initial sale, it does not address the remaining life cycle. No spares,
+          no training, no maintenance logistics. As this becomes a bone of contention even for continuing clients,
+          deeply intertwined defence ties like those binding China to Pakistan remain the exception, not the rule.
+        </div>
+      </div>
+    </div>
+
+    <!-- Purge Section -->
+    <div class="purge-section fade-in" style="margin-top:2rem;">
+      <div class="purge-title">Anti-Corruption Purges Across the MIC (2023&ndash;26)</div>
+      <div class="purge-sub">
+        Internal investigations into procurement rigging, kickbacks, and misreporting have led to the removal
+        of top leadership across the CMC, Rocket Force, and major defence SOEs.
+      </div>
+      <div class="purge-grid">
+        <div class="purge-tag">
+          <strong>Li Shangfu</strong>
+          <span class="purge-role">Fmr. Defence Minister &amp; EDD Director</span>
+        </div>
+        <div class="purge-tag">
+          <strong>Zhang Youxia</strong>
+          <span class="purge-role">Fmr. CMC Vice-Chairman</span>
+        </div>
+        <div class="purge-tag">
+          <strong>Zhou Xinmin</strong>
+          <span class="purge-role">AVIC Chairman</span>
+        </div>
+        <div class="purge-tag">
+          <strong>Liu Shiquan</strong>
+          <span class="purge-role">NORINCO Chairman</span>
+        </div>
+        <div class="purge-tag">
+          <strong>Wu Yansheng</strong>
+          <span class="purge-role">CASC Chairman &amp; Party Chief</span>
+        </div>
+        <div class="purge-tag">
+          <strong>Luo Qi</strong>
+          <span class="purge-role">CNNC Chief Engineer</span>
+        </div>
+        <div class="purge-tag">
+          <strong>Liu Cangli</strong>
+          <span class="purge-role">CAEP Director</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">CHINA DIB TRACKER</div>
+    <div class="footer-brand">'MADE IN CHINA' WEAPONS TRACKER</div>
     <div class="footer-text">
-      An interactive research tool mapping China's defence industrial base, arms exports, and quality control record.
-      Data sourced from SIPRI Arms Transfers Database, open-source defence reporting, and primary research.
+      Interactive companion to
+      <a href="https://takshashila.org.in/content/publications/ChinaArms-20062026.html" target="_blank" style="color:var(--yellow-bright); text-decoration:none;">Takshashila Discussion Document 2026-16</a>:
+      <em>"Weapons 'Made in China': Foolproof or in Muddy Waters?"</em>
     </div>
     <div class="footer-sources" style="margin-top:1.5rem;">
-      <p style="margin-bottom:0.5rem;">Primary data:
-        <a href="https://www.sipri.org/databases/armstransfers" target="_blank">SIPRI Arms Transfers Database</a>
+      <p style="margin-bottom:0.5rem;">
+        Data: <a href="https://www.sipri.org/databases/armstransfers" target="_blank">SIPRI Arms Transfers Database</a>
+        &bull; <a href="https://shakunasanaxe.github.io/SIPRI-China-Arms-Tracker/" target="_blank">SIPRI China Arms Tracker</a>
       </p>
       <p>
         Research &amp; analysis by Anushka Saxena &bull;
-        Built 2025 &bull;
-        Timeline: 2016&ndash;2026
+        The Takshashila Institution &bull;
+        2026 &bull; Timeline: 2015&ndash;2026
       </p>
     </div>
   </div>
 </footer>
 
-<!-- ===== JAVASCRIPT ===== -->
+<!-- JS -->
 <script>
-// --- Nav scroll effect ---
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// --- Active nav link ---
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
@@ -2385,24 +1867,19 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// --- Fade-in on scroll ---
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
+    if (e.isIntersecting) e.target.classList.add('visible');
   });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-// --- Carousel scroll ---
 function scrollCarousel(id, dir) {
   const track = document.getElementById(id);
   const card = track.querySelector('.platform-card');
   const scrollAmount = (card.offsetWidth + 20) * dir;
   track.parentElement.scrollBy({ left: scrollAmount, behavior: 'smooth' });
 }
-// Make platform carousel scrollable
 document.addEventListener('DOMContentLoaded', () => {
   const wrapper = document.querySelector('#platformCarousel').parentElement;
   wrapper.style.overflowX = 'auto';
@@ -2414,126 +1891,140 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// --- Charts ---
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Charts
 Chart.defaults.color = '#A89BBF';
 Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
 
 // Export Share Over Time
-const exportCtx = document.getElementById('exportShareChart').getContext('2d');
-new Chart(exportCtx, {
+new Chart(document.getElementById('exportShareChart').getContext('2d'), {
   type: 'line',
   data: {
     labels: ['2012-16', '2013-17', '2014-18', '2015-19', '2016-20', '2017-21', '2018-22', '2019-23', '2020-24'],
     datasets: [{
-      label: "China's Share of Global Arms Exports (%)",
+      label: "China's Share (%)",
       data: [6.2, 5.7, 5.2, 5.5, 5.2, 4.6, 4.6, 5.8, 5.9],
       borderColor: '#F5C518',
       backgroundColor: 'rgba(245, 197, 24, 0.08)',
-      fill: true,
-      tension: 0.35,
+      fill: true, tension: 0.35,
       pointBackgroundColor: '#F5C518',
       pointBorderColor: '#F5C518',
-      pointRadius: 5,
-      pointHoverRadius: 8,
+      pointRadius: 5, pointHoverRadius: 8,
       borderWidth: 3,
     }]
   },
   options: {
-    responsive: true,
-    maintainAspectRatio: false,
+    responsive: true, maintainAspectRatio: false,
     scales: {
-      y: {
-        beginAtZero: false, min: 3, max: 8,
-        grid: { color: 'rgba(107, 63, 160, 0.1)' },
-        ticks: { callback: v => v + '%' }
-      },
-      x: {
-        grid: { color: 'rgba(107, 63, 160, 0.05)' }
-      }
+      y: { beginAtZero: false, min: 3, max: 8, grid: { color: 'rgba(107,63,160,0.1)' }, ticks: { callback: v => v + '%' } },
+      x: { grid: { color: 'rgba(107,63,160,0.05)' } }
     },
     plugins: {
       legend: { display: false },
-      tooltip: {
-        backgroundColor: '#1A1225',
-        borderColor: '#6B3FA0',
-        borderWidth: 1,
-        callbacks: { label: ctx => ctx.parsed.y + '% of global exports' }
-      }
+      tooltip: { backgroundColor: '#1A1225', borderColor: '#6B3FA0', borderWidth: 1, callbacks: { label: ctx => ctx.parsed.y + '% of global exports' } }
     }
   }
 });
 
 // Regional Distribution
-const regionCtx = document.getElementById('regionalChart').getContext('2d');
-new Chart(regionCtx, {
+new Chart(document.getElementById('regionalChart').getContext('2d'), {
   type: 'doughnut',
   data: {
     labels: ['Asia & Oceania', 'Africa', 'Middle East', 'Americas', 'Europe'],
     datasets: [{
       data: [77, 14, 5, 2, 2],
-      backgroundColor: [
-        '#F5C518',
-        '#6B3FA0',
-        '#8B5FC7',
-        '#C4A8E0',
-        '#4A2D7A',
-      ],
-      borderColor: '#1A1225',
-      borderWidth: 3,
+      backgroundColor: ['#F5C518', '#6B3FA0', '#8B5FC7', '#C4A8E0', '#4A2D7A'],
+      borderColor: '#1A1225', borderWidth: 3,
     }]
   },
   options: {
-    responsive: true,
-    maintainAspectRatio: false,
+    responsive: true, maintainAspectRatio: false,
     cutout: '60%',
     plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' }
-      },
-      tooltip: {
-        backgroundColor: '#1A1225',
-        borderColor: '#6B3FA0',
-        borderWidth: 1,
-        callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' }
-      }
+      legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } },
+      tooltip: { backgroundColor: '#1A1225', borderColor: '#6B3FA0', borderWidth: 1, callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' } }
     }
   }
 });
 
-// --- Smooth scroll for nav links ---
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// Tank Exports by Country
+new Chart(document.getElementById('tankChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['Pakistan', 'Bangladesh', 'Thailand', 'Nigeria', 'Myanmar', 'Others'],
+    datasets: [{
+      label: 'Tanks Exported',
+      data: [373, 188, 63, 44, 16, 16],
+      backgroundColor: [
+        'rgba(245, 197, 24, 0.85)',
+        'rgba(139, 95, 199, 0.85)',
+        'rgba(107, 63, 160, 0.7)',
+        'rgba(196, 168, 224, 0.6)',
+        'rgba(74, 45, 122, 0.7)',
+        'rgba(45, 27, 78, 0.7)',
+      ],
+      borderColor: 'rgba(245, 197, 24, 0.3)',
+      borderWidth: 1,
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    indexAxis: 'y',
+    scales: {
+      x: { grid: { color: 'rgba(107,63,160,0.1)' }, ticks: { callback: v => v } },
+      y: { grid: { display: false } }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: { backgroundColor: '#1A1225', borderColor: '#6B3FA0', borderWidth: 1, callbacks: { label: ctx => ctx.parsed.x + ' tanks' } }
     }
-  });
+  }
 });
 
-// --- Counter animation for hero stats ---
-function animateCounters() {
-  document.querySelectorAll('.hero-stat-value').forEach(el => {
-    const text = el.textContent;
-    if (text.includes('%') || text.includes('+') || text.includes('~')) return;
-    const target = parseInt(text);
-    if (isNaN(target)) return;
-    let current = 0;
-    const step = Math.ceil(target / 40);
-    const timer = setInterval(() => {
-      current += step;
-      if (current >= target) { current = target; clearInterval(timer); }
-      el.textContent = current;
-    }, 30);
-  });
-}
-const heroObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { animateCounters(); heroObserver.disconnect(); }
-  });
-}, { threshold: 0.5 });
-heroObserver.observe(document.querySelector('.hero-stats'));
+// UCAV Exports by Country
+new Chart(document.getElementById('ucavChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['Saudi Arabia', 'Pakistan', 'UAE', 'Iraq', 'Serbia', 'Nigeria', 'Algeria', 'Others'],
+    datasets: [{
+      label: 'UCAVs Exported',
+      data: [85, 68, 30, 20, 18, 15, 12, 52],
+      backgroundColor: [
+        'rgba(245, 197, 24, 0.85)',
+        'rgba(139, 95, 199, 0.85)',
+        'rgba(107, 63, 160, 0.7)',
+        'rgba(196, 168, 224, 0.6)',
+        'rgba(74, 45, 122, 0.7)',
+        'rgba(230, 184, 0, 0.5)',
+        'rgba(45, 27, 78, 0.7)',
+        'rgba(107, 95, 128, 0.4)',
+      ],
+      borderColor: 'rgba(245, 197, 24, 0.3)',
+      borderWidth: 1,
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    indexAxis: 'y',
+    scales: {
+      x: { grid: { color: 'rgba(107,63,160,0.1)' } },
+      y: { grid: { display: false } }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: { backgroundColor: '#1A1225', borderColor: '#6B3FA0', borderWidth: 1, callbacks: { label: ctx => ctx.parsed.x + ' UCAVs' } }
+    }
+  }
+});
 </script>
 
 </body>
