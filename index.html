@@ -6,843 +6,788 @@
 <title>Weapons 'Made in China' — Tracker</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --purple-deep: #2D1B4E;
-  --purple-dark: #4A2D7A;
-  --purple-mid: #6B3FA0;
-  --purple-light: #8B5FC7;
-  --purple-pale: #C4A8E0;
-  --yellow-bright: #F5C518;
-  --yellow-mid: #E6B800;
-  --yellow-pale: #FFF3C4;
-  --yellow-dark: #B8960F;
-  --bg-dark: #0D0A14;
-  --bg-card: #1A1225;
-  --bg-card-hover: #241835;
-  --text-primary: #F0EBF5;
-  --text-secondary: #A89BBF;
-  --text-muted: #6B5F80;
-  --border-subtle: rgba(107, 63, 160, 0.25);
-  --red-alert: #E74C3C;
-  --green-ok: #2ECC71;
-  --orange-warn: #F39C12;
+  --tk-primary: #620d3c;
+  --tk-primary-dark: #4a0a2e;
+  --tk-primary-soft: #f5e6ec;
+  --tk-gold: #f1a222;
+  --tk-gold-soft: #fcf0d9;
+  --tk-bg: #FFFFFF;
+  --tk-bg-deep: #F7F5F2;
+  --tk-ink: #171413;
+  --tk-ink-70: rgba(23,20,19,0.70);
+  --tk-ink-50: rgba(23,20,19,0.50);
+  --tk-ink-20: rgba(23,20,19,0.16);
+  --tk-ink-10: rgba(23,20,19,0.08);
+  --tk-rule: 1px solid rgba(23,20,19,0.16);
+  --tk-max: 1240px;
+  --tk-pad-x: 40px;
+  --tk-mono: 'Roboto Mono', ui-monospace, monospace;
+  --tk-sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --red-alert: #b91c1c;
+  --orange-warn: #c2410c;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg-dark);
-  color: var(--text-primary);
-  line-height: 1.6;
+  font-family: var(--tk-sans);
+  background: #FDFDFD;
+  color: var(--tk-ink);
+  line-height: 1.5;
   overflow-x: hidden;
+  font-size: 15px;
 }
 
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-dark); }
-::-webkit-scrollbar-thumb { background: var(--purple-dark); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--purple-mid); }
-
-/* NAV */
+/* NAV — wine background */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: rgba(13, 10, 20, 0.92);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 0 2rem;
-  transition: all 0.3s ease;
+  background: var(--tk-primary);
+  padding: 0 var(--tk-pad-x);
+  transition: box-shadow 0.3s;
 }
-nav.scrolled { box-shadow: 0 4px 30px rgba(45, 27, 78, 0.4); }
+nav.scrolled { box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
 .nav-inner {
-  max-width: 1400px; margin: 0 auto;
+  max-width: var(--tk-max); margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  height: 64px;
+  height: clamp(60px, 10vw, 80px);
 }
 .nav-brand {
-  font-weight: 800; font-size: 1.1rem;
-  color: var(--yellow-bright);
-  letter-spacing: -0.02em;
+  font-family: var(--tk-sans);
+  font-weight: 400; font-size: clamp(14px, 1.6vw, 16px);
+  color: #fff;
+  letter-spacing: 0.03em;
   display: flex; align-items: center; gap: 0.5rem;
 }
-.nav-brand span { color: var(--text-primary); font-weight: 400; }
+.nav-brand strong {
+  font-weight: 500;
+  color: var(--tk-gold);
+}
 .nav-links { display: flex; gap: 0.25rem; }
 .nav-links a {
-  color: var(--text-secondary); text-decoration: none;
-  padding: 0.5rem 1rem; border-radius: 8px;
-  font-size: 0.85rem; font-weight: 500;
-  transition: all 0.2s ease;
+  color: rgba(255,255,255,0.85); text-decoration: none;
+  padding: 0.5rem 0.85rem;
+  font-family: var(--tk-mono);
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.15s;
 }
 .nav-links a:hover, .nav-links a.active {
-  color: var(--yellow-bright);
-  background: rgba(245, 197, 24, 0.08);
+  color: var(--tk-gold);
 }
 
-/* HERO */
+/* HERO — wine brand ground */
 .hero {
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
+  min-height: 90vh;
+  display: flex; align-items: center;
   position: relative;
-  background: radial-gradient(ellipse at 30% 50%, rgba(74, 45, 122, 0.3) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 30%, rgba(245, 197, 24, 0.08) 0%, transparent 50%),
-              var(--bg-dark);
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236B3FA0' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  opacity: 0.5;
+  background: var(--tk-primary);
+  color: #fff;
+  padding-top: 80px;
 }
 .hero-content {
-  position: relative; z-index: 1;
-  text-align: center;
-  max-width: 900px; padding: 2rem;
+  max-width: var(--tk-max); margin: 0 auto;
+  padding: 4rem var(--tk-pad-x);
+  width: 100%;
 }
-.hero-badge {
+.hero-paper-link {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  background: rgba(245, 197, 24, 0.1);
-  border: 1px solid rgba(245, 197, 24, 0.25);
-  padding: 0.4rem 1.2rem; border-radius: 100px;
-  font-size: 0.8rem; font-weight: 600;
-  color: var(--yellow-bright);
-  margin-bottom: 2rem;
-  text-transform: uppercase; letter-spacing: 0.1em;
+  font-family: var(--tk-mono);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--tk-ink);
+  background: var(--tk-gold);
+  padding: 14px 28px;
+  margin-bottom: 2.5rem;
+  transition: background 0.15s;
 }
-.hero-badge::before {
-  content: ''; width: 8px; height: 8px;
-  background: var(--yellow-bright); border-radius: 50%;
-  animation: pulse-dot 2s infinite;
-}
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.5); }
-}
+.hero-paper-link:hover { background: #d89118; }
 .hero h1 {
-  font-size: clamp(2.5rem, 6vw, 4.2rem);
-  font-weight: 900; line-height: 1.08;
-  letter-spacing: -0.03em;
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 400; line-height: 0.98;
+  letter-spacing: -0.025em;
   margin-bottom: 1.5rem;
+  text-wrap: balance;
 }
-.hero h1 .highlight {
-  background: linear-gradient(135deg, var(--yellow-bright), var(--yellow-mid));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+.hero h1 em {
+  font-style: italic;
+  color: var(--tk-gold);
 }
 .hero-sub {
-  font-size: 1.1rem; color: var(--text-secondary);
-  max-width: 680px; margin: 0 auto 2.5rem;
-  line-height: 1.7;
+  font-size: 22px; font-weight: 300;
+  color: rgba(255,255,255,0.85);
+  max-width: 700px;
+  line-height: 1.45;
+  margin-bottom: 3rem;
+  text-wrap: pretty;
 }
 .hero-stats {
-  display: flex; justify-content: center; gap: 2.5rem;
+  display: flex; gap: 3rem;
   flex-wrap: wrap;
 }
-.hero-stat { text-align: center; }
+.hero-stat { text-align: left; }
 .hero-stat-value {
-  font-size: 2.2rem; font-weight: 800;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--yellow-bright);
+  font-size: 44px; font-weight: 400;
+  font-family: var(--tk-sans);
+  color: var(--tk-gold);
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 .hero-stat-label {
-  font-size: 0.72rem; color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 0.1em;
-  margin-top: 0.25rem;
+  font-family: var(--tk-mono);
+  font-size: 10.5px; color: rgba(255,255,255,0.55);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  margin-top: 0.4rem;
 }
-.scroll-indicator {
-  position: absolute; bottom: 2rem; left: 50%;
-  transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center;
-  gap: 0.5rem; color: var(--text-muted);
-  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
-  animation: float 3s ease-in-out infinite;
-}
-@keyframes float {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-10px); }
-}
-.scroll-indicator svg { width: 20px; height: 20px; stroke: var(--purple-light); }
 
 /* SECTIONS */
-section { padding: 6rem 2rem; position: relative; }
-.section-inner { max-width: 1400px; margin: 0 auto; }
-.section-header { text-align: center; margin-bottom: 4rem; }
+section {
+  padding: 64px var(--tk-pad-x);
+  border-bottom: var(--tk-rule);
+}
+.section-inner { max-width: var(--tk-max); margin: 0 auto; }
+.section-header { margin-bottom: 3rem; }
 .section-number {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem; color: var(--purple-light);
-  text-transform: uppercase; letter-spacing: 0.2em;
-  margin-bottom: 0.75rem;
+  font-family: var(--tk-mono);
+  font-size: 11px; color: var(--tk-primary);
+  text-transform: uppercase; letter-spacing: 0.14em;
+  margin-bottom: 0.5rem;
 }
 .section-title {
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 800; letter-spacing: -0.02em;
-  margin-bottom: 1rem;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 400; letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 0.75rem;
+  text-wrap: balance;
 }
 .section-subtitle {
-  font-size: 1rem; color: var(--text-secondary);
-  max-width: 650px; margin: 0 auto;
-}
-.section-divider {
-  width: 60px; height: 3px;
-  background: linear-gradient(90deg, var(--yellow-bright), var(--purple-mid));
-  margin: 1.5rem auto 0; border-radius: 2px;
+  font-size: 22px; font-weight: 300;
+  color: var(--tk-ink-70);
+  line-height: 1.45;
+  max-width: 700px;
 }
 
-/* MIC OVERVIEW */
-#mic { background: var(--bg-dark); }
-.mic-overview {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 3rem; margin-bottom: 4rem; align-items: start;
+/* Alternate section backgrounds */
+.section-deep { background: var(--tk-bg-deep); }
+.section-dark {
+  background: var(--tk-ink);
+  color: #fff;
 }
-.mic-overview-text { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.8; }
-.mic-overview-text strong { color: var(--yellow-bright); font-weight: 600; }
+.section-dark .section-number { color: var(--tk-gold); }
+.section-dark .section-subtitle { color: rgba(255,255,255,0.70); }
 
-/* Policy Visual */
-.policy-stack {
-  display: flex; flex-direction: column; gap: 1rem;
+/* POLICY CARDS */
+.policy-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px; margin-bottom: 3rem;
 }
 .policy-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px; padding: 1.15rem 1.5rem;
-  transition: all 0.3s;
+  border: var(--tk-rule);
+  padding: 1.25rem 1.5rem;
+  transition: background 0.15s ease;
 }
-.policy-card:hover {
-  border-color: var(--purple-light);
-  transform: translateX(4px);
-}
+.policy-card:hover { background: var(--tk-bg-deep); }
 .policy-card-label {
-  font-size: 0.65rem; text-transform: uppercase;
-  letter-spacing: 0.12em; color: var(--purple-light);
-  margin-bottom: 0.3rem; font-weight: 600;
+  font-family: var(--tk-mono);
+  font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: 0.14em; color: var(--tk-primary);
+  margin-bottom: 0.4rem;
 }
 .policy-card-title {
-  font-size: 0.9rem; font-weight: 700;
-  margin-bottom: 0.2rem;
+  font-size: 18px; font-weight: 500;
+  line-height: 1.3; margin-bottom: 0.3rem;
 }
 .policy-card-desc {
-  font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;
+  font-size: 14px; color: var(--tk-ink-70); line-height: 1.55;
 }
 
-/* MCF Diagram */
+/* MCF DIAGRAM */
 .mcf-diagram {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px; padding: 2rem;
-  text-align: center;
+  border: var(--tk-rule);
+  padding: 2rem;
+  margin-bottom: 3rem;
 }
 .mcf-title {
-  font-size: 0.8rem; text-transform: uppercase;
-  letter-spacing: 0.15em; color: var(--purple-light);
-  margin-bottom: 1.5rem; font-weight: 600;
+  font-family: var(--tk-mono);
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.14em; color: var(--tk-primary);
+  margin-bottom: 1.5rem;
 }
-.mcf-layers { display: flex; flex-direction: column; gap: 0.75rem; }
+.mcf-layers { display: flex; flex-direction: column; gap: 0; }
 .mcf-layer {
-  padding: 0.85rem 1.5rem; border-radius: 10px;
-  font-size: 0.85rem; font-weight: 600;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: default;
+  padding: 0.85rem 1.5rem;
+  font-size: 14px; font-weight: 400;
+  border: var(--tk-rule);
+  border-bottom: none;
+  text-align: center;
+  transition: background 0.15s;
 }
-.mcf-layer:hover { transform: scale(1.02); }
+.mcf-layer:last-child { border-bottom: var(--tk-rule); }
+.mcf-layer:hover { background: var(--tk-bg-deep); }
 .mcf-layer.party {
-  background: linear-gradient(135deg, var(--red-alert), #c0392b);
-  box-shadow: 0 4px 20px rgba(231, 76, 60, 0.3);
+  background: var(--tk-primary); color: #fff; font-weight: 500;
+  border-color: var(--tk-primary);
 }
-.mcf-layer.cmc {
-  background: linear-gradient(135deg, var(--purple-mid), var(--purple-dark));
-  box-shadow: 0 4px 20px rgba(107, 63, 160, 0.3);
-}
+.mcf-layer.party:hover { background: var(--tk-primary-dark); }
+.mcf-layer.cmc { background: var(--tk-primary-soft); }
 .mcf-layer.soe {
-  background: linear-gradient(135deg, var(--yellow-dark), var(--yellow-mid));
-  color: var(--bg-dark);
-  box-shadow: 0 4px 20px rgba(245, 197, 24, 0.2);
+  background: var(--tk-gold-soft);
+  font-weight: 500;
 }
-.mcf-layer.ntv {
-  background: linear-gradient(135deg, #1a6b4a, #2ecc71);
-  box-shadow: 0 4px 20px rgba(46, 204, 113, 0.2);
-}
-.mcf-layer.civil {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-}
-.mcf-connector {
-  width: 2px; height: 16px;
-  background: var(--purple-pale); margin: 0 auto;
-  position: relative;
-}
-.mcf-connector::after {
-  content: '▼'; position: absolute; bottom: -8px; left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.5rem; color: var(--purple-pale);
-}
+.mcf-layer.ntv { background: var(--tk-bg-deep); }
+.mcf-layer.civil { background: var(--tk-bg); }
 
-/* SOE Cards */
+/* SOE CARDS */
 .soe-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem; margin-top: 3rem;
+  gap: 20px; margin-bottom: 3rem;
 }
 .soe-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px; padding: 1.75rem;
-  transition: all 0.3s ease;
-  position: relative; overflow: hidden;
-  cursor: pointer;
+  border: var(--tk-rule);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
 }
-.soe-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--yellow-bright), var(--purple-mid));
-  opacity: 0; transition: opacity 0.3s;
-}
-.soe-card:hover {
-  border-color: var(--purple-light);
-  background: var(--bg-card-hover);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(74, 45, 122, 0.25);
-}
-.soe-card:hover::before { opacity: 1; }
+.soe-card:hover { background: var(--tk-bg-deep); }
 .soe-card-header {
   display: flex; align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 .soe-acronym {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem; font-weight: 600;
-  color: var(--yellow-bright);
-  background: rgba(245, 197, 24, 0.1);
-  padding: 0.25rem 0.6rem; border-radius: 6px;
-  letter-spacing: 0.05em;
+  font-family: var(--tk-mono);
+  font-size: 11px; font-weight: 400;
+  color: var(--tk-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .soe-domain-tag {
-  font-size: 0.65rem; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--purple-pale);
-  background: rgba(139, 95, 199, 0.15);
-  padding: 0.2rem 0.6rem; border-radius: 6px;
+  font-family: var(--tk-mono);
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--tk-ink-50);
 }
 .soe-name {
-  font-size: 1.05rem; font-weight: 700;
-  margin-bottom: 0.35rem; line-height: 1.3;
+  font-size: 18px; font-weight: 500;
+  margin-bottom: 0.25rem; line-height: 1.25;
 }
-.soe-chinese { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.65rem; }
+.soe-chinese {
+  font-size: 13px; color: var(--tk-ink-50);
+  margin-bottom: 0.6rem;
+}
 .soe-desc {
-  font-size: 0.8rem; color: var(--text-secondary);
-  line-height: 1.6; margin-bottom: 1rem;
+  font-size: 14px; color: var(--tk-ink-70);
+  line-height: 1.55; margin-bottom: 0.85rem;
+  text-wrap: pretty;
 }
-.soe-products {
-  display: flex; flex-wrap: wrap; gap: 0.4rem;
-}
+.soe-products { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .soe-product-tag {
-  font-size: 0.7rem; padding: 0.2rem 0.5rem;
-  background: rgba(107, 63, 160, 0.15);
-  border: 1px solid rgba(107, 63, 160, 0.2);
-  border-radius: 6px; color: var(--purple-pale);
+  font-family: var(--tk-mono);
+  font-size: 10px; padding: 3px 8px;
+  border: var(--tk-rule);
+  color: var(--tk-ink-70);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-/* Platform Carousel */
+/* PLATFORM CAROUSEL */
 .platform-carousel-section {
-  margin-top: 4rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 20px; padding: 2.5rem;
+  margin-top: 3rem;
+  border: var(--tk-rule);
+  padding: 2rem;
 }
 .platform-carousel-title {
-  font-size: 1rem; font-weight: 700;
-  margin-bottom: 0.25rem;
+  font-size: 21px; font-weight: 500; margin-bottom: 0.15rem;
 }
 .platform-carousel-sub {
-  font-size: 0.8rem; color: var(--text-muted);
+  font-family: var(--tk-mono);
+  font-size: 10.5px; color: var(--tk-ink-50);
+  text-transform: uppercase; letter-spacing: 0.1em;
   margin-bottom: 1.5rem;
 }
 .carousel-wrapper { position: relative; overflow: hidden; }
 .carousel-track {
-  display: flex; gap: 1.25rem;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex; gap: 20px;
+  transition: transform 0.5s ease;
 }
 .platform-card {
   min-width: 260px; flex-shrink: 0;
-  background: var(--bg-dark);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px; padding: 1.25rem;
-  transition: all 0.3s;
+  border: var(--tk-rule);
+  padding: 1.25rem;
+  transition: background 0.15s;
 }
-.platform-card:hover {
-  border-color: var(--yellow-bright);
-  background: rgba(245, 197, 24, 0.03);
-}
+.platform-card:hover { background: var(--tk-bg-deep); }
 .platform-card-domain {
-  font-size: 0.65rem; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--yellow-mid);
-  margin-bottom: 0.5rem; font-weight: 600;
+  font-family: var(--tk-mono);
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--tk-primary);
+  margin-bottom: 0.5rem;
 }
-.platform-card-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; }
-.platform-card-type { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+.platform-card-name { font-size: 16px; font-weight: 500; margin-bottom: 0.25rem; }
+.platform-card-type { font-size: 13px; color: var(--tk-ink-50); margin-bottom: 0.75rem; }
 .platform-card-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
-.platform-spec { font-size: 0.7rem; color: var(--text-secondary); }
-.platform-spec strong { display: block; color: var(--text-primary); font-size: 0.8rem; }
+.platform-spec { font-size: 13px; color: var(--tk-ink-70); }
+.platform-spec strong { display: block; color: var(--tk-ink); font-size: 14px; font-weight: 500; }
 .carousel-controls {
-  display: flex; justify-content: center;
-  gap: 0.75rem; margin-top: 1.5rem;
+  display: flex; justify-content: flex-start;
+  gap: 0.5rem; margin-top: 1.25rem;
 }
 .carousel-btn {
   width: 40px; height: 40px;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-dark);
-  color: var(--text-primary);
-  border-radius: 10px; cursor: pointer;
+  border: var(--tk-rule);
+  background: var(--tk-bg);
+  color: var(--tk-ink);
+  cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s; font-size: 1.1rem;
+  transition: background 0.15s;
+  font-size: 1rem;
 }
-.carousel-btn:hover {
-  background: var(--purple-dark);
-  border-color: var(--purple-mid);
-}
+.carousel-btn:hover { background: var(--tk-bg-deep); }
 
 /* EXPORTS SECTION */
-#exports {
-  background: linear-gradient(180deg, var(--bg-dark) 0%, #110E1A 100%);
-}
-.export-charts {
-  display: grid; grid-template-columns: 1.2fr 0.8fr;
-  gap: 2rem; margin-bottom: 3rem;
-}
-.chart-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px; padding: 1.75rem;
-}
-.chart-box-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
-.chart-box-sub { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.25rem; }
-.chart-container { position: relative; width: 100%; }
-.chart-container canvas { width: 100% !important; }
-
-/* Headline Stats */
 .headline-stats {
   display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: 1.25rem; margin-bottom: 3rem;
+  border: var(--tk-rule);
+  margin-bottom: 3rem;
 }
 .headline-stat {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 14px; padding: 1.3rem 1rem;
+  padding: 1.5rem 1rem;
   text-align: center;
-  transition: all 0.3s;
+  border-right: var(--tk-rule);
+  transition: background 0.15s;
 }
-.headline-stat:hover {
-  border-color: var(--yellow-bright);
-  transform: translateY(-2px);
-}
+.headline-stat:last-child { border-right: none; }
+.headline-stat:hover { background: var(--tk-bg-deep); }
 .headline-stat-value {
-  font-size: 1.6rem; font-weight: 800;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--yellow-bright);
+  font-size: 32px; font-weight: 400;
+  color: var(--tk-gold);
+  letter-spacing: -0.02em; line-height: 1;
 }
 .headline-stat-label {
-  font-size: 0.7rem; color: var(--text-muted);
-  margin-top: 0.25rem; line-height: 1.3;
+  font-family: var(--tk-mono);
+  font-size: 10px; color: var(--tk-ink-50);
+  margin-top: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-/* Clientele Cards */
+/* CLIENTELE */
 .clientele-section { margin-bottom: 3rem; }
 .clientele-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  border: var(--tk-rule);
 }
 .clientele-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px; padding: 1.25rem;
+  padding: 1.25rem;
   text-align: center;
-  transition: all 0.3s;
+  border-right: var(--tk-rule);
+  transition: background 0.15s;
 }
-.clientele-card:hover {
-  border-color: var(--purple-light);
-  transform: translateY(-2px);
-}
-.clientele-flag { font-size: 2rem; margin-bottom: 0.4rem; }
-.clientele-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+.clientele-card:last-child { border-right: none; }
+.clientele-card:hover { background: var(--tk-bg-deep); }
+.clientele-flag { font-size: 1.8rem; margin-bottom: 0.3rem; }
+.clientele-name { font-size: 15px; font-weight: 500; margin-bottom: 0.2rem; }
 .clientele-pct {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.5rem; font-weight: 800;
-  color: var(--yellow-bright);
+  font-size: 36px; font-weight: 400;
+  color: var(--tk-gold);
+  letter-spacing: -0.02em;
 }
-.clientele-label { font-size: 0.65rem; color: var(--text-muted); }
+.clientele-label {
+  font-family: var(--tk-mono);
+  font-size: 10px; color: var(--tk-ink-50);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
 .clientele-bar {
-  height: 6px; border-radius: 3px;
-  background: rgba(107, 63, 160, 0.2);
-  margin-top: 0.6rem; overflow: hidden;
+  height: 4px;
+  background: var(--tk-ink-10);
+  margin-top: 0.6rem;
 }
 .clientele-bar-fill {
-  height: 100%; border-radius: 3px;
-  background: linear-gradient(90deg, var(--yellow-bright), var(--purple-mid));
-  transition: width 1s ease;
+  height: 100%;
+  background: var(--tk-primary);
 }
 
-/* CASE STUDIES */
-#cases {
-  background: var(--bg-dark);
+/* CHARTS */
+.export-charts {
+  display: grid; grid-template-columns: 7fr 5fr;
+  gap: 0; margin-bottom: 3rem;
+  border: var(--tk-rule);
 }
-.region-group {
-  margin-bottom: 4rem;
+.chart-box {
+  padding: 1.75rem;
+  border-right: var(--tk-rule);
 }
-.region-label {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-size: 0.75rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.15em;
-  color: var(--yellow-bright);
-  margin-bottom: 1.5rem;
-  padding: 0.4rem 1rem; border-radius: 8px;
-  background: rgba(245, 197, 24, 0.08);
-  border: 1px solid rgba(245, 197, 24, 0.15);
+.chart-box:last-child { border-right: none; }
+.chart-box-title { font-size: 18px; font-weight: 500; margin-bottom: 0.15rem; }
+.chart-box-sub {
+  font-family: var(--tk-mono);
+  font-size: 10.5px; color: var(--tk-ink-50);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 1.25rem;
 }
-.case-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 1.5rem;
-}
-.case-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-.case-card:hover {
-  border-color: var(--red-alert);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(231, 76, 60, 0.15);
-}
-.case-card-severity { height: 4px; }
-.case-card-severity.critical { background: var(--red-alert); }
-.case-card-severity.high { background: var(--orange-warn); }
-.case-card-severity.medium { background: var(--yellow-bright); }
-.case-card-content { padding: 1.5rem; }
-.case-card-top {
-  display: flex; justify-content: space-between;
-  align-items: flex-start; margin-bottom: 0.75rem;
-}
-.case-card-country {
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.case-card-flag { font-size: 1.3rem; }
-.case-card-nation { font-size: 0.85rem; font-weight: 600; }
-.case-card-year {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem; color: var(--text-muted);
-}
-.severity-badge {
-  font-size: 0.6rem; text-transform: uppercase;
-  letter-spacing: 0.1em; font-weight: 700;
-  padding: 0.2rem 0.5rem; border-radius: 4px;
-}
-.severity-badge.critical {
-  background: rgba(231, 76, 60, 0.15);
-  color: var(--red-alert);
-}
-.severity-badge.high {
-  background: rgba(243, 156, 18, 0.15);
-  color: var(--orange-warn);
-}
-.severity-badge.medium {
-  background: rgba(245, 197, 24, 0.15);
-  color: var(--yellow-bright);
-}
-.case-card-headline {
-  font-size: 1rem; font-weight: 700;
-  line-height: 1.35; margin-bottom: 0.5rem;
-}
-.case-card-platform {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  font-size: 0.72rem; padding: 0.2rem 0.5rem;
-  background: rgba(245, 197, 24, 0.08);
-  border: 1px solid rgba(245, 197, 24, 0.15);
-  border-radius: 5px; color: var(--yellow-pale);
-  margin-bottom: 0.75rem;
-}
-.case-card-desc {
-  font-size: 0.8rem; color: var(--text-secondary);
-  line-height: 1.65; margin-bottom: 1rem;
-}
-.case-card-complaint {
-  background: rgba(231, 76, 60, 0.06);
-  border-left: 3px solid var(--red-alert);
-  padding: 0.75rem 1rem; border-radius: 0 8px 8px 0;
-}
-.complaint-label {
-  font-size: 0.65rem; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--red-alert);
-  margin-bottom: 0.3rem; font-weight: 600;
-}
-.complaint-text {
-  font-size: 0.78rem; color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-/* Failure Matrix */
-.failure-matrix {
-  margin-top: 3rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  overflow: hidden;
-}
-.failure-matrix-title {
-  padding: 1.5rem 2rem;
-  font-size: 1.1rem; font-weight: 700;
-  border-bottom: 1px solid var(--border-subtle);
-}
-.matrix-table-wrapper { overflow-x: auto; }
-.matrix-table {
-  width: 100%; border-collapse: collapse;
-  font-size: 0.8rem;
-}
-.matrix-table th {
-  text-align: left;
-  padding: 0.85rem 1.25rem;
-  background: rgba(107, 63, 160, 0.08);
-  color: var(--purple-pale);
-  font-size: 0.7rem; text-transform: uppercase;
-  letter-spacing: 0.1em; font-weight: 600;
-  border-bottom: 1px solid var(--border-subtle);
-  white-space: nowrap;
-}
-.matrix-table td {
-  padding: 0.85rem 1.25rem;
-  border-bottom: 1px solid rgba(107, 63, 160, 0.08);
-  color: var(--text-secondary);
-  vertical-align: top;
-}
-.matrix-table tr:hover td { background: rgba(107, 63, 160, 0.05); }
-.matrix-table .country-col { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
-.matrix-table .platform-col { color: var(--yellow-bright); font-weight: 500; }
-.matrix-table .severity-col { white-space: nowrap; }
+.chart-container { position: relative; width: 100%; }
+.chart-container canvas { width: 100% !important; }
 
 /* DEALS */
-#deals {
-  background: linear-gradient(180deg, #110E1A 0%, var(--bg-dark) 100%);
-  padding: 5rem 2rem;
-}
-.deals-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 2.5rem;
-}
-.deals-title-group {}
+#deals { background: var(--tk-ink); color: #fff; }
+#deals .section-number { color: var(--tk-gold); }
+.deals-header { margin-bottom: 2rem; }
 .deals-badge {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  font-size: 0.7rem; font-weight: 600;
-  color: var(--yellow-bright);
-  text-transform: uppercase; letter-spacing: 0.12em;
+  font-family: var(--tk-mono);
+  font-size: 11px; font-weight: 400;
+  color: var(--tk-gold);
+  text-transform: uppercase; letter-spacing: 0.14em;
   margin-bottom: 0.5rem;
 }
 .deals-badge .live-dot {
-  width: 8px; height: 8px;
+  width: 6px; height: 6px;
   background: var(--red-alert); border-radius: 50%;
   animation: pulse-dot 1.5s infinite;
 }
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+}
 .deals-title {
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 800;
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 400; letter-spacing: -0.02em;
+  color: #fff;
 }
 .deals-carousel {
-  display: flex; gap: 1.5rem;
+  display: flex; gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
 }
 .deals-carousel::-webkit-scrollbar { display: none; }
 .deal-card {
   min-width: 400px; max-width: 400px;
   flex-shrink: 0;
   scroll-snap-align: start;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.3s;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.15s;
 }
-.deal-card:hover {
-  border-color: var(--yellow-bright);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(245, 197, 24, 0.1);
-}
+.deal-card:hover { background: rgba(255,255,255,0.04); }
 .deal-card-accent {
-  height: 4px;
-  background: linear-gradient(90deg, var(--yellow-bright), var(--purple-mid));
+  height: 3px; background: var(--tk-gold);
 }
 .deal-card-content { padding: 1.5rem; }
 .deal-date {
-  font-size: 0.7rem; color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase; letter-spacing: 0.08em;
+  font-family: var(--tk-mono);
+  font-size: 10.5px; color: rgba(255,255,255,0.50);
+  text-transform: uppercase; letter-spacing: 0.1em;
   margin-bottom: 0.6rem;
 }
 .deal-headline {
-  font-size: 1rem; font-weight: 700;
-  line-height: 1.35; margin-bottom: 0.6rem;
+  font-size: 18px; font-weight: 500;
+  line-height: 1.25; margin-bottom: 0.6rem; color: #fff;
 }
 .deal-parties { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
 .deal-party {
-  font-size: 0.7rem; padding: 0.2rem 0.6rem;
-  border-radius: 6px; font-weight: 500;
+  font-family: var(--tk-mono);
+  font-size: 10px; padding: 3px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 .deal-party.seller {
-  background: rgba(231, 76, 60, 0.12); color: #ff7675;
-  border: 1px solid rgba(231, 76, 60, 0.2);
+  background: rgba(98,13,60,0.4); color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(98,13,60,0.5);
 }
 .deal-party.buyer {
-  background: rgba(46, 204, 113, 0.1); color: #55efc4;
-  border: 1px solid rgba(46, 204, 113, 0.2);
+  background: rgba(241,162,34,0.15); color: var(--tk-gold);
+  border: 1px solid rgba(241,162,34,0.25);
 }
 .deal-desc {
-  font-size: 0.8rem; color: var(--text-secondary);
+  font-size: 14px; color: rgba(255,255,255,0.70);
   line-height: 1.6; margin-bottom: 1rem;
 }
 .deal-meta {
   display: flex; justify-content: space-between;
   align-items: center; padding-top: 0.85rem;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(255,255,255,0.12);
 }
 .deal-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.05rem; font-weight: 700;
-  color: var(--yellow-bright);
+  font-size: 22px; font-weight: 400;
+  color: var(--tk-gold);
+  letter-spacing: -0.01em;
 }
-.deal-value-label { font-size: 0.65rem; color: var(--text-muted); }
+.deal-value-label {
+  font-family: var(--tk-mono);
+  font-size: 10px; color: rgba(255,255,255,0.45);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
 .deal-type-tag {
-  font-size: 0.68rem; padding: 0.25rem 0.6rem;
-  background: rgba(107, 63, 160, 0.15);
-  border: 1px solid rgba(107, 63, 160, 0.25);
-  border-radius: 6px; color: var(--purple-pale);
+  font-family: var(--tk-mono);
+  font-size: 10px; padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.70);
+  text-transform: uppercase; letter-spacing: 0.06em;
 }
 
-/* OUTLOOK */
-#outlook {
-  background: linear-gradient(180deg, var(--bg-dark) 0%, #110E1A 100%);
+/* CASE STUDIES */
+.region-group { margin-bottom: 3rem; }
+.region-label {
+  font-family: var(--tk-mono);
+  font-size: 11px; font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--tk-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--tk-ink);
 }
-.outlook-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem; margin-bottom: 3rem;
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 20px;
 }
-.outlook-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px; padding: 2rem;
-  transition: all 0.3s;
-  position: relative;
+.case-card {
+  border: var(--tk-rule);
+  transition: background 0.15s;
 }
-.outlook-card:hover {
-  border-color: var(--purple-light);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(74, 45, 122, 0.2);
+.case-card:hover { background: var(--tk-bg-deep); }
+.case-card-severity { height: 3px; }
+.case-card-severity.critical { background: var(--red-alert); }
+.case-card-severity.high { background: var(--orange-warn); }
+.case-card-severity.medium { background: var(--tk-gold); }
+.case-card-content { padding: 1.5rem; }
+.case-card-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 0.6rem;
 }
-.outlook-card-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 2rem; font-weight: 800;
-  color: var(--purple-mid); opacity: 0.3;
-  position: absolute; top: 1rem; right: 1.5rem;
+.case-card-country { display: flex; align-items: center; gap: 0.5rem; }
+.case-card-flag { font-size: 1.2rem; }
+.case-card-nation { font-size: 15px; font-weight: 500; }
+.case-card-year {
+  font-family: var(--tk-mono);
+  font-size: 10.5px; color: var(--tk-ink-50);
+  letter-spacing: 0.06em;
 }
-.outlook-card-title {
-  font-size: 1rem; font-weight: 700;
-  margin-bottom: 0.75rem; line-height: 1.3;
+.severity-badge {
+  font-family: var(--tk-mono);
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.1em; font-weight: 400;
+  padding: 3px 8px;
 }
-.outlook-card-text {
-  font-size: 0.82rem; color: var(--text-secondary);
-  line-height: 1.7;
+.severity-badge.critical {
+  background: #fef2f2; color: var(--red-alert);
+  border: 1px solid #fecaca;
 }
-
-/* Purge Ticker */
-.purge-section {
-  background: var(--bg-card);
-  border: 1px solid rgba(231, 76, 60, 0.2);
-  border-radius: 16px; padding: 2rem;
+.severity-badge.high {
+  background: #fff7ed; color: var(--orange-warn);
+  border: 1px solid #fed7aa;
 }
-.purge-title {
-  font-size: 1rem; font-weight: 700;
+.severity-badge.medium {
+  background: var(--tk-gold-soft); color: #92400e;
+  border: 1px solid #fde68a;
+}
+.case-card-headline {
+  font-size: 18px; font-weight: 500;
+  line-height: 1.25; margin-bottom: 0.4rem;
+}
+.case-card-platform {
+  display: inline-block;
+  font-family: var(--tk-mono);
+  font-size: 10px; padding: 3px 8px;
+  border: var(--tk-rule);
+  color: var(--tk-ink-50);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+.case-card-desc {
+  font-size: 14px; color: var(--tk-ink-70);
+  line-height: 1.55; margin-bottom: 1rem;
+  text-wrap: pretty;
+}
+.case-card-complaint {
+  border-left: 2px solid var(--tk-primary);
+  padding: 0.75rem 1rem;
+}
+.complaint-label {
+  font-family: var(--tk-mono);
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--tk-primary);
   margin-bottom: 0.3rem;
 }
-.purge-sub {
-  font-size: 0.78rem; color: var(--text-muted);
-  margin-bottom: 1.25rem;
-}
-.purge-grid {
-  display: flex; flex-wrap: wrap; gap: 0.75rem;
-}
-.purge-tag {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.78rem; padding: 0.5rem 0.85rem;
-  background: rgba(231, 76, 60, 0.06);
-  border: 1px solid rgba(231, 76, 60, 0.15);
-  border-radius: 8px; color: var(--text-secondary);
-}
-.purge-tag strong {
-  color: var(--text-primary); font-weight: 600;
-}
-.purge-tag .purge-role {
-  font-size: 0.65rem; color: var(--text-muted);
+.complaint-text {
+  font-size: 13px; color: var(--tk-ink-70);
+  line-height: 1.55;
 }
 
-/* FOOTER */
-footer {
-  padding: 3rem 2rem;
-  border-top: 1px solid var(--border-subtle);
-  text-align: center;
+/* FAILURE MATRIX */
+.failure-matrix {
+  margin-top: 3rem;
+  border: var(--tk-rule);
 }
-.footer-inner { max-width: 1400px; margin: 0 auto; }
+.failure-matrix-title {
+  padding: 1.25rem 1.5rem;
+  font-size: 18px; font-weight: 500;
+  border-bottom: 2px solid var(--tk-ink);
+}
+.matrix-table-wrapper { overflow-x: auto; }
+.matrix-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 14px;
+}
+.matrix-table th {
+  text-align: left;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--tk-mono);
+  color: var(--tk-ink-50);
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 400;
+  border-bottom: var(--tk-rule);
+  white-space: nowrap;
+}
+.matrix-table td {
+  padding: 0.75rem 1.25rem;
+  border-bottom: var(--tk-rule);
+  color: var(--tk-ink-70);
+  vertical-align: top;
+}
+.matrix-table tr:hover td { background: var(--tk-bg-deep); }
+.matrix-table .country-col { font-weight: 500; color: var(--tk-ink); white-space: nowrap; }
+.matrix-table .platform-col { color: var(--tk-primary); font-weight: 500; }
+
+/* OUTLOOK */
+.outlook-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: var(--tk-rule);
+  margin-bottom: 3rem;
+}
+.outlook-card {
+  padding: 2rem;
+  border-right: var(--tk-rule);
+  transition: background 0.15s;
+  position: relative;
+}
+.outlook-card:last-child { border-right: none; }
+.outlook-card:hover { background: var(--tk-bg-deep); }
+.outlook-card-num {
+  font-family: var(--tk-mono);
+  font-size: 11px; font-weight: 400;
+  color: var(--tk-primary);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+}
+.outlook-card-title {
+  font-size: 18px; font-weight: 500;
+  margin-bottom: 0.75rem; line-height: 1.25;
+}
+.outlook-card-text {
+  font-size: 14px; color: var(--tk-ink-70);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* PURGE SECTION */
+.purge-section {
+  border: var(--tk-rule);
+  padding: 2rem;
+}
+.purge-title { font-size: 18px; font-weight: 500; margin-bottom: 0.2rem; }
+.purge-sub {
+  font-size: 14px; color: var(--tk-ink-70);
+  margin-bottom: 1.25rem; line-height: 1.55;
+}
+.purge-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.purge-tag {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 14px; padding: 8px 14px;
+  border: var(--tk-rule);
+  color: var(--tk-ink-70);
+  transition: background 0.15s;
+}
+.purge-tag:hover { background: var(--tk-bg-deep); }
+.purge-tag strong { color: var(--tk-ink); font-weight: 500; }
+.purge-tag .purge-role {
+  font-family: var(--tk-mono);
+  font-size: 10px; color: var(--tk-ink-50);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* FOOTER — wine */
+footer {
+  background: var(--tk-primary);
+  color: #fff;
+  padding: 64px var(--tk-pad-x) 40px;
+}
+.footer-inner {
+  max-width: var(--tk-max); margin: 0 auto;
+}
 .footer-brand {
-  font-size: 1rem; font-weight: 700;
-  color: var(--yellow-bright);
-  margin-bottom: 0.5rem;
+  font-size: 16px; font-weight: 500;
+  margin-bottom: 0.75rem;
 }
 .footer-text {
-  font-size: 0.75rem; color: var(--text-muted);
-  line-height: 1.7; max-width: 500px; margin: 0 auto;
+  font-size: 14px; color: rgba(255,255,255,0.80);
+  line-height: 1.6; max-width: 600px;
 }
+.footer-text a {
+  color: var(--tk-gold); text-decoration: none;
+}
+.footer-text a:hover { text-decoration: underline; }
 .footer-sources {
   margin-top: 1.5rem;
-  font-size: 0.7rem; color: var(--text-muted);
+  font-family: var(--tk-mono);
+  font-size: 10.5px; color: rgba(255,255,255,0.50);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
-.footer-sources a { color: var(--purple-light); text-decoration: none; }
+.footer-sources a {
+  color: rgba(255,255,255,0.70);
+  text-decoration: none;
+}
 .footer-sources a:hover { text-decoration: underline; }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .mic-overview { grid-template-columns: 1fr; }
   .export-charts { grid-template-columns: 1fr; }
+  .export-charts .chart-box { border-right: none; border-bottom: var(--tk-rule); }
+  .export-charts .chart-box:last-child { border-bottom: none; }
   .headline-stats { grid-template-columns: repeat(3, 1fr); }
+  .headline-stat:nth-child(3) { border-right: none; }
+  .headline-stat:nth-child(-n+3) { border-bottom: var(--tk-rule); }
   .clientele-grid { grid-template-columns: repeat(2, 1fr); }
+  .clientele-card:nth-child(2) { border-right: none; }
+  .clientele-card:nth-child(-n+2) { border-bottom: var(--tk-rule); }
   .outlook-grid { grid-template-columns: 1fr; }
+  .outlook-card { border-right: none; border-bottom: var(--tk-rule); }
+  .outlook-card:last-child { border-bottom: none; }
 }
 @media (max-width: 768px) {
+  :root { --tk-pad-x: 24px; }
   .nav-links { display: none; }
-  .hero-stats { gap: 1.5rem; }
   .soe-grid { grid-template-columns: 1fr; }
   .case-grid { grid-template-columns: 1fr; }
   .deal-card { min-width: 320px; max-width: 320px; }
   .headline-stats { grid-template-columns: repeat(2, 1fr); }
-  .clientele-grid { grid-template-columns: 1fr 1fr; }
-  section { padding: 4rem 1.25rem; }
+  section { padding: 44px var(--tk-pad-x); }
 }
-@media (max-width: 480px) {
+@media (max-width: 560px) {
+  :root { --tk-pad-x: 18px; }
   .headline-stats { grid-template-columns: 1fr; }
-  .hero-stats { flex-direction: column; gap: 1rem; }
+  .headline-stat { border-right: none; border-bottom: var(--tk-rule); }
+  .headline-stat:last-child { border-bottom: none; }
+  .hero-stats { flex-direction: column; gap: 1.5rem; }
   .clientele-grid { grid-template-columns: 1fr; }
+  .clientele-card { border-right: none; border-bottom: var(--tk-rule); }
+  .clientele-card:last-child { border-bottom: none; }
 }
 
-/* ANIMATIONS */
+/* ANIMATIONS — subtle fade only, no lift */
 .fade-in {
-  opacity: 0; transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-.fade-in-delay-1 { transition-delay: 0.1s; }
-.fade-in-delay-2 { transition-delay: 0.2s; }
-.fade-in-delay-3 { transition-delay: 0.3s; }
-.fade-in-delay-4 { transition-delay: 0.4s; }
+.fade-in.visible { opacity: 1; }
 </style>
 </head>
 <body>
@@ -851,12 +796,12 @@ footer {
 <nav id="navbar">
   <div class="nav-inner">
     <div class="nav-brand">
-      'MADE IN CHINA' <span>WEAPONS TRACKER</span>
+      <strong>'Made in China'</strong> Weapons Tracker
     </div>
     <div class="nav-links">
       <a href="#mic">The MIC</a>
-      <a href="#exports">Exports &amp; Patterns</a>
-      <a href="#deals">Deal Tracker</a>
+      <a href="#exports">Exports</a>
+      <a href="#deals">Deals</a>
       <a href="#cases">Case Studies</a>
       <a href="#outlook">Outlook</a>
     </div>
@@ -864,16 +809,16 @@ footer {
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="hero">
+<section class="hero" id="hero" style="border-bottom:none;">
   <div class="hero-content">
-    <a href="https://takshashila.org.in/content/publications/ChinaArms-20062026.html" target="_blank" class="hero-badge" style="text-decoration:none; cursor:pointer;">Read the Full Paper Here &rarr;</a>
+    <a href="https://takshashila.org.in/content/publications/ChinaArms-20062026.html" target="_blank" class="hero-paper-link">Read the Full Paper Here →</a>
     <h1>
-      Weapons <span class="highlight">'Made in China'</span><br>
+      Weapons <em>'Made in China'</em><br>
       Foolproof or in Muddy Waters?
     </h1>
     <p class="hero-sub">
       Tracking the paradox of Beijing's rise as a major arms exporter and the operational deficiencies
-      plaguing its military-industrial complex &mdash; from SOE monopolies to battlefield post-mortems.
+      plaguing its military-industrial complex — from SOE monopolies to battlefield post-mortems.
     </p>
     <div class="hero-stats">
       <div class="hero-stat">
@@ -890,19 +835,13 @@ footer {
       </div>
       <div class="hero-stat">
         <div class="hero-stat-value">~95</div>
-        <div class="hero-stat-label">JF-17s Exported (Only Customer)</div>
+        <div class="hero-stat-label">JF-17s Exported</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-value">4th&rarr;5th</div>
-        <div class="hero-stat-label">Exporter Rank (Passed by Germany)</div>
+        <div class="hero-stat-value">4th→5th</div>
+        <div class="hero-stat-label">Exporter Rank</div>
       </div>
     </div>
-  </div>
-  <div class="scroll-indicator">
-    <span>Scroll to explore</span>
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
-      <path d="M12 5v14M5 12l7 7 7-7"/>
-    </svg>
   </div>
 </section>
 
@@ -910,58 +849,47 @@ footer {
 <section id="mic">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <div class="section-number">01 &mdash; Architecture</div>
+      <div class="section-number">01 — Architecture</div>
       <h2 class="section-title">China's Military-Industrial Complex</h2>
       <p class="section-subtitle">
         Policy scaffolding, state-owned enterprises, and the non-traditional actors driving Military-Civil Fusion
       </p>
-      <div class="section-divider"></div>
     </div>
 
-    <!-- Policy Stack -->
-    <div class="fade-in">
-      <div class="policy-stack" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
-        <div class="policy-card">
-          <div class="policy-card-label">Strategy</div>
-          <div class="policy-card-title">Military-Civil Fusion &rarr; NSSC</div>
-          <div class="policy-card-desc">Whole-of-nation mobilisation for dual-use tech integration</div>
-        </div>
-        <div class="policy-card">
-          <div class="policy-card-label">Legislation</div>
-          <div class="policy-card-title">Export Control + Data Security Laws</div>
-          <div class="policy-card-desc">Broad security parameters governing dual-use trade &amp; data flows</div>
-        </div>
-        <div class="policy-card">
-          <div class="policy-card-label">April 2026</div>
-          <div class="policy-card-title">Decrees 834 &amp; 835</div>
-          <div class="policy-card-desc">Supply chain security &amp; countering foreign extraterritorial jurisdiction</div>
-        </div>
-        <div class="policy-card">
-          <div class="policy-card-label">US Response</div>
-          <div class="policy-card-title">1260H List &mdash; 188 Entities</div>
-          <div class="policy-card-desc">Including Alibaba, Baidu, BYD designated as Chinese Military Companies</div>
-        </div>
+    <div class="policy-grid fade-in">
+      <div class="policy-card">
+        <div class="policy-card-label">Strategy</div>
+        <div class="policy-card-title">Military-Civil Fusion → NSSC</div>
+        <div class="policy-card-desc">Whole-of-nation mobilisation for dual-use tech integration</div>
+      </div>
+      <div class="policy-card">
+        <div class="policy-card-label">Legislation</div>
+        <div class="policy-card-title">Export Control + Data Security Laws</div>
+        <div class="policy-card-desc">Broad security parameters governing dual-use trade &amp; data flows</div>
+      </div>
+      <div class="policy-card">
+        <div class="policy-card-label">April 2026</div>
+        <div class="policy-card-title">Decrees 834 &amp; 835</div>
+        <div class="policy-card-desc">Supply chain security &amp; countering foreign extraterritorial jurisdiction</div>
+      </div>
+      <div class="policy-card">
+        <div class="policy-card-label">US Response</div>
+        <div class="policy-card-title">1260H List — 188 Entities</div>
+        <div class="policy-card-desc">Including Alibaba, Baidu, BYD designated as Chinese Military Companies</div>
       </div>
     </div>
 
-    <!-- MCF Hierarchy -->
-
-    <div class="mcf-diagram fade-in" style="margin-top: 3rem;">
+    <div class="mcf-diagram fade-in">
       <div class="mcf-title">Military-Civil Fusion Hierarchy</div>
       <div class="mcf-layers">
         <div class="mcf-layer party">CCP Central Committee &amp; Central Military Commission</div>
-        <div class="mcf-connector"></div>
         <div class="mcf-layer cmc">SASAC &amp; CMC Equipment Development Dept.</div>
-        <div class="mcf-connector"></div>
         <div class="mcf-layer soe">Legacy SOEs (NORINCO, AVIC, CASC, CASIC, CETC, CSSC, Poly, CATIC)</div>
-        <div class="mcf-connector"></div>
-        <div class="mcf-layer ntv">Non-Traditional Vendors (~75% of PLA AI contracts, 2023&ndash;24)</div>
-        <div class="mcf-connector"></div>
+        <div class="mcf-layer ntv">Non-Traditional Vendors (~75% of PLA AI contracts, 2023–24)</div>
         <div class="mcf-layer civil">Civilian Tech (Baidu, Alibaba, Tencent, Huawei, DJI, SenseTime)</div>
       </div>
     </div>
 
-    <!-- SOE Cards -->
     <div class="soe-grid">
       <div class="soe-card fade-in">
         <div class="soe-card-header">
@@ -970,10 +898,7 @@ footer {
         </div>
         <div class="soe-name">China North Industries Group Corporation</div>
         <div class="soe-chinese">中国兵器工业集团有限公司</div>
-        <div class="soe-desc">
-          China's largest land systems manufacturer. Dominates ground-force exports to Africa, SE Asia, and West Asia.
-          One of only four SOEs authorised to export SALW.
-        </div>
+        <div class="soe-desc">China's largest land systems manufacturer. Dominates ground-force exports to Africa, SE Asia, and West Asia. One of only four SOEs authorised to export SALW.</div>
         <div class="soe-products">
           <span class="soe-product-tag">VT-4 MBT</span>
           <span class="soe-product-tag">VT-5 Light Tank</span>
@@ -983,17 +908,14 @@ footer {
         </div>
       </div>
 
-      <div class="soe-card fade-in fade-in-delay-1">
+      <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">AVIC</div>
           <div class="soe-domain-tag">Aviation</div>
         </div>
         <div class="soe-name">Aviation Industry Corporation of China</div>
         <div class="soe-chinese">中国航空工业集团有限公司</div>
-        <div class="soe-desc">
-          Dominant aerospace conglomerate. Subsidiaries include Chengdu Aircraft (CAC) and Shenyang Aircraft.
-          Wing Loong drone series especially popular in the global market.
-        </div>
+        <div class="soe-desc">Dominant aerospace conglomerate. Subsidiaries include Chengdu Aircraft (CAC) and Shenyang Aircraft. Wing Loong drone series especially popular in the global market.</div>
         <div class="soe-products">
           <span class="soe-product-tag">JF-17 Thunder</span>
           <span class="soe-product-tag">J-10CE</span>
@@ -1002,17 +924,14 @@ footer {
         </div>
       </div>
 
-      <div class="soe-card fade-in fade-in-delay-2">
+      <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">CASC</div>
           <div class="soe-domain-tag">Missiles &amp; Space</div>
         </div>
         <div class="soe-name">China Aerospace Science &amp; Technology Corp.</div>
         <div class="soe-chinese">中国航天科技集团有限公司</div>
-        <div class="soe-desc">
-          Leads strategic missile and space programmes. CH/"Rainbow" series drones widely exported.
-          Also produces BeiDou navigation satellites and Long March launch vehicles.
-        </div>
+        <div class="soe-desc">Leads strategic missile and space programmes. CH/"Rainbow" series drones widely exported. Also produces BeiDou navigation satellites.</div>
         <div class="soe-products">
           <span class="soe-product-tag">CH-4B Rainbow</span>
           <span class="soe-product-tag">CH-5</span>
@@ -1024,14 +943,11 @@ footer {
       <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">CASIC</div>
-          <div class="soe-domain-tag">Air Defence &amp; Cruise Missiles</div>
+          <div class="soe-domain-tag">Air Defence</div>
         </div>
         <div class="soe-name">China Aerospace Science &amp; Industry Corp.</div>
         <div class="soe-chinese">中国航天科工集团有限公司</div>
-        <div class="soe-desc">
-          Responsible for SAM systems including the HQ-9 family and cruise/anti-ship missiles.
-          SAM systems exported to 12+ countries between 2015 and 2025.
-        </div>
+        <div class="soe-desc">Responsible for SAM systems including the HQ-9 family and cruise/anti-ship missiles. SAM systems exported to 12+ countries between 2015 and 2025.</div>
         <div class="soe-products">
           <span class="soe-product-tag">HQ-9B SAM</span>
           <span class="soe-product-tag">HQ-22/FK-3</span>
@@ -1040,17 +956,14 @@ footer {
         </div>
       </div>
 
-      <div class="soe-card fade-in fade-in-delay-1">
+      <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">CETC</div>
           <div class="soe-domain-tag">Electronics &amp; Radar</div>
         </div>
         <div class="soe-name">China Electronics Technology Group Corp.</div>
         <div class="soe-chinese">中国电子科技集团有限公司</div>
-        <div class="soe-desc">
-          Produces military radars, EW systems, and C4ISR infrastructure. JY-27A and JYL-1 radars marketed
-          as "anti-stealth" &mdash; operationally failed in Venezuela (January 2026).
-        </div>
+        <div class="soe-desc">Produces military radars, EW systems, and C4ISR infrastructure. JY-27A and JYL-1 radars marketed as "anti-stealth" — operationally failed in Venezuela (January 2026).</div>
         <div class="soe-products">
           <span class="soe-product-tag">JY-27A Radar</span>
           <span class="soe-product-tag">JYL-1 Radar</span>
@@ -1059,17 +972,14 @@ footer {
         </div>
       </div>
 
-      <div class="soe-card fade-in fade-in-delay-2">
+      <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">CSSC</div>
-          <div class="soe-domain-tag">Naval &amp; Shipbuilding</div>
+          <div class="soe-domain-tag">Naval</div>
         </div>
         <div class="soe-name">China State Shipbuilding Corporation</div>
         <div class="soe-chinese">中国船舶集团有限公司</div>
-        <div class="soe-desc">
-          World's largest shipbuilder by tonnage. Builds PLA Navy fleet domestically and export frigates,
-          corvettes, and submarines for Pakistan, Bangladesh, and Thailand.
-        </div>
+        <div class="soe-desc">World's largest shipbuilder by tonnage. Builds PLA Navy fleet domestically and export frigates, corvettes, and submarines for Pakistan, Bangladesh, and Thailand.</div>
         <div class="soe-products">
           <span class="soe-product-tag">Type 054A/P Frigates</span>
           <span class="soe-product-tag">Hangor-class Subs</span>
@@ -1080,15 +990,12 @@ footer {
 
       <div class="soe-card fade-in">
         <div class="soe-card-header">
-          <div class="soe-acronym">POLY TECH</div>
+          <div class="soe-acronym">Poly Tech</div>
           <div class="soe-domain-tag">Arms Trading &amp; SALW</div>
         </div>
         <div class="soe-name">Poly Technologies Inc.</div>
         <div class="soe-chinese">保利科技有限公司</div>
-        <div class="soe-desc">
-          One of only four SOEs authorised to export SALW. Originally under PLA control, transferred to State Council
-          in 1999. US-sanctioned in 2013 over nonproliferation violations.
-        </div>
+        <div class="soe-desc">One of only four SOEs authorised to export SALW. Originally under PLA control, transferred to State Council in 1999. US-sanctioned in 2013.</div>
         <div class="soe-products">
           <span class="soe-product-tag">Assault Rifles</span>
           <span class="soe-product-tag">RPGs</span>
@@ -1097,17 +1004,14 @@ footer {
         </div>
       </div>
 
-      <div class="soe-card fade-in fade-in-delay-1">
+      <div class="soe-card fade-in">
         <div class="soe-card-header">
           <div class="soe-acronym">CATIC</div>
           <div class="soe-domain-tag">Aerospace Export</div>
         </div>
         <div class="soe-name">China National Aero-Technology Import &amp; Export Corp.</div>
         <div class="soe-chinese">中国航空技术进出口有限公司</div>
-        <div class="soe-desc">
-          AVIC's dedicated trading arm for international fighter jet, UAV, and helicopter sales.
-          Implicated in transfers to Liberia during its UN arms embargo.
-        </div>
+        <div class="soe-desc">AVIC's dedicated trading arm for international fighter jet, UAV, and helicopter sales. Implicated in transfers to Liberia during its UN arms embargo.</div>
         <div class="soe-products">
           <span class="soe-product-tag">Fighter Exports</span>
           <span class="soe-product-tag">UAV Sales</span>
@@ -1117,7 +1021,6 @@ footer {
       </div>
     </div>
 
-    <!-- Platform Carousel -->
     <div class="platform-carousel-section fade-in">
       <div class="platform-carousel-title">Key Export Platforms</div>
       <div class="platform-carousel-sub">Major systems exported between 2015 and 2025</div>
@@ -1180,7 +1083,7 @@ footer {
           </div>
           <div class="platform-card">
             <div class="platform-card-domain">Submarine</div>
-            <div class="platform-card-name">Hangor-class (Type 041)</div>
+            <div class="platform-card-name">Hangor-class</div>
             <div class="platform-card-type">Diesel-Electric Attack Sub</div>
             <div class="platform-card-specs">
               <div class="platform-spec"><strong>~$5B</strong>For 8 units</div>
@@ -1214,53 +1117,48 @@ footer {
         </div>
       </div>
       <div class="carousel-controls">
-        <button class="carousel-btn" onclick="scrollCarousel('platformCarousel', -1)">&larr;</button>
-        <button class="carousel-btn" onclick="scrollCarousel('platformCarousel', 1)">&rarr;</button>
+        <button class="carousel-btn" onclick="scrollCarousel('platformCarousel', -1)">←</button>
+        <button class="carousel-btn" onclick="scrollCarousel('platformCarousel', 1)">→</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SECTION 2: EXPORTS & PATTERNS -->
-<section id="exports">
+<!-- SECTION 2: EXPORTS -->
+<section id="exports" class="section-deep">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <div class="section-number">02 &mdash; Numbers &amp; Patterns</div>
+      <div class="section-number">02 — Numbers &amp; Patterns</div>
       <h2 class="section-title">The Export Footprint</h2>
-      <p class="section-subtitle">
-        SIPRI TIV data on scale, clientele dependency, and the geographic concentration of China's arms trade (2015&ndash;2025)
-      </p>
-      <div class="section-divider"></div>
+      <p class="section-subtitle">SIPRI TIV data on scale, clientele dependency, and the geographic concentration of China's arms trade (2015–2025)</p>
     </div>
 
-    <!-- Headline Stats -->
     <div class="headline-stats fade-in">
       <div class="headline-stat">
         <div class="headline-stat-value">~600</div>
-        <div class="headline-stat-label">Tanks &bull; 8 Countries</div>
+        <div class="headline-stat-label">Tanks · 8 Countries</div>
       </div>
       <div class="headline-stat">
         <div class="headline-stat-value">300+</div>
-        <div class="headline-stat-label">UCAVs &bull; 16+ Countries</div>
+        <div class="headline-stat-label">UCAVs · 16+ Countries</div>
       </div>
       <div class="headline-stat">
         <div class="headline-stat-value">12K+</div>
-        <div class="headline-stat-label">Missiles &bull; Pakistan Alone</div>
+        <div class="headline-stat-label">Missiles · Pakistan Alone</div>
       </div>
       <div class="headline-stat">
         <div class="headline-stat-value">~28</div>
-        <div class="headline-stat-label">Ships &bull; Bangladesh &amp; Pak</div>
+        <div class="headline-stat-label">Ships · Bangladesh &amp; Pak</div>
       </div>
       <div class="headline-stat">
         <div class="headline-stat-value">12+</div>
-        <div class="headline-stat-label">Countries &bull; SAM Systems</div>
+        <div class="headline-stat-label">Countries · SAM Systems</div>
       </div>
     </div>
 
-    <!-- Clientele Dependency -->
     <div class="clientele-section fade-in">
-      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.3rem;">Deeply Dependent Clientele (2025)</h3>
-      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">
+      <h3 style="font-size:21px; font-weight:500; margin-bottom:0.15rem;">Deeply Dependent Clientele (2025)</h3>
+      <p style="font-family:var(--tk-mono); font-size:10.5px; color:var(--tk-ink-50); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1.25rem;">
         Percentage of each country's total arms imports basket sourced from China
       </p>
       <div class="clientele-grid">
@@ -1295,71 +1193,52 @@ footer {
       </div>
     </div>
 
-    <!-- Charts -->
     <div class="export-charts fade-in">
       <div class="chart-box">
         <div class="chart-box-title">Global Arms Export Share Over Time</div>
         <div class="chart-box-sub">SIPRI 5-year rolling averages (%)</div>
-        <div class="chart-container">
-          <canvas id="exportShareChart" height="280"></canvas>
-        </div>
+        <div class="chart-container"><canvas id="exportShareChart" height="280"></canvas></div>
       </div>
       <div class="chart-box">
-        <div class="chart-box-title">Regional Distribution (2020&ndash;24)</div>
+        <div class="chart-box-title">Regional Distribution (2020–24)</div>
         <div class="chart-box-sub">Where Chinese arms exports go</div>
-        <div class="chart-container">
-          <canvas id="regionalChart" height="280"></canvas>
-        </div>
+        <div class="chart-container"><canvas id="regionalChart" height="280"></canvas></div>
       </div>
     </div>
 
-    <!-- New Charts: Tank & UCAV exports -->
-    <div class="export-charts fade-in" style="margin-top:0;">
+    <div class="export-charts fade-in" style="margin-top:0; border-top:none;">
       <div class="chart-box">
-        <div class="chart-box-title">Tank Exports by Buyer (2015&ndash;25)</div>
-        <div class="chart-box-sub">~600 tanks across all types (VT-4, Type-90-2M, VT-5, ZTD-05)</div>
-        <div class="chart-container">
-          <canvas id="tankChart" height="260"></canvas>
-        </div>
+        <div class="chart-box-title">Tank Exports by Buyer (2015–25)</div>
+        <div class="chart-box-sub">~600 tanks across all types</div>
+        <div class="chart-container"><canvas id="tankChart" height="260"></canvas></div>
       </div>
       <div class="chart-box">
-        <div class="chart-box-title">UCAV Exports by Buyer (2015&ndash;25)</div>
+        <div class="chart-box-title">UCAV Exports by Buyer (2015–25)</div>
         <div class="chart-box-sub">300+ combat drones to 16+ countries</div>
-        <div class="chart-container">
-          <canvas id="ucavChart" height="260"></canvas>
-        </div>
+        <div class="chart-container"><canvas id="ucavChart" height="260"></canvas></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SECTION 2.5: DEAL TRACKER -->
-<section id="deals">
+<!-- DEALS -->
+<section id="deals" style="border-bottom:none;">
   <div class="section-inner">
     <div class="deals-header fade-in">
-      <div class="deals-title-group">
-        <div class="deals-badge">
-          <span class="live-dot"></span>
-          Deal Tracker
-        </div>
-        <h2 class="deals-title">Latest Defence Industrial Deals</h2>
-      </div>
+      <div class="deals-badge"><span class="live-dot"></span> Deal Tracker</div>
+      <h2 class="deals-title">Latest Defence Industrial Deals</h2>
     </div>
-
     <div class="deals-carousel" id="dealsCarousel">
       <div class="deal-card fade-in">
         <div class="deal-card-accent"></div>
         <div class="deal-card-content">
-          <div class="deal-date">April 2024 &ndash; December 2025</div>
+          <div class="deal-date">April 2024 – December 2025</div>
           <div class="deal-headline">Hangor-Class Submarine Programme for Pakistan Navy</div>
           <div class="deal-parties">
             <span class="deal-party seller">🇨🇳 CSSC / Wuchang</span>
             <span class="deal-party buyer">🇵🇰 Pakistan Navy</span>
           </div>
-          <div class="deal-desc">
-            Four Type 041-variant diesel-electric submarines launched at Wuchang Shipyard; four more
-            to be assembled at Karachi under ToT. Pakistan's largest defence procurement programme.
-          </div>
+          <div class="deal-desc">Four Type 041-variant diesel-electric submarines launched at Wuchang Shipyard; four more to be assembled at Karachi under ToT. Pakistan's largest defence procurement programme.</div>
           <div class="deal-meta">
             <div>
               <div class="deal-value">~$5 Billion</div>
@@ -1369,8 +1248,7 @@ footer {
           </div>
         </div>
       </div>
-
-      <div class="deal-card fade-in fade-in-delay-1">
+      <div class="deal-card fade-in">
         <div class="deal-card-accent"></div>
         <div class="deal-card-content">
           <div class="deal-date">March 2026</div>
@@ -1379,10 +1257,7 @@ footer {
             <span class="deal-party seller">🇨🇳 AVIC</span>
             <span class="deal-party buyer">🇸🇦 GAMI / Saudi Arabia</span>
           </div>
-          <div class="deal-desc">
-            Landmark agreement for a manufacturing line producing 48 Wing Loong-3 UCAVs annually.
-            Costs ~25% of the US MQ-9B Reaper. A Vision 2030 defence localisation milestone.
-          </div>
+          <div class="deal-desc">Landmark agreement for a manufacturing line producing 48 Wing Loong-3 UCAVs annually. Costs ~25% of the US MQ-9B Reaper.</div>
           <div class="deal-meta">
             <div>
               <div class="deal-value">$5 Billion</div>
@@ -1392,8 +1267,7 @@ footer {
           </div>
         </div>
       </div>
-
-      <div class="deal-card fade-in fade-in-delay-2">
+      <div class="deal-card fade-in">
         <div class="deal-card-accent"></div>
         <div class="deal-card-content">
           <div class="deal-date">August 2025</div>
@@ -1402,11 +1276,7 @@ footer {
             <span class="deal-party seller">🇨🇳 CSOC</span>
             <span class="deal-party buyer">🇹🇭 Royal Thai Navy</span>
           </div>
-          <div class="deal-desc">
-            After years of stalled negotiations over the EU-embargoed German MTU396 engine, Thailand accepted
-            the unproven CHD620 substitute. Delivery extended by 1,217 days. China offered to sell the
-            half-built sub to Indonesia as leverage.
-          </div>
+          <div class="deal-desc">After years of stalled negotiations over the EU-embargoed German MTU396 engine, Thailand accepted the unproven CHD620 substitute. Delivery extended by 1,217 days.</div>
           <div class="deal-meta">
             <div>
               <div class="deal-value">13.5B Baht</div>
@@ -1420,21 +1290,17 @@ footer {
   </div>
 </section>
 
-<!-- SECTION 3: CASE STUDIES -->
+<!-- CASE STUDIES -->
 <section id="cases">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <div class="section-number">03 &mdash; Operational Realities</div>
+      <div class="section-number">03 — Operational Realities</div>
       <h2 class="section-title">Case Studies &amp; Battlefield Post-Mortems</h2>
-      <p class="section-subtitle">
-        Training and combat deployment reveal genuine issues &mdash; from mechanical failures to absent after-sales support
-      </p>
-      <div class="section-divider"></div>
+      <p class="section-subtitle">Training and combat deployment reveal genuine issues — from mechanical failures to absent after-sales support</p>
     </div>
 
-    <!-- SE ASIA -->
     <div class="region-group fade-in">
-      <div class="region-label">3.1 &mdash; Southeast Asia</div>
+      <div class="region-label">3.1 — Southeast Asia</div>
       <div class="case-grid">
         <div class="case-card">
           <div class="case-card-severity critical"></div>
@@ -1447,54 +1313,38 @@ footer {
               <span class="severity-badge critical">Critical</span>
             </div>
             <div class="case-card-headline">VT-4 Gun Barrel Explosion Near Cambodia Border</div>
-            <div class="case-card-platform">VT-4 MBT &bull; NORINCO</div>
-            <div class="case-card-desc">
-              During a live-fire exercise, a 125mm gun barrel exploded while firing HE ammunition. All three crew
-              severely wounded. Thai tank crews also report melting barrels past "safe limits" and underperforming
-              V12 diesel engines. Cambodia has damaged three Thai VT-4s in border clashes.
-            </div>
+            <div class="case-card-platform">VT-4 MBT · NORINCO</div>
+            <div class="case-card-desc">During a live-fire exercise, a 125mm gun barrel exploded while firing HE ammunition. All three crew severely wounded. Thai tank crews also report melting barrels past "safe limits" and underperforming V12 diesel engines.</div>
             <div class="case-card-complaint">
               <div class="complaint-label">History</div>
-              <div class="complaint-text">
-                Thailand's 1970s Type 69 MBTs sat unused for decades, then were dumped into the ocean as artificial reefs.
-                The Thai Ordnance Department attributes the 2025 explosion to "thermal stress."
-              </div>
+              <div class="complaint-text">Thailand's 1970s Type 69 MBTs sat unused for decades, then were dumped into the ocean as artificial reefs. The Thai Ordnance Department attributes the 2025 explosion to "thermal stress."</div>
             </div>
           </div>
         </div>
-
         <div class="case-card">
           <div class="case-card-severity high"></div>
           <div class="case-card-content">
             <div class="case-card-top">
               <div class="case-card-country">
                 <span class="case-card-flag">🇲🇲</span>
-                <div><div class="case-card-nation">Myanmar</div><div class="case-card-year">Nov 2022 &ndash; 2025</div></div>
+                <div><div class="case-card-nation">Myanmar</div><div class="case-card-year">Nov 2022 – 2025</div></div>
               </div>
               <span class="severity-badge high">High</span>
             </div>
             <div class="case-card-headline">JF-17 Fleet Grounded; FTC-2000Gs Shot Down</div>
-            <div class="case-card-platform">JF-17, FTC-2000G &bull; AVIC</div>
-            <div class="case-card-desc">
-              Majority of JF-17 fleet grounded due to structural airframe cracks, CETC KLJ-7A radar failures,
-              and inability to perform BVR targeting. Pakistani technicians secretly deployed to Pathein airbase.
-              Two FTC-2000Gs confirmed shot down &mdash; one by a Chinese-made FN-6 MANPAD, ironically.
-            </div>
+            <div class="case-card-platform">JF-17, FTC-2000G · AVIC</div>
+            <div class="case-card-desc">Majority of JF-17 fleet grounded due to structural airframe cracks, CETC KLJ-7A radar failures, and inability to perform BVR targeting. Two FTC-2000Gs confirmed shot down — one by a Chinese-made FN-6 MANPAD.</div>
             <div class="case-card-complaint">
               <div class="complaint-label">Systemic Issue</div>
-              <div class="complaint-text">
-                Myanmar lacks technical expertise for repairs and cannot import Western spares due to sanctions.
-                Radar resolution-cell issues with KLJ-7/7A affect situational awareness in dense combat environments.
-              </div>
+              <div class="complaint-text">Myanmar lacks technical expertise for repairs and cannot import Western spares due to sanctions. Pakistani technicians secretly deployed to Pathein airbase.</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- WEST ASIA -->
     <div class="region-group fade-in">
-      <div class="region-label">3.2 &mdash; West Asia</div>
+      <div class="region-label">3.2 — West Asia</div>
       <div class="case-grid">
         <div class="case-card">
           <div class="case-card-severity high"></div>
@@ -1502,27 +1352,15 @@ footer {
             <div class="case-card-top">
               <div class="case-card-country">
                 <span class="case-card-flag">🇮🇶</span>
-                <div><div class="case-card-nation">Iraq &amp; Jordan</div><div class="case-card-year">2016&ndash;2021</div></div>
+                <div><div class="case-card-nation">Iraq &amp; Jordan</div><div class="case-card-year">2016–2021</div></div>
               </div>
               <span class="severity-badge high">High</span>
             </div>
             <div class="case-card-headline">CH-4B Fleets: Mass Crashes, Grounded, Sold Off</div>
-            <div class="case-card-platform">CH-4B Rainbow &bull; CASC</div>
-            <div class="case-card-desc">
-              Eight of Iraq's 20 CH-4Bs crashed from technical malfunctions; the rest grounded by 2021 due to absolute
-              lack of spares from CASC. Jordan put all 6 CH-4Bs up for sale within three years of acquisition.
-              Algeria also experienced multiple crashes during routine drills.
-            </div>
-            <div class="case-card-complaint">
-              <div class="complaint-label">Broader Pattern</div>
-              <div class="complaint-text">
-                Despite failures, Iraq has since purchased CH-5 drones. Baghdad unveiled one during a live missile
-                drill as US forces exited Ain Al-Asad in February 2026. Countries continue engagement despite evidence.
-              </div>
-            </div>
+            <div class="case-card-platform">CH-4B Rainbow · CASC</div>
+            <div class="case-card-desc">Eight of Iraq's 20 CH-4Bs crashed from technical malfunctions; the rest grounded by 2021 due to absolute lack of spares. Jordan put all 6 CH-4Bs up for sale within three years of acquisition.</div>
           </div>
         </div>
-
         <div class="case-card">
           <div class="case-card-severity medium"></div>
           <div class="case-card-content">
@@ -1534,20 +1372,15 @@ footer {
               <span class="severity-badge medium">Continuing</span>
             </div>
             <div class="case-card-headline">$5B Wing Loong-3 Factory Despite Operational Concerns</div>
-            <div class="case-card-platform">Wing Loong III &bull; AVIC</div>
-            <div class="case-card-desc">
-              Riyadh signed a landmark co-production deal despite known operational issues with earlier Chinese
-              drones in the region. Driven by desire to diversify from US, strategic pricing (1/4 of MQ-9B cost),
-              and Vision 2030 indigenous capability goals. Saudi is the top UCAV buyer (~85 units, 2015&ndash;25).
-            </div>
+            <div class="case-card-platform">Wing Loong III · AVIC</div>
+            <div class="case-card-desc">Riyadh signed a landmark co-production deal despite known operational issues with earlier Chinese drones. Driven by desire to diversify from US, strategic pricing, and Vision 2030 goals.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- AFRICA -->
     <div class="region-group fade-in">
-      <div class="region-label">3.3 &mdash; Africa</div>
+      <div class="region-label">3.3 — Africa</div>
       <div class="case-grid">
         <div class="case-card">
           <div class="case-card-severity critical"></div>
@@ -1555,53 +1388,39 @@ footer {
             <div class="case-card-top">
               <div class="case-card-country">
                 <span class="case-card-flag">🇳🇬</span>
-                <div><div class="case-card-nation">Nigeria</div><div class="case-card-year">2020&ndash;2025</div></div>
+                <div><div class="case-card-nation">Nigeria</div><div class="case-card-year">2020–2025</div></div>
               </div>
               <span class="severity-badge critical">Critical</span>
             </div>
             <div class="case-card-headline">VT-4 "Temu Tanks": 30-Min Cooldowns, Destroyed by RPGs</div>
-            <div class="case-card-platform">VT-4 MBT, F-7 &bull; NORINCO, AVIC</div>
-            <div class="case-card-desc">
-              Procured for $152M to fight Boko Haram (Operation Tura Takai Bango). Turrets required 30-minute
-              cooldowns between engagements. Boko Haram destroyed multiple VT-4s with simple RPGs.
-              Nigeria also lost 3 F-7 jets to crashes; returned 7 of 9 remaining to China.
-            </div>
+            <div class="case-card-platform">VT-4 MBT, F-7 · NORINCO, AVIC</div>
+            <div class="case-card-desc">Procured for $152M to fight Boko Haram. Turrets required 30-minute cooldowns. Boko Haram destroyed multiple VT-4s with simple RPGs. Nigeria also lost 3 F-7 jets to crashes; returned 7 of 9 remaining to China.</div>
             <div class="case-card-complaint">
               <div class="complaint-label">Diversification</div>
-              <div class="complaint-text">
-                Nigeria resumed negotiations with Russia for T-90 MBTs ($99.5M). Armed forces continue using
-                Czech/Ukrainian T-72s and British Vickers Mk-3 tanks instead.
-              </div>
+              <div class="complaint-text">Nigeria resumed negotiations with Russia for T-90 MBTs. Armed forces continue using Czech/Ukrainian T-72s and British Vickers Mk-3 tanks instead.</div>
             </div>
           </div>
         </div>
-
         <div class="case-card">
           <div class="case-card-severity critical"></div>
           <div class="case-card-content">
             <div class="case-card-top">
               <div class="case-card-country">
                 <span class="case-card-flag">🇰🇪</span>
-                <div><div class="case-card-nation">Kenya</div><div class="case-card-year">2016&ndash;present</div></div>
+                <div><div class="case-card-nation">Kenya</div><div class="case-card-year">2016–present</div></div>
               </div>
               <span class="severity-badge critical">Critical</span>
             </div>
             <div class="case-card-headline">VN-4 APCs: Chinese Reps Refused to Sit Inside During Tests</div>
-            <div class="case-card-platform">VN-4 APC &bull; NORINCO / Chongqing Tiema</div>
-            <div class="case-card-desc">
-              Chinese sales representatives from Chongqing Tiema Industries refused to sit inside VN-4s
-              during test firings. Kenya's National Police Service found APCs "cannot withstand an RPG attack."
-              IEDs planted by Al Shabaab caused injuries and deaths. Kenya signed deals for South African
-              Springbuck APCs and US M1117s in late 2025.
-            </div>
+            <div class="case-card-platform">VN-4 APC · NORINCO / Chongqing Tiema</div>
+            <div class="case-card-desc">Chinese sales representatives refused to sit inside VN-4s during test firings. Kenya's National Police Service found APCs "cannot withstand an RPG attack." Kenya signed deals for South African Springbuck APCs and US M1117s in late 2025.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- VENEZUELA & PAKISTAN -->
     <div class="region-group fade-in">
-      <div class="region-label">3.4 &mdash; Venezuela &amp; Pakistan</div>
+      <div class="region-label">3.4 — Venezuela &amp; Pakistan</div>
       <div class="case-grid">
         <div class="case-card">
           <div class="case-card-severity critical"></div>
@@ -1614,16 +1433,10 @@ footer {
               <span class="severity-badge critical">Critical</span>
             </div>
             <div class="case-card-headline">Total Radar Blindness During US Op. Absolute Resolve</div>
-            <div class="case-card-platform">JY-27A, JYL-1 Radars &bull; CETC</div>
-            <div class="case-card-desc">
-              US Joint Chiefs assessed that Chinese radars "failed to detect US fighter jets or aircraft."
-              $2B+ layered air defence network (Chinese radars + Russian S-300s/Pantsir) did not fire a single shot.
-              Whether systems were overwhelmed by EW, internally sabotaged, or simply broken is debated &mdash;
-              but 60%+ of the radar network was already non-operational due to years of spare parts shortages.
-            </div>
+            <div class="case-card-platform">JY-27A, JYL-1 Radars · CETC</div>
+            <div class="case-card-desc">US Joint Chiefs assessed that Chinese radars "failed to detect US fighter jets or aircraft." $2B+ layered air defence network did not fire a single shot. 60%+ of the radar network was already non-operational due to spare parts shortages.</div>
           </div>
         </div>
-
         <div class="case-card">
           <div class="case-card-severity high"></div>
           <div class="case-card-content">
@@ -1635,106 +1448,30 @@ footer {
               <span class="severity-badge high">High</span>
             </div>
             <div class="case-card-headline">Operation Sindoor Exposes Chinese Air Defence &amp; Naval Gaps</div>
-            <div class="case-card-platform">HQ-9P, HQ-16, JF-17, F-22P Frigates &bull; Multiple SOEs</div>
-            <div class="case-card-desc">
-              Indian airstrikes penetrated defences heavily reliant on Chinese SAMs. F-22P frigate FM-90(N) missile
-              systems exhibit faulty image processing and cannot lock targets; IR17 sensors and SR60 radars also
-              defective. Multiple JF-17s have crashed during drills. Yet Pakistan continues procuring &mdash;
-              Type 054A/P frigates, Hangor subs, CM-401 hypersonic missiles.
-            </div>
+            <div class="case-card-platform">HQ-9P, HQ-16, JF-17, F-22P Frigates · Multiple SOEs</div>
+            <div class="case-card-desc">Indian airstrikes penetrated defences heavily reliant on Chinese SAMs. F-22P frigate FM-90(N) missile systems exhibit faulty image processing. Multiple JF-17s have crashed during drills.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Failure Matrix -->
     <div class="failure-matrix fade-in">
-      <div class="failure-matrix-title">Battlefield &amp; Operational Failure Matrix (2016&ndash;2026)</div>
+      <div class="failure-matrix-title">Battlefield &amp; Operational Failure Matrix (2016–2026)</div>
       <div class="matrix-table-wrapper">
         <table class="matrix-table">
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Platform</th>
-              <th>SOE</th>
-              <th>Nature of Failure</th>
-              <th>Severity</th>
-              <th>Consequence</th>
-            </tr>
-          </thead>
+          <thead><tr>
+            <th>Country</th><th>Platform</th><th>SOE</th><th>Nature of Failure</th><th>Severity</th><th>Consequence</th>
+          </tr></thead>
           <tbody>
-            <tr>
-              <td class="country-col">🇻🇪 Venezuela (2026)</td>
-              <td class="platform-col">JY-27A, JYL-1</td>
-              <td>CETC</td>
-              <td>Total blindness under US EW</td>
-              <td class="severity-col"><span class="severity-badge critical">Critical</span></td>
-              <td>IADS collapsed; Maduro captured</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇹🇭 Thailand (2025)</td>
-              <td class="platform-col">VT-4 MBT</td>
-              <td>NORINCO</td>
-              <td>125mm barrel explosion; thermal stress</td>
-              <td class="severity-col"><span class="severity-badge critical">Critical</span></td>
-              <td>3 crew wounded; metallurgical flaws</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇵🇰 Pakistan (2025)</td>
-              <td class="platform-col">HQ-9P, HQ-16, JF-17</td>
-              <td>CASIC, AVIC</td>
-              <td>Air defences penetrated in Op Sindoor</td>
-              <td class="severity-col"><span class="severity-badge high">High</span></td>
-              <td>Multiple Indian strikes on targets</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇳🇬 Nigeria (2020&ndash;25)</td>
-              <td class="platform-col">VT-4, F-7</td>
-              <td>NORINCO, AVIC</td>
-              <td>30-min cooldown; RPG penetration; crashes</td>
-              <td class="severity-col"><span class="severity-badge critical">Critical</span></td>
-              <td>"Temu tanks"; jets returned to China</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇲🇲 Myanmar (2022)</td>
-              <td class="platform-col">JF-17, FTC-2000G</td>
-              <td>AVIC</td>
-              <td>Structural cracks; BVR failure; shoot-downs</td>
-              <td class="severity-col"><span class="severity-badge high">High</span></td>
-              <td>Fleet grounded mid-civil war</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇮🇶🇯🇴 Iraq &amp; Jordan</td>
-              <td class="platform-col">CH-4B Rainbow</td>
-              <td>CASC</td>
-              <td>8/20 crashed (Iraq); zero spare parts</td>
-              <td class="severity-col"><span class="severity-badge high">High</span></td>
-              <td>Jordan sold fleet; Iraq grounded rest</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇰🇪 Kenya (2016&ndash;)</td>
-              <td class="platform-col">VN-4 APC</td>
-              <td>NORINCO</td>
-              <td>Cannot withstand RPG; structural failures</td>
-              <td class="severity-col"><span class="severity-badge critical">Critical</span></td>
-              <td>Diversifying to SA/US platforms</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇵🇰 Pakistan (ongoing)</td>
-              <td class="platform-col">F-22P Frigates</td>
-              <td>CSSC</td>
-              <td>Missile lock failure; engine degradation</td>
-              <td class="severity-col"><span class="severity-badge high">High</span></td>
-              <td>Cannot sustain prolonged deployments</td>
-            </tr>
-            <tr>
-              <td class="country-col">🇩🇿 Algeria (2014&ndash;21)</td>
-              <td class="platform-col">CH-4 Rainbow</td>
-              <td>CASC</td>
-              <td>Multiple crashes during routine drills</td>
-              <td class="severity-col"><span class="severity-badge medium">Medium</span></td>
-              <td>Fleet reliability in question</td>
-            </tr>
+            <tr><td class="country-col">🇻🇪 Venezuela (2026)</td><td class="platform-col">JY-27A, JYL-1</td><td>CETC</td><td>Total blindness under US EW</td><td class="severity-col"><span class="severity-badge critical">Critical</span></td><td>IADS collapsed; Maduro captured</td></tr>
+            <tr><td class="country-col">🇹🇭 Thailand (2025)</td><td class="platform-col">VT-4 MBT</td><td>NORINCO</td><td>125mm barrel explosion; thermal stress</td><td class="severity-col"><span class="severity-badge critical">Critical</span></td><td>3 crew wounded</td></tr>
+            <tr><td class="country-col">🇵🇰 Pakistan (2025)</td><td class="platform-col">HQ-9P, HQ-16, JF-17</td><td>CASIC, AVIC</td><td>Air defences penetrated in Op Sindoor</td><td class="severity-col"><span class="severity-badge high">High</span></td><td>Multiple Indian strikes on targets</td></tr>
+            <tr><td class="country-col">🇳🇬 Nigeria (2020–25)</td><td class="platform-col">VT-4, F-7</td><td>NORINCO, AVIC</td><td>30-min cooldown; RPG penetration; crashes</td><td class="severity-col"><span class="severity-badge critical">Critical</span></td><td>"Temu tanks"; jets returned</td></tr>
+            <tr><td class="country-col">🇲🇲 Myanmar (2022)</td><td class="platform-col">JF-17, FTC-2000G</td><td>AVIC</td><td>Structural cracks; BVR failure; shoot-downs</td><td class="severity-col"><span class="severity-badge high">High</span></td><td>Fleet grounded mid-civil war</td></tr>
+            <tr><td class="country-col">🇮🇶🇯🇴 Iraq &amp; Jordan</td><td class="platform-col">CH-4B Rainbow</td><td>CASC</td><td>8/20 crashed; zero spare parts</td><td class="severity-col"><span class="severity-badge high">High</span></td><td>Jordan sold fleet; Iraq grounded</td></tr>
+            <tr><td class="country-col">🇰🇪 Kenya (2016–)</td><td class="platform-col">VN-4 APC</td><td>NORINCO</td><td>Cannot withstand RPG; structural failures</td><td class="severity-col"><span class="severity-badge critical">Critical</span></td><td>Diversifying to SA/US platforms</td></tr>
+            <tr><td class="country-col">🇵🇰 Pakistan (ongoing)</td><td class="platform-col">F-22P Frigates</td><td>CSSC</td><td>Missile lock failure; engine degradation</td><td class="severity-col"><span class="severity-badge high">High</span></td><td>Cannot sustain deployments</td></tr>
+            <tr><td class="country-col">🇩🇿 Algeria (2014–21)</td><td class="platform-col">CH-4 Rainbow</td><td>CASC</td><td>Multiple crashes during routine drills</td><td class="severity-col"><span class="severity-badge medium">Medium</span></td><td>Fleet reliability in question</td></tr>
           </tbody>
         </table>
       </div>
@@ -1742,84 +1479,44 @@ footer {
   </div>
 </section>
 
-<!-- SECTION 4: OUTLOOK -->
-<section id="outlook">
+<!-- OUTLOOK -->
+<section id="outlook" class="section-deep">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <div class="section-number">04 &mdash; Outlook</div>
+      <div class="section-number">04 — Outlook</div>
       <h2 class="section-title">Concerns &amp; The Future</h2>
-      <p class="section-subtitle">
-        Three structural headwinds, internal purges, and the after-sales vacuum
-      </p>
-      <div class="section-divider"></div>
+      <p class="section-subtitle">Three structural headwinds, internal purges, and the after-sales vacuum</p>
     </div>
 
     <div class="outlook-grid fade-in">
       <div class="outlook-card">
         <div class="outlook-card-num">01</div>
         <div class="outlook-card-title">Post-Ukraine Resurgence of Russian &amp; US Exporters</div>
-        <div class="outlook-card-text">
-          China's rise to 4th-largest exporter was partly due to Russia's shrinking share during the Ukraine war,
-          inflating Beijing's contribution numbers. As Russian and American production lines ramp back up,
-          market share competition will intensify &mdash; especially in Africa and West Asia.
-        </div>
+        <div class="outlook-card-text">China's rise to 4th-largest exporter was partly due to Russia's shrinking share during the Ukraine war, inflating Beijing's contribution numbers. As production lines ramp back up, market share competition will intensify.</div>
       </div>
       <div class="outlook-card">
         <div class="outlook-card-num">02</div>
         <div class="outlook-card-title">Widening Net of US BIS &amp; 1260H Designations</div>
-        <div class="outlook-card-text">
-          The June 2026 list now includes ~188 entities, including commercial giants like Alibaba, Baidu,
-          and BYD. Compliance scrutiny extends globally under the "small yard, high fences" strategy,
-          complicating supply chains for China's dual-use components and non-traditional vendors.
-        </div>
+        <div class="outlook-card-text">The June 2026 list now includes ~188 entities, including Alibaba, Baidu, and BYD. Compliance scrutiny extends globally under the "small yard, high fences" strategy.</div>
       </div>
       <div class="outlook-card">
         <div class="outlook-card-num">03</div>
         <div class="outlook-card-title">After-Sales Vacuum &amp; Buyer's Remorse</div>
-        <div class="outlook-card-text">
-          Once a Chinese SOE secures the initial sale, it does not address the remaining life cycle. No spares,
-          no training, no maintenance logistics. As this becomes a bone of contention even for continuing clients,
-          deeply intertwined defence ties like those binding China to Pakistan remain the exception, not the rule.
-        </div>
+        <div class="outlook-card-text">Once a Chinese SOE secures the initial sale, it does not address the remaining life cycle. No spares, no training, no maintenance logistics. Deeply intertwined ties like those binding China to Pakistan remain the exception.</div>
       </div>
     </div>
 
-    <!-- Purge Section -->
-    <div class="purge-section fade-in" style="margin-top:2rem;">
-      <div class="purge-title">Anti-Corruption Purges Across the MIC (2023&ndash;26)</div>
-      <div class="purge-sub">
-        Internal investigations into procurement rigging, kickbacks, and misreporting have led to the removal
-        of top leadership across the CMC, Rocket Force, and major defence SOEs.
-      </div>
+    <div class="purge-section fade-in">
+      <div class="purge-title">Anti-Corruption Purges Across the MIC (2023–26)</div>
+      <div class="purge-sub">Internal investigations into procurement rigging, kickbacks, and misreporting have led to the removal of top leadership across the CMC, Rocket Force, and major defence SOEs.</div>
       <div class="purge-grid">
-        <div class="purge-tag">
-          <strong>Li Shangfu</strong>
-          <span class="purge-role">Fmr. Defence Minister &amp; EDD Director</span>
-        </div>
-        <div class="purge-tag">
-          <strong>Zhang Youxia</strong>
-          <span class="purge-role">Fmr. CMC Vice-Chairman</span>
-        </div>
-        <div class="purge-tag">
-          <strong>Zhou Xinmin</strong>
-          <span class="purge-role">AVIC Chairman</span>
-        </div>
-        <div class="purge-tag">
-          <strong>Liu Shiquan</strong>
-          <span class="purge-role">NORINCO Chairman</span>
-        </div>
-        <div class="purge-tag">
-          <strong>Wu Yansheng</strong>
-          <span class="purge-role">CASC Chairman &amp; Party Chief</span>
-        </div>
-        <div class="purge-tag">
-          <strong>Luo Qi</strong>
-          <span class="purge-role">CNNC Chief Engineer</span>
-        </div>
-        <div class="purge-tag">
-          <strong>Liu Cangli</strong>
-          <span class="purge-role">CAEP Director</span>
-        </div>
+        <div class="purge-tag"><strong>Li Shangfu</strong><span class="purge-role">Fmr. Defence Minister</span></div>
+        <div class="purge-tag"><strong>Zhang Youxia</strong><span class="purge-role">Fmr. CMC Vice-Chairman</span></div>
+        <div class="purge-tag"><strong>Zhou Xinmin</strong><span class="purge-role">AVIC Chairman</span></div>
+        <div class="purge-tag"><strong>Liu Shiquan</strong><span class="purge-role">NORINCO Chairman</span></div>
+        <div class="purge-tag"><strong>Wu Yansheng</strong><span class="purge-role">CASC Chairman</span></div>
+        <div class="purge-tag"><strong>Luo Qi</strong><span class="purge-role">CNNC Chief Engineer</span></div>
+        <div class="purge-tag"><strong>Liu Cangli</strong><span class="purge-role">CAEP Director</span></div>
       </div>
     </div>
   </div>
@@ -1828,22 +1525,18 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">'MADE IN CHINA' WEAPONS TRACKER</div>
+    <div class="footer-brand">'Made in China' Weapons Tracker</div>
     <div class="footer-text">
       Interactive companion to
-      <a href="https://takshashila.org.in/content/publications/ChinaArms-20062026.html" target="_blank" style="color:var(--yellow-bright); text-decoration:none;">Takshashila Discussion Document 2026-16</a>:
+      <a href="https://takshashila.org.in/content/publications/ChinaArms-20062026.html" target="_blank">Takshashila Discussion Document 2026-16</a>:
       <em>"Weapons 'Made in China': Foolproof or in Muddy Waters?"</em>
     </div>
     <div class="footer-sources" style="margin-top:1.5rem;">
       <p style="margin-bottom:0.5rem;">
-        Data: <a href="https://www.sipri.org/databases/armstransfers" target="_blank">SIPRI Arms Transfers Database</a>
-        &bull; <a href="https://shakunasanaxe.github.io/SIPRI-China-Arms-Tracker/" target="_blank">SIPRI China Arms Tracker</a>
+        Data: <a href="https://www.sipri.org/databases/armstransfers" target="_blank">SIPRI Arms Transfers Database ↗</a>
+         · <a href="https://shakunasanaxe.github.io/SIPRI-China-Arms-Tracker/" target="_blank">SIPRI China Arms Tracker ↗</a>
       </p>
-      <p>
-        Research &amp; analysis by Anushka Saxena &bull;
-        The Takshashila Institution &bull;
-        2026 &bull; Timeline: 2015&ndash;2026
-      </p>
+      <p>Research &amp; analysis by Anushka Saxena · The Takshashila Institution · 2026</p>
     </div>
   </div>
 </footer>
@@ -1851,178 +1544,117 @@ footer {
 <!-- JS -->
 <script>
 const nav = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 50);
-});
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
 
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
   let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 200) current = s.id;
-  });
-  navLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
 });
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('visible');
-  });
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
 function scrollCarousel(id, dir) {
   const track = document.getElementById(id);
   const card = track.querySelector('.platform-card');
-  const scrollAmount = (card.offsetWidth + 20) * dir;
-  track.parentElement.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  track.parentElement.scrollBy({ left: (card.offsetWidth + 20) * dir, behavior: 'smooth' });
 }
 document.addEventListener('DOMContentLoaded', () => {
-  const wrapper = document.querySelector('#platformCarousel').parentElement;
-  wrapper.style.overflowX = 'auto';
-  wrapper.style.scrollSnapType = 'x mandatory';
-  wrapper.style.msOverflowStyle = 'none';
-  wrapper.style.scrollbarWidth = 'none';
-  document.querySelectorAll('.platform-card').forEach(c => {
-    c.style.scrollSnapAlign = 'start';
-  });
+  const w = document.querySelector('#platformCarousel').parentElement;
+  w.style.overflowX = 'auto'; w.style.scrollSnapType = 'x mandatory';
+  w.style.msOverflowStyle = 'none'; w.style.scrollbarWidth = 'none';
+  document.querySelectorAll('.platform-card').forEach(c => c.style.scrollSnapAlign = 'start');
 });
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 
-// Charts
-Chart.defaults.color = '#A89BBF';
-Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+// Charts — wine and gold palette per style guide
+Chart.defaults.color = 'rgba(23,20,19,0.50)';
+Chart.defaults.font.family = "'Roboto Mono', monospace";
+Chart.defaults.font.size = 10;
 
-// Export Share Over Time
 new Chart(document.getElementById('exportShareChart').getContext('2d'), {
   type: 'line',
   data: {
-    labels: ['2012-16', '2013-17', '2014-18', '2015-19', '2016-20', '2017-21', '2018-22', '2019-23', '2020-24'],
+    labels: ['2012-16','2013-17','2014-18','2015-19','2016-20','2017-21','2018-22','2019-23','2020-24'],
     datasets: [{
       label: "China's Share (%)",
       data: [6.2, 5.7, 5.2, 5.5, 5.2, 4.6, 4.6, 5.8, 5.9],
-      borderColor: '#F5C518',
-      backgroundColor: 'rgba(245, 197, 24, 0.08)',
+      borderColor: '#620d3c',
+      backgroundColor: 'rgba(98,13,60,0.06)',
       fill: true, tension: 0.35,
-      pointBackgroundColor: '#F5C518',
-      pointBorderColor: '#F5C518',
-      pointRadius: 5, pointHoverRadius: 8,
-      borderWidth: 3,
+      pointBackgroundColor: '#620d3c',
+      pointBorderColor: '#620d3c',
+      pointRadius: 4, pointHoverRadius: 6,
+      borderWidth: 2,
     }]
   },
   options: {
     responsive: true, maintainAspectRatio: false,
     scales: {
-      y: { beginAtZero: false, min: 3, max: 8, grid: { color: 'rgba(107,63,160,0.1)' }, ticks: { callback: v => v + '%' } },
-      x: { grid: { color: 'rgba(107,63,160,0.05)' } }
+      y: { beginAtZero: false, min: 3, max: 8, grid: { color: 'rgba(23,20,19,0.08)' }, ticks: { callback: v => v + '%' } },
+      x: { grid: { color: 'rgba(23,20,19,0.04)' } }
     },
     plugins: {
       legend: { display: false },
-      tooltip: { backgroundColor: '#1A1225', borderColor: '#6B3FA0', borderWidth: 1, callbacks: { label: ctx => ctx.parsed.y + '% of global exports' } }
+      tooltip: { backgroundColor: '#171413', borderColor: 'rgba(23,20,19,0.16)', borderWidth: 1, callbacks: { label: ctx => ctx.parsed.y + '% of global exports' } }
     }
   }
 });
 
-// Regional Distribution
 new Chart(document.getElementById('regionalChart').getContext('2d'), {
   type: 'doughnut',
   data: {
-    labels: ['Asia & Oceania', 'Africa', 'Middle East', 'Americas', 'Europe'],
-    datasets: [{
-      data: [77, 14, 5, 2, 2],
-      backgroundColor: ['#F5C518', '#6B3FA0', '#8B5FC7', '#C4A8E0', '#4A2D7A'],
-      borderColor: '#1A1225', borderWidth: 3,
-    }]
+    labels: ['Asia & Oceania','Africa','Middle East','Americas','Europe'],
+    datasets: [{ data: [77,14,5,2,2], backgroundColor: ['#620d3c','#f1a222','rgba(98,13,60,0.5)','rgba(241,162,34,0.5)','rgba(23,20,19,0.15)'], borderColor: '#fff', borderWidth: 2 }]
   },
   options: {
-    responsive: true, maintainAspectRatio: false,
-    cutout: '60%',
+    responsive: true, maintainAspectRatio: false, cutout: '60%',
     plugins: {
-      legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } },
-      tooltip: { backgroundColor: '#1A1225', borderColor: '#6B3FA0', borderWidth: 1, callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' } }
+      legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle', font: { family: "'Roboto Mono', monospace", size: 10 } } },
+      tooltip: { backgroundColor: '#171413', callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' } }
     }
   }
 });
 
-// Tank Exports by Country
 new Chart(document.getElementById('tankChart').getContext('2d'), {
   type: 'bar',
   data: {
-    labels: ['Pakistan', 'Bangladesh', 'Thailand', 'Nigeria', 'Myanmar', 'Others'],
-    datasets: [{
-      label: 'Tanks Exported',
-      data: [373, 188, 63, 44, 16, 16],
-      backgroundColor: [
-        'rgba(245, 197, 24, 0.85)',
-        'rgba(139, 95, 199, 0.85)',
-        'rgba(107, 63, 160, 0.7)',
-        'rgba(196, 168, 224, 0.6)',
-        'rgba(74, 45, 122, 0.7)',
-        'rgba(45, 27, 78, 0.7)',
-      ],
-      borderColor: 'rgba(245, 197, 24, 0.3)',
-      borderWidth: 1,
-      borderRadius: 6,
-    }]
+    labels: ['Pakistan','Bangladesh','Thailand','Nigeria','Myanmar','Others'],
+    datasets: [{ label: 'Tanks', data: [373,188,63,44,16,16],
+      backgroundColor: ['#620d3c','rgba(98,13,60,0.7)','rgba(98,13,60,0.5)','#f1a222','rgba(241,162,34,0.6)','rgba(23,20,19,0.12)'],
+      borderWidth: 0 }]
   },
   options: {
-    responsive: true, maintainAspectRatio: false,
-    indexAxis: 'y',
-    scales: {
-      x: { grid: { color: 'rgba(107,63,160,0.1)' }, ticks: { callback: v => v } },
-      y: { grid: { display: false } }
-    },
-    plugins: {
-      legend: { display: false },
-      tooltip: { backgroundColor: '#1A1225', borderColor: '#6B3FA0', borderWidth: 1, callbacks: { label: ctx => ctx.parsed.x + ' tanks' } }
-    }
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    scales: { x: { grid: { color: 'rgba(23,20,19,0.08)' } }, y: { grid: { display: false } } },
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#171413', callbacks: { label: ctx => ctx.parsed.x + ' tanks' } } }
   }
 });
 
-// UCAV Exports by Country
 new Chart(document.getElementById('ucavChart').getContext('2d'), {
   type: 'bar',
   data: {
-    labels: ['Saudi Arabia', 'Pakistan', 'UAE', 'Iraq', 'Serbia', 'Nigeria', 'Algeria', 'Others'],
-    datasets: [{
-      label: 'UCAVs Exported',
-      data: [85, 68, 30, 20, 18, 15, 12, 52],
-      backgroundColor: [
-        'rgba(245, 197, 24, 0.85)',
-        'rgba(139, 95, 199, 0.85)',
-        'rgba(107, 63, 160, 0.7)',
-        'rgba(196, 168, 224, 0.6)',
-        'rgba(74, 45, 122, 0.7)',
-        'rgba(230, 184, 0, 0.5)',
-        'rgba(45, 27, 78, 0.7)',
-        'rgba(107, 95, 128, 0.4)',
-      ],
-      borderColor: 'rgba(245, 197, 24, 0.3)',
-      borderWidth: 1,
-      borderRadius: 6,
-    }]
+    labels: ['Saudi Arabia','Pakistan','UAE','Iraq','Serbia','Nigeria','Algeria','Others'],
+    datasets: [{ label: 'UCAVs', data: [85,68,30,20,18,15,12,52],
+      backgroundColor: ['#620d3c','rgba(98,13,60,0.7)','rgba(98,13,60,0.5)','#f1a222','rgba(241,162,34,0.7)','rgba(241,162,34,0.5)','rgba(241,162,34,0.35)','rgba(23,20,19,0.12)'],
+      borderWidth: 0 }]
   },
   options: {
-    responsive: true, maintainAspectRatio: false,
-    indexAxis: 'y',
-    scales: {
-      x: { grid: { color: 'rgba(107,63,160,0.1)' } },
-      y: { grid: { display: false } }
-    },
-    plugins: {
-      legend: { display: false },
-      tooltip: { backgroundColor: '#1A1225', borderColor: '#6B3FA0', borderWidth: 1, callbacks: { label: ctx => ctx.parsed.x + ' UCAVs' } }
-    }
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    scales: { x: { grid: { color: 'rgba(23,20,19,0.08)' } }, y: { grid: { display: false } } },
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#171413', callbacks: { label: ctx => ctx.parsed.x + ' UCAVs' } } }
   }
 });
 </script>
